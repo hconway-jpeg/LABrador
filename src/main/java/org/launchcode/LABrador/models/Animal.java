@@ -3,9 +3,8 @@ package org.launchcode.LABrador.models;
 import java.util.Date;
 import java.util.Objects;
 
-public class Animal {
+public class Animal extends AbstractEntity {
 
-    private int id;
     private String tag;
     private String cageNumber;
     private String cageType;
@@ -19,8 +18,18 @@ public class Animal {
 
     public Animal() { }
 
-    public int getId() {
-        return id;
+    public Animal(String tag, String cageNumber, String cageType, char sex, Date dateCageOpen, Date dateOfBirth, String genotypeOne, String genotypeTwo, String litter, String notes) {
+        super();
+        this.tag = tag;
+        this.cageNumber = cageNumber;
+        this.cageType = cageType;
+        this.sex = sex;
+        this.dateCageOpen = dateCageOpen;
+        this.dateOfBirth = dateOfBirth;
+        this.genotypeOne = genotypeOne;
+        this.genotypeTwo = genotypeTwo;
+        this.litter = litter;
+        this.notes = notes;
     }
 
     public String getTag() {
@@ -106,19 +115,6 @@ public class Animal {
     @Override
     public String toString() {
         return tag;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Animal animal = (Animal) o;
-        return id == animal.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 
 }
