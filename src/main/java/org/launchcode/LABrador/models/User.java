@@ -1,8 +1,7 @@
 package org.launchcode.LABrador.models;
 
-public class User {
+public class User extends AbstractEntity {
 
-    private int id;
     private String username;
     private String password;
     private String lab;
@@ -12,16 +11,12 @@ public class User {
 
     public User() {}
 
-    public User(int id, String username, String password, String email, String firstName, String lastName) {
+    public User(String username, String password, String email, String firstName, String lastName) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getUsername() {
