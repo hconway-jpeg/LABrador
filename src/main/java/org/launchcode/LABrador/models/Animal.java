@@ -1,16 +1,18 @@
 package org.launchcode.LABrador.models;
 
+import javax.persistence.Entity;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
 public class Animal extends AbstractEntity {
 
     private String tag;
     private String cageNumber;
     private String cageType;
     private String sex;
-    private Date dateOfBirth;
-    private Date dateOpened;
+    private String dateOfBirth;
+    private String dateOpened;
     private String genotypeOne;
     private String genotypeTwo;
     private String litter;
@@ -18,7 +20,7 @@ public class Animal extends AbstractEntity {
 
     public Animal() { }
 
-    public Animal(String tag, String cageNumber, String cageType, String sex, Date dateOpened, Date dateOfBirth, String genotypeOne, String genotypeTwo, String litter, String notes) {
+    public Animal(String tag, String cageNumber, String cageType, String sex, String dateOpened, String dateOfBirth, String genotypeOne, String genotypeTwo, String litter, String notes) {
         super();
         this.tag = tag;
         this.cageNumber = cageNumber;
@@ -60,17 +62,17 @@ public class Animal extends AbstractEntity {
         this.sex = sex;
     }
 
-    public Date getDateOpened() {
+    public String getDateOpened() {
         return dateOpened;
     }
-    public void setDateOpened(Date dateOpened) {
+    public void setDateOpened(String dateOpened) {
         this.dateOpened = dateOpened;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

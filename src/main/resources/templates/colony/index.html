@@ -13,6 +13,7 @@
 <table class="table table-striped">
     <thead>
     <tr>
+        <th></th>
         <th>Tag</th>
         <th>Cage Number</th>
         <th>Type</th>
@@ -26,8 +27,19 @@
     </tr>
     </thead>
 
-
-
+    <tr th:each="animal : ${animals}">
+        <td th:text="${animal.id}"></td>
+        <td th:text="${animal.tag}">Tag</td>
+        <td th:text="${animal.cageNumber}">Tag</td>
+        <td th:text="${animal.cageType}">Tag</td>
+        <td th:text="${animal.sex}">Tag</td>
+        <td th:text="${animal.dateOfBirth}">Tag</td>
+        <td th:text="${animal.dateOpened}">Tag</td>
+        <td th:text="${animal.genotypeOne}">Tag</td>
+        <td th:text="${animal.genotypeTwo}">Tag</td>
+        <td th:text="${animal.litter}">Tag</td>
+        <td th:text="${animal.notes}">Tag</td>
+    </tr>
 </table>
 
 </body>
