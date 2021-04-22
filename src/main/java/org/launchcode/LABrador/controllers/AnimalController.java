@@ -24,29 +24,41 @@ public class AnimalController {
     }
 
     @PostMapping("add")
-    public String processAddAnimalForm(Model model) {
+    public String processAddAnimalForm(@ModelAttribute Animal newAnimal, Model model) {
+        //animalRepository.save(newAnimal);
         return "redirect:";
     }
 
-    @GetMapping("edit")
-    public String displayEditAnimalForm(Model model) {
+    @GetMapping("edit/${animalId}")
+    public String displayEditAnimalForm(Model model, @PathVariable  int animalId) {
+        //Animal animal = animalRepository.findById(animalId);
         model.addAttribute("title", "Edit Entry");
+        //model.addAttribute("animal", animal);
         return "colony/edit";
     }
 
     @PostMapping("edit")
-    public String processEditAnimalForm(@RequestParam Integer animalId, Model model) {
+    public String processEditAnimalForm(@RequestParam Integer animalId, String tag) {
+        //Animal editedAnimal = animalRepository.findById(animalId);
+        //editedAnimal.setTag(tag);
+        //etc
         return "redirect:";
     }
 
     @GetMapping("delete")
     public String displayDeleteAnimalForm(Model model) {
         model.addAttribute("title", "Delete Entry");
+        //model.addAttribute("animals", animalRepository.findAll());
         return "colony/delete";
     }
 
     @PostMapping("delete")
-    public String processDeleteAnimalForm() {
+    public String processDeleteAnimalForm(@RequestParam(required = false) int[] animalIds) {
+        if (animalIds != null) {
+            for (int id : animalIds) {
+                //animalRepository.deleteById(id);
+            }
+        }
         return "redirect:";
     }
 

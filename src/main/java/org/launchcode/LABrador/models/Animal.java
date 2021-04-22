@@ -8,9 +8,9 @@ public class Animal extends AbstractEntity {
     private String tag;
     private String cageNumber;
     private String cageType;
-    private char sex;
-    private Date dateCageOpen;
+    private String sex;
     private Date dateOfBirth;
+    private Date dateOpened;
     private String genotypeOne;
     private String genotypeTwo;
     private String litter;
@@ -18,13 +18,13 @@ public class Animal extends AbstractEntity {
 
     public Animal() { }
 
-    public Animal(String tag, String cageNumber, String cageType, char sex, Date dateCageOpen, Date dateOfBirth, String genotypeOne, String genotypeTwo, String litter, String notes) {
+    public Animal(String tag, String cageNumber, String cageType, String sex, Date dateOpened, Date dateOfBirth, String genotypeOne, String genotypeTwo, String litter, String notes) {
         super();
         this.tag = tag;
         this.cageNumber = cageNumber;
         this.cageType = cageType;
         this.sex = sex;
-        this.dateCageOpen = dateCageOpen;
+        this.dateOpened = dateOpened;
         this.dateOfBirth = dateOfBirth;
         this.genotypeOne = genotypeOne;
         this.genotypeTwo = genotypeTwo;
@@ -35,7 +35,6 @@ public class Animal extends AbstractEntity {
     public String getTag() {
         return tag;
     }
-
     public void setTag(String tag) {
         this.tag = tag;
     }
@@ -43,7 +42,6 @@ public class Animal extends AbstractEntity {
     public String getCageNumber() {
         return cageNumber;
     }
-
     public void setCageNumber(String cageNumber) {
         this.cageNumber = cageNumber;
     }
@@ -51,31 +49,27 @@ public class Animal extends AbstractEntity {
     public String getCageType() {
         return cageType;
     }
-
     public void setCageType(String cageType) {
         this.cageType = cageType;
     }
 
-    public char getSex() {
+    public String getSex() {
         return sex;
     }
-
-    public void setSex(char sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
-    public Date getDateCageOpen() {
-        return dateCageOpen;
+    public Date getDateOpened() {
+        return dateOpened;
     }
-
-    public void setDateCageOpen(Date dateCageOpen) {
-        this.dateCageOpen = dateCageOpen;
+    public void setDateOpened(Date dateOpened) {
+        this.dateOpened = dateOpened;
     }
 
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
-
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
@@ -83,7 +77,6 @@ public class Animal extends AbstractEntity {
     public String getGenotypeOne() {
         return genotypeOne;
     }
-
     public void setGenotypeOne(String genotypeOne) {
         this.genotypeOne = genotypeOne;
     }
@@ -91,7 +84,6 @@ public class Animal extends AbstractEntity {
     public String getGenotypeTwo() {
         return genotypeTwo;
     }
-
     public void setGenotypeTwo(String genotypeTwo) {
         this.genotypeTwo = genotypeTwo;
     }
@@ -99,7 +91,6 @@ public class Animal extends AbstractEntity {
     public String getLitter() {
         return litter;
     }
-
     public void setLitter(String litter) {
         this.litter = litter;
     }
@@ -107,7 +98,6 @@ public class Animal extends AbstractEntity {
     public String getNotes() {
         return notes;
     }
-
     public void setNotes(String notes) {
         this.notes = notes;
     }
