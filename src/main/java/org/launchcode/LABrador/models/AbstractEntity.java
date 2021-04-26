@@ -1,24 +1,17 @@
 package org.launchcode.LABrador.models;
 
-import java.util.Objects;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-public abstract class AbstractEntity {
+public class AbstractEntity
+{
+    @Id
+    @GeneratedValue
+    private long id;
 
-    private int id;
+    public AbstractEntity() {}
 
-    public int getId() { return id; }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AbstractEntity entity = (AbstractEntity) o;
-        return id == entity.id;
+    public long getId() {
+        return id;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
 }
