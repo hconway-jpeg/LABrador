@@ -1,54 +1,116 @@
 package org.launchcode.LABrador.models;
 
-import com.sun.istack.NotNull;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
 @Table(name = "users")
-public class User {
-    private @Id
-    @GeneratedValue
-    long id;
+public class User extends AbstractEntity {
+
+    // encryptor for passwords; we DO NOT want to store unencrypted passwords at all!
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
     @NotNull
     private  String username;
+
     @NotNull
-    private  String password;
+    private  String pwHash;
+
+    private String lab;
+
+    @NotNull
+    private String email;
+
+    @NotNull
+    private String firstName;
+
+    @NotNull
+    private String lastName;
+
     @NotNull
     private  boolean loggedIn;
+
     public User() {
     }
-    public User(@NotNull String username,
-                @NotNull String password) {
+
+    public User(@NotNull String username, @NotNull String password, String lab, @NotNull String email, @NotNull String firstName, @NotNull String lastName) {
         this.username = username;
-        this.password = password;
+        this.pwHash = encoder.encode(password);
+        this.lab = lab;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.loggedIn = false;
     }
-    public long getId() {
-        return id;
-    }
+
     public String getUsername() {
         return username;
     }
+
     public void setUsername(String username) {
         this.username = username;
     }
-    public String getPassword() {
-        return password;
+
+    public String getPwHash() {
+        return pwHash;
     }
-    public void setPassword(String password) {
-        this.password = password;
+
+    public void setPwHash(String password) {
+        this.pwHash = encoder.encode(password);
     }
+
     public boolean isLoggedIn() {
         return loggedIn;
     }
+
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
     }
+
+    public String getLab() {
+        return lab;
+    }
+
+    public void setLab(String lab) {
+        this.lab = lab;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public boolean isMatchingPassword(String password) {
+        return encoder.matches(password, pwHash);
+    }
+
+    //
+    // not sure what to do with this yet
+    /*
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,17 +119,20 @@ public class User {
         return Objects.equals(username, user.username) &&
                 Objects.equals(password, user.password);
     }
+
+     */
+
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password,
+        return Objects.hash(username, pwHash,
                 loggedIn);
     }
+
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", password='" + pwHash + '\'' +
                 ", loggedIn=" + loggedIn +
                 '}';
     }

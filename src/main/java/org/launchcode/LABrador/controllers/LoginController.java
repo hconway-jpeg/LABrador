@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class logincontroller{
+public class LoginController {
     @Autowired
     userRepository UserRepository;
     @PostMapping("/register")
