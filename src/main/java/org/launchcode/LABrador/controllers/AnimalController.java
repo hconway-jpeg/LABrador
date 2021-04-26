@@ -37,18 +37,18 @@ public class AnimalController {
         return "redirect:";
     }
 
-//    @GetMapping("edit/${animalId}")
-//    public String displayEditAnimalForm(Model model, @PathVariable  int animalId) {
-//        Optional<Animal> animal = animalRepository.findById(animalId);
-//        model.addAttribute("title", "Edit Entry");
-//        model.addAttribute("animal", animal);
-//        return "colony/edit";
-//    }
+    @GetMapping("edit/{animalId}")
+    public String displayEditAnimalForm(Model model, @PathVariable  int animalId) {
+        Optional<Animal> animal = animalRepository.findById(animalId);
+        model.addAttribute("title", "Edit Entry");
+        model.addAttribute("animal", animal);
+        return "colony/edit";
+    }
 
     @PostMapping("edit")
     public String processEditAnimalForm(@RequestParam Integer animalId, String tag) {
         Optional<Animal> editedAnimal = animalRepository.findById(animalId);
-        //set info here??
+        //
         return "redirect:";
     }
 
@@ -69,9 +69,5 @@ public class AnimalController {
         return "redirect:";
     }
 
-//    @GetMapping("details/{animalId}")
-//    public String displayAnimalDetails(Model model, @PathVariable int animalId) {
-//        return "colony/details";
-//    }
 
 }

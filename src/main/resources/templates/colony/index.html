@@ -39,6 +39,9 @@
         <td th:text="${animal.genotypeTwo}">Tag</td>
         <td th:text="${animal.litter}">Tag</td>
         <td th:text="${animal.notes}">Tag</td>
+        <td>
+            <a th:href="@{/colony/edit/{id}(id=${animal.id})}">Edit</a>
+        </td>
     </tr>
 </table>
 
