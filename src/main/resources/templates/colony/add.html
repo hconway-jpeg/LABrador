@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
+<head th:replace="fragmentsColony :: head">
     <meta charset="UTF-8"/>
     <title>Add Entry</title>
 
@@ -8,7 +8,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 </head>
-<body>
+<body class="container  body-content">
+    <nav th:replace="fragmentsColony :: page-header"></nav>
+
+    <h1>Add Animal</h1>
 
     <form method="post">
         <div class="form-group">

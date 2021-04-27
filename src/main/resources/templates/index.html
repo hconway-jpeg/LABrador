@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragmentsHome :: head">
+</head>
+<body>
+
+<div th:replace="fragmentsHome :: page-header"></div>
+
+<div class="container body-content">
+    <h2>LABrador Lab Management Solutions</h2>
+    <div>
+        <h5>Welcome, (Username). View your:</h5>
+    <ul>
+        <li><a th:href="@{/colony}">Animal Database</a></li>
+        <li><a>Chemical Inventory</a></li>
+        <li><a>Protocols</a></li>
+        <li><a>Lab Communications</a></li>
+    </ul>
+    </div>
+</div>
+
+</body>
+</html>
