@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Animal Colony</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th></th>
+        <th>Tag</th>
+        <th>Cage Number</th>
+        <th>Type</th>
+        <th>Sex</th>
+        <th>Date of Birth</th>
+        <th>Date Opened</th>
+        <th>Genotype One</th>
+        <th>Genotype Two</th>
+        <th>Litter</th>
+        <th>Notes</th>
+    </tr>
+    </thead>
+
+    <tr th:each="animal : ${animals}">
+        <td th:text="${animal.id}"></td>
+        <td th:text="${animal.tag}">Tag</td>
+        <td th:text="${animal.cageNumber}">Tag</td>
+        <td th:text="${animal.cageType}">Tag</td>
+        <td th:text="${animal.sex}">Tag</td>
+        <td th:text="${animal.dateOfBirth}">Tag</td>
+        <td th:text="${animal.dateOpened}">Tag</td>
+        <td th:text="${animal.genotypeOne}">Tag</td>
+        <td th:text="${animal.genotypeTwo}">Tag</td>
+        <td th:text="${animal.litter}">Tag</td>
+        <td th:text="${animal.notes}">Tag</td>
+        <td>
+            <a th:href="@{/colony/edit/{id}(id=${animal.id})}">Edit</a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
