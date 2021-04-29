@@ -31,8 +31,6 @@ public class User extends AbstractEntity {
     @NotNull
     private String lastName;
 
-    private boolean loggedIn;
-
     public User() {
     }
 
@@ -43,7 +41,6 @@ public class User extends AbstractEntity {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.loggedIn = false;
     }
 
     public String getUsername() {
@@ -60,14 +57,6 @@ public class User extends AbstractEntity {
 
     public void setPwHash(String password) {
         this.pwHash = encoder.encode(password);
-    }
-
-    public boolean isLoggedIn() {
-        return loggedIn;
-    }
-
-    public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
     }
 
     public String getLab() {
@@ -106,25 +95,9 @@ public class User extends AbstractEntity {
         return encoder.matches(password, pwHash);
     }
 
-    //
-    // not sure what to do with this yet
-    /*
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return Objects.equals(username, user.username) &&
-                Objects.equals(password, user.password);
-    }
-
-     */
-
     @Override
     public int hashCode() {
-        return Objects.hash(username, pwHash,
-                loggedIn);
+        return Objects.hash(username, pwHash);
     }
 
     @Override
@@ -132,7 +105,6 @@ public class User extends AbstractEntity {
         return "User{" +
                 ", username='" + username + '\'' +
                 ", password='" + pwHash + '\'' +
-                ", loggedIn=" + loggedIn +
                 '}';
     }
 }

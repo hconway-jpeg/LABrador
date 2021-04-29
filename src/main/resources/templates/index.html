@@ -9,7 +9,7 @@
 <div class="container body-content">
     <h2>LABrador Lab Management Solutions</h2>
     <div>
-        <h5>Welcome, (Username). View your:</h5>
+        <h5 th:text="'Welcome, '+ ${user.firstName} + ' ' + ${user.lastName} + '! View your:'">Welcome, Username!  View your:</h5>
     <ul>
         <li><a th:href="@{/colony}">Animal Database</a></li>
         <li><a>Chemical Inventory</a></li>
