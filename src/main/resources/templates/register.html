@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+
+<body>
+<form action="/register" method="post">
+
+    <div>
+        <label>E-Mail Address:</label>
+        <input th:field="${registerFormDTO.email}"/>
+        <span th:errors="${registerFormDTO.email}" class="error"></span>
+    </div>
+
+    <div>
+        <label>First Name:</label>
+        <input th:field="${registerFormDTO.firstName}"/>
+        <span th:errors="${registerFormDTO.firstName}" class="error"></span>
+    </div>
+
+    <div>
+        <label>Last Name:</label>
+        <input th:field="${registerFormDTO.lastName}"/>
+        <span th:errors="${registerFormDTO.lastName}" class="error"></span>
+    </div>
+
+    <div>
+        <label>Laboratory:</label>
+        <input th:field="${registerFormDTO.lab}"/>
+        <span th:errors="${registerFormDTO.lab}" class="error"></span>
+    </div>
+
+    <div>
+        <label>Desired Username:</label>
+        <input th:field="${registerFormDTO.username}"/>
+        <span th:errors="${registerFormDTO.username}" class="error"></span>
+    </div>
+
+    <div>
+        <label>Password:</label>
+        <input th:field="${registerFormDTO.password}" type="password"/>
+        <span th:errors="${registerFormDTO.password}" class="error"></span>
+    </div>
+
+    <div>
+        <label>Verify Password:</label>
+        <input th:field="${registerFormDTO.verifyPassword}" type="password"/>
+        <span th:errors="${registerFormDTO.verifyPassword}" class="error"></span>
+    </div>
+
+    <input type="submit" value="Register"/>
+</form>
+
+</body>
+</html>

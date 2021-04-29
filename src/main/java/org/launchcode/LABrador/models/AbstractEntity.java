@@ -7,12 +7,15 @@ import java.util.Objects;
 
 @MappedSuperclass
 public abstract class AbstractEntity {
-
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
 
-    public int getId() { return id; }
+    public AbstractEntity() {}
+
+    public Integer getId() {
+        return id;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -26,5 +29,4 @@ public abstract class AbstractEntity {
     public int hashCode() {
         return Objects.hash(id);
     }
-
 }
