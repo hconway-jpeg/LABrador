@@ -1,47 +1,106 @@
 package org.launchcode.LABrador.controllers;
 
-import org.launchcode.LABrador.data.Status;
-import org.launchcode.LABrador.data.userRepository;
+import org.launchcode.LABrador.data.UserRepository;
 import org.launchcode.LABrador.models.User;
+import org.launchcode.LABrador.models.dto.LoginFormDTO;
+import org.launchcode.LABrador.models.dto.RegisterFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
-@RestController
+import static org.launchcode.LABrador.controllers.AuthenticationController.setUserInSession;
+
+@Controller
 public class LoginController {
+
     @Autowired
-    userRepository UserRepository;
-    @PostMapping("/register")
-    public Status registerUser(@RequestBody User newUser) {
-        List<User> users = UserRepository.findAll();
-        System.out.println("New user: " + newUser.toString());
-        for (User user : users) {
-            System.out.println("Registered user: " + newUser.toString());
-            if (user.equals(newUser)) {
-                System.out.println("User Already exists!");
-                return Status.USER_ALREADY_EXISTS;
-            }
-        }
-        UserRepository.save(newUser);
-        return Status.SUCCESS;
-        //redirect to login
+    UserRepository userRepository;
+
+    @GetMapping("/login")
+    public String showLoginPage(Model model){
+        model.addAttribute(new LoginFormDTO());
+        model.addAttribute("title", "LABrador - Log In");
+        return "login";
     }
+
+    @GetMapping("/register")
+    public String showRegisterPage(Model model){
+        model.addAttribute(new RegisterFormDTO());
+        model.addAttribute("title", "LABrador - Register");
+        return "register";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request){
+        request.getSession().invalidate();
+        return "redirect:";
+    }
+
     @PostMapping("/login")
-    public Status loginUser(@RequestBody User user) {
-        List<User> users = UserRepository.findAll();
-        for (User other : users) {
-            if (other.equals(user)) {
-                user.setLoggedIn(true);
-                UserRepository.save(user);
-                return Status.SUCCESS;
-                //redirect
-            }
+    public String processLogin(@ModelAttribute @Valid LoginFormDTO loginFormDTO, Errors errors,
+                               HttpServletRequest request, Model model){
+        if (errors.hasErrors()){
+            model.addAttribute("title", "LABrador - Log In");
+            return "login";
         }
-        return Status.FAILURE;
-        //redirect back to login
+
+        User userFind = userRepository.findByUsername(loginFormDTO.getUsername());
+
+        if(userFind == null){
+            errors.rejectValue("username", "user.invalid", "Invalid username.");
+            model.addAttribute("title","LABrador - Log In");
+            return "login";
+        }
+
+        String password = loginFormDTO.getPassword();
+        if(!userFind.isMatchingPassword(password)){
+            errors.rejectValue("password","password.invalid", "Invalid password.");
+            model.addAttribute("title", "LABrador - Log In");
+            return "login";
+        }
+
+        setUserInSession(request.getSession(), userFind);
+
+        return "redirect:";
+    }
+
+    @PostMapping("/register")
+    public String processRegistration(@ModelAttribute @Valid RegisterFormDTO registerFormDTO, Errors errors,
+                                      HttpServletRequest request, Model model){
+        if (errors.hasErrors()){
+            model.addAttribute("title", "LABrador - Register");
+            return "register";
+        }
+
+        User userExists = userRepository.findByUsername(registerFormDTO.getUsername());
+
+        if(userExists != null){
+            errors.rejectValue("username", "username.alreadyexists", "A user with that username already exists.");
+            model.addAttribute("title", "LABrador - Register");
+            return "register";
+        }
+
+        String password = registerFormDTO.getPassword();
+        String verifyPassword = registerFormDTO.getVerifyPassword();
+        if(!password.equals(verifyPassword)){
+            errors.rejectValue("password", "passwords.mismatch", "Passwords do not match.");
+            model.addAttribute("title", "LABrador - Register");
+            return "register";
+        }
+
+        User newUser = new User(registerFormDTO.getUsername(), registerFormDTO.getPassword(),
+                registerFormDTO.getEmail(), registerFormDTO.getFirstName(), registerFormDTO.getLastName(),
+                registerFormDTO.getLab());
+        userRepository.save(newUser);
+        setUserInSession(request.getSession(), newUser);
+
+        return "redirect:";
+
     }
 }
 

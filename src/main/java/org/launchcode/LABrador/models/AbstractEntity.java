@@ -2,18 +2,18 @@ package org.launchcode.LABrador.models;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.util.Objects;
 
-
-public class AbstractEntity
-{
+@MappedSuperclass
+public class AbstractEntity {
     @Id
     @GeneratedValue
-    private long id;
+    private Integer id;
 
     public AbstractEntity() {}
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 

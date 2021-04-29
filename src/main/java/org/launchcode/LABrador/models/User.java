@@ -31,13 +31,12 @@ public class User extends AbstractEntity {
     @NotNull
     private String lastName;
 
-    @NotNull
-    private  boolean loggedIn;
+    private boolean loggedIn;
 
     public User() {
     }
 
-    public User(@NotNull String username, @NotNull String password, String lab, @NotNull String email, @NotNull String firstName, @NotNull String lastName) {
+    public User(@NotNull String username, @NotNull String password, @NotNull String email, @NotNull String firstName, @NotNull String lastName, String lab) {
         this.username = username;
         this.pwHash = encoder.encode(password);
         this.lab = lab;
