@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragmentsColony :: head">
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+
+    <nav th:replace="fragmentsColony :: page-header"></nav>
+<div class="container  body-content">
+    <form method="post">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tag</th>
+                <th>Cage Number</th>
+                <th>Type</th>
+                <th>Sex</th>
+                <th>Date of Birth</th>
+                <th>Date Opened</th>
+                <th>Genotype One</th>
+                <th>Genotype Two</th>
+                <th>Litter</th>
+                <th>Notes</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tr th:each="animal : ${animals}">
+                <td th:text="${animal.id}"></td>
+                <td th:text="${animal.tag}">Tag</td>
+                <td th:text="${animal.cageNumber}">Tag</td>
+                <td th:text="${animal.cageType}">Tag</td>
+                <td th:text="${animal.sex}">Tag</td>
+                <td th:text="${animal.dateOfBirth}">Tag</td>
+                <td th:text="${animal.dateOpened}">Tag</td>
+                <td th:text="${animal.genotypeOne}">Tag</td>
+                <td th:text="${animal.genotypeTwo}">Tag</td>
+                <td th:text="${animal.litter}">Tag</td>
+                <td th:text="${animal.notes}">Tag</td>
+                <td>
+                    <input type="checkbox" name="animalIds" th:value="${animal.id}">
+                </td>
+            </tr>
+        </table>
+        <input class="btn btn-danger" type="submit" value="Confirm Delete">
+    </form>
+</div>
+</body>
+</html>
