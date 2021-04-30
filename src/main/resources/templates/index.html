@@ -1,34 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragmentsHome :: head">
+    <head th:replace="fragmentsHome :: head">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <!-- Bootstrap stylesheets and script -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <!--  Path to jQuery, Popper, and Bootstrap-->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-    <!--  //Path to jQuery-->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    </head>
+    <body>
 
-    <!--  ////Path to Popper - it is for dropsdowns etc in bootstrap-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <div th:replace="fragmentsHome :: page-header"></div>
 
-    <!--  Path to bootsrap-->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-</head>
-<body>
+        <div class="container body-content">
+            <h2>LABrador Lab Management Solutions</h2>
+            <div>
+                <h5 th:text="'Welcome, '+ ${user.firstName} + ' ' + ${user.lastName} + '! View your:'">Welcome, Username!  View your:</h5>
+            <ul>
+                <li><a th:href="@{/colony}">Animal Database</a></li>
+                <li><a>Chemical Inventory</a></li>
+                <li><a>Protocols</a></li>
+                <li><a>Lab Communications</a></li>
+            </ul>
+            </div>
 
-<div th:replace="fragmentsHome :: page-header"></div>
-
-<div class="container body-content">
-    <h2>LABrador Lab Management Solutions</h2>
-    <div>
-        <h5 th:text="'Welcome, '+ ${user.firstName} + ' ' + ${user.lastName} + '! View your:'">Welcome, Username!  View your:</h5>
-    <ul>
-        <li><a th:href="@{/colony}">Animal Database</a></li>
-        <li><a>Chemical Inventory</a></li>
-        <li><a>Protocols</a></li>
-        <li><a>Lab Communications</a></li>
-    </ul>
-    </div>
-  
-</div>
-</body>
+        </div>
+    </body>
 </html>

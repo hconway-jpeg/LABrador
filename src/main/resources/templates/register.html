@@ -1,60 +1,68 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragmentsHome :: head">
-</head>
-<body>
+    <head th:replace="fragmentsHome :: head">
 
-<div th:replace="fragmentsLogin :: page-header"></div>
+        <!-- Bootstrap stylesheets and script -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <!--  Path to jQuery, Popper, and Bootstrap-->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-<div class="container body-content">
-    <form action="/register" method="post">
+    </head>
+    <body>
 
-        <div>
-            <label>E-Mail Address:</label>
-            <input th:field="${registerFormDTO.email}"/>
-            <span th:errors="${registerFormDTO.email}" class="error"></span>
+        <div th:replace="fragmentsLogin :: page-header"></div>
+
+        <div class="container body-content">
+            <form action="/register" method="post">
+
+                <div>
+                    <label>E-Mail Address:</label>
+                    <input th:field="${registerFormDTO.email}"/>
+                    <span th:errors="${registerFormDTO.email}" class="error"></span>
+                </div>
+
+                <div>
+                    <label>First Name:</label>
+                    <input th:field="${registerFormDTO.firstName}"/>
+                    <span th:errors="${registerFormDTO.firstName}" class="error"></span>
+                </div>
+
+                <div>
+                    <label>Last Name:</label>
+                    <input th:field="${registerFormDTO.lastName}"/>
+                    <span th:errors="${registerFormDTO.lastName}" class="error"></span>
+                </div>
+
+                <div>
+                    <label>Laboratory:</label>
+                    <input th:field="${registerFormDTO.lab}"/>
+                    <span th:errors="${registerFormDTO.lab}" class="error"></span>
+                </div>
+
+                <div>
+                    <label>Desired Username:</label>
+                    <input th:field="${registerFormDTO.username}"/>
+                    <span th:errors="${registerFormDTO.username}" class="error"></span>
+                </div>
+
+                <div>
+                    <label>Password:</label>
+                    <input th:field="${registerFormDTO.password}" type="password"/>
+                    <span th:errors="${registerFormDTO.password}" class="error"></span>
+                </div>
+
+                <div>
+                    <label>Verify Password:</label>
+                    <input th:field="${registerFormDTO.verifyPassword}" type="password"/>
+                    <span th:errors="${registerFormDTO.verifyPassword}" class="error"></span>
+                </div>
+
+                <input type="submit" value="Register"/>
+            </form>
         </div>
 
-        <div>
-            <label>First Name:</label>
-            <input th:field="${registerFormDTO.firstName}"/>
-            <span th:errors="${registerFormDTO.firstName}" class="error"></span>
-        </div>
 
-        <div>
-            <label>Last Name:</label>
-            <input th:field="${registerFormDTO.lastName}"/>
-            <span th:errors="${registerFormDTO.lastName}" class="error"></span>
-        </div>
-
-        <div>
-            <label>Laboratory:</label>
-            <input th:field="${registerFormDTO.lab}"/>
-            <span th:errors="${registerFormDTO.lab}" class="error"></span>
-        </div>
-
-        <div>
-            <label>Desired Username:</label>
-            <input th:field="${registerFormDTO.username}"/>
-            <span th:errors="${registerFormDTO.username}" class="error"></span>
-        </div>
-
-        <div>
-            <label>Password:</label>
-            <input th:field="${registerFormDTO.password}" type="password"/>
-            <span th:errors="${registerFormDTO.password}" class="error"></span>
-        </div>
-
-        <div>
-            <label>Verify Password:</label>
-            <input th:field="${registerFormDTO.verifyPassword}" type="password"/>
-            <span th:errors="${registerFormDTO.verifyPassword}" class="error"></span>
-        </div>
-
-        <input type="submit" value="Register"/>
-    </form>
-</div>
-
-
-</body>
+    </body>
 </html>

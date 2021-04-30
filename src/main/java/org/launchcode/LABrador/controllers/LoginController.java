@@ -19,7 +19,7 @@ import static org.launchcode.LABrador.controllers.AuthenticationController.setUs
 public class LoginController {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @GetMapping("/login")
     public String showLoginPage(Model model){

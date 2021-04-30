@@ -16,10 +16,10 @@ import javax.servlet.http.HttpSession;
 public class HomeController {
 
     @Autowired
-    AuthenticationController authenticationController;
+    private AuthenticationController authenticationController;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @GetMapping("")
     public String index(Model model, HttpServletRequest request) {

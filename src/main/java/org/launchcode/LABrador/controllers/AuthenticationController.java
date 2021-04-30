@@ -12,7 +12,7 @@ import java.util.Optional;
 public class AuthenticationController {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     private static final String userSessionKey = "userSession";
 

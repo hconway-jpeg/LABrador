@@ -20,7 +20,7 @@ import java.util.Optional;
 public class AnimalController {
 
     @Autowired
-    AuthenticationController authenticationController;
+    private AuthenticationController authenticationController;
 
     @Autowired
     private AnimalRepository animalRepository;
