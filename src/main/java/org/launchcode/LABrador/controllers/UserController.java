@@ -3,6 +3,8 @@ package org.launchcode.LABrador.controllers;
 import org.launchcode.LABrador.data.UserRepository;
 import org.launchcode.LABrador.models.Animal;
 import org.launchcode.LABrador.models.User;
+import org.launchcode.LABrador.models.dto.LoginFormDTO;
+import org.launchcode.LABrador.models.dto.RegisterFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,51 +39,51 @@ public class UserController {
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
+        model.addAttribute(new RegisterFormDTO());
         model.addAttribute("title", "Edit User");
         model.addAttribute(userRepository.findByUsername(userFromSession.getUsername()));
         return "user/edit";
     }
 
     @PostMapping("edit")
-    public String processEditUserForm(@ModelAttribute @Valid User user, Model model, Errors errors, HttpServletRequest request) {
+    public String processEditUserForm(@ModelAttribute @Valid RegisterFormDTO registerFormDTO, Errors errors, HttpServletRequest request, Model model) {
 
-        if (errors.hasErrors()) {
-            model.addAttribute("title", "Edit User");
-            return "user/edit";
-        }
-
-//        animalRepository.findById(animalId).get().setTag(animal.getTag());
-//        animalRepository.findById(animalId).get().setCageNumber(animal.getCageNumber());
-//        animalRepository.findById(animalId).get().setCageType(animal.getCageType());
-//        animalRepository.findById(animalId).get().setSex(animal.getSex());
-//        animalRepository.findById(animalId).get().setDateOfBirth(animal.getDateOfBirth());
-//        animalRepository.findById(animalId).get().setDateOpened(animal.getDateOpened());
-//        animalRepository.findById(animalId).get().setGenotypeOne(animal.getGenotypeOne());
-//        animalRepository.findById(animalId).get().setGenotypeTwo(animal.getGenotypeTwo());
-//        animalRepository.findById(animalId).get().setLitter(animal.getLitter());
-//        animalRepository.findById(animalId).get().setNotes(animal.getNotes());
-//
-//        animalRepository.save(animalRepository.findById(animalId).get());
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
 
-        userRepository.findByUsername(userFromSession.getUsername()).setUsername(user.getUsername());
-        userRepository.findByUsername(userFromSession.getUsername()).setFirstName(user.getFirstName());
-        userRepository.findByUsername(userFromSession.getUsername()).setLastName(user.getLastName());
-        userRepository.findByUsername(userFromSession.getUsername()).setEmail(user.getEmail());
-        userRepository.findByUsername(userFromSession.getUsername()).setLab(user.getLab());
+        if (errors.hasErrors()) {
+            model.addAttribute("user", userFromSession);
+            return "user/edit";
+        }
 
-        userRepository.findByUsername(userFromSession.getUsername()).setPwHash(userRepository.findByUsername(userFromSession.getUsername()).getPwHash());
+        User userFind = userRepository.findByUsername(registerFormDTO.getUsername());
+        String password = registerFormDTO.getPassword();
+        if(!userFind.isMatchingPassword(password)){
+            errors.rejectValue("password","password.invalid", "Incorrect password.");
+            model.addAttribute("title", "Edit User");
+            model.addAttribute("user", userFromSession);
+            return "user/edit";
+        }
+
+
+
+
+
+
+
+
+
+        model.addAttribute("user", userFromSession);
+
+        userRepository.findByUsername(userFromSession.getUsername()).setUsername(registerFormDTO.getUsername());
+        userRepository.findByUsername(userFromSession.getUsername()).setFirstName(registerFormDTO.getFirstName());
+        userRepository.findByUsername(userFromSession.getUsername()).setLastName(registerFormDTO.getLastName());
+        userRepository.findByUsername(userFromSession.getUsername()).setEmail(registerFormDTO.getEmail());
+        userRepository.findByUsername(userFromSession.getUsername()).setLab(registerFormDTO.getLab());
+
+
 
         userRepository.save(userRepository.findByUsername(userFromSession.getUsername()));
-//        userFromSession.setUsername(user.getUsername());
-//        userFromSession.setFirstName(user.getFirstName());
-//        userFromSession.setLastName(user.getLastName());
-//        userFromSession.setEmail(user.getEmail());
-//        userFromSession.setLab(user.getLab());
-//
-//        userFromSession.setPwHash(userFromSession.getPwHash());
-
-        return "redirect:../";
+        return "redirect:";
     }
 }
