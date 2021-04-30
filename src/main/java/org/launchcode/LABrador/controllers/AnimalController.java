@@ -2,12 +2,15 @@ package org.launchcode.LABrador.controllers;
 
 import org.launchcode.LABrador.data.AnimalRepository;
 import org.launchcode.LABrador.models.Animal;
+import org.launchcode.LABrador.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.util.Optional;
@@ -17,17 +20,28 @@ import java.util.Optional;
 public class AnimalController {
 
     @Autowired
+    AuthenticationController authenticationController;
+
+    @Autowired
     private AnimalRepository animalRepository;
 
     @GetMapping
-    public String displayAllAnimals(Model model) {
+    public String displayAllAnimals(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
         model.addAttribute("title", "LAB_NAME Animal Colony");
         model.addAttribute("animals", animalRepository.findAll());
         return "colony/index";
     }
 
     @GetMapping("add")
-    public String displayAddAnimalForm(Model model) {
+    public String displayAddAnimalForm(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
         model.addAttribute("title", "Add Entry");
         model.addAttribute(new Animal());
         return "colony/add";
@@ -40,7 +54,11 @@ public class AnimalController {
     }
 
     @GetMapping("edit/{animalId}")
-    public String displayEditAnimalForm(Model model, @PathVariable  int animalId) {
+    public String displayEditAnimalForm(Model model, @PathVariable  int animalId, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
         model.addAttribute("title", "Edit Entry");
         model.addAttribute(animalRepository.findById(animalId).get());
         return "colony/edit";
@@ -71,7 +89,11 @@ public class AnimalController {
     }
 
     @GetMapping("delete")
-    public String displayDeleteAnimalForm(Model model) {
+    public String displayDeleteAnimalForm(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
         model.addAttribute("title", "Delete Entry");
         model.addAttribute("animals", animalRepository.findAll());
         return "colony/delete";
