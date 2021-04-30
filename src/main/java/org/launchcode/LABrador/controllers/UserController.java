@@ -1,9 +1,7 @@
 package org.launchcode.LABrador.controllers;
 
 import org.launchcode.LABrador.data.UserRepository;
-import org.launchcode.LABrador.models.Animal;
 import org.launchcode.LABrador.models.User;
-import org.launchcode.LABrador.models.dto.LoginFormDTO;
 import org.launchcode.LABrador.models.dto.RegisterFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,14 +63,6 @@ public class UserController {
             return "user/edit";
         }
 
-
-
-
-
-
-
-
-
         model.addAttribute("user", userFromSession);
 
         userRepository.findByUsername(userFromSession.getUsername()).setUsername(registerFormDTO.getUsername());
@@ -80,8 +70,6 @@ public class UserController {
         userRepository.findByUsername(userFromSession.getUsername()).setLastName(registerFormDTO.getLastName());
         userRepository.findByUsername(userFromSession.getUsername()).setEmail(registerFormDTO.getEmail());
         userRepository.findByUsername(userFromSession.getUsername()).setLab(registerFormDTO.getLab());
-
-
 
         userRepository.save(userRepository.findByUsername(userFromSession.getUsername()));
         return "redirect:";

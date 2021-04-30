@@ -17,49 +17,58 @@
         <div class="container body-content">
             <form action="/register" method="post">
 
-                <div>
-                    <label>E-Mail Address:</label>
-                    <input th:field="${registerFormDTO.email}"/>
-                    <span th:errors="${registerFormDTO.email}" class="error"></span>
+                <div class="form-group">
+                    <label>E-Mail Address:
+                        <input class="form-control" th:field="${registerFormDTO.email}"/>
+                        <span th:errors="${registerFormDTO.email}" class="error"></span>
+                    </label>
                 </div>
 
-                <div>
-                    <label>First Name:</label>
-                    <input th:field="${registerFormDTO.firstName}"/>
-                    <span th:errors="${registerFormDTO.firstName}" class="error"></span>
+                <div class="form-group">
+                    <label>First Name:
+                        <input class="form-control" th:field="${registerFormDTO.firstName}"/>
+                        <span th:errors="${registerFormDTO.firstName}" class="error"></span>
+                    </label>
                 </div>
 
-                <div>
-                    <label>Last Name:</label>
-                    <input th:field="${registerFormDTO.lastName}"/>
-                    <span th:errors="${registerFormDTO.lastName}" class="error"></span>
+                <div class="form-group">
+                    <label>Last Name:
+                        <input class="form-control" th:field="${registerFormDTO.lastName}"/>
+                        <span th:errors="${registerFormDTO.lastName}" class="error"></span>
+                    </label>
                 </div>
 
-                <div>
-                    <label>Laboratory:</label>
-                    <input th:field="${registerFormDTO.lab}"/>
-                    <span th:errors="${registerFormDTO.lab}" class="error"></span>
+                <div class="form-group">
+                    <label>Laboratory:
+                        <input class="form-control" th:field="${registerFormDTO.lab}"/>
+                        <span th:errors="${registerFormDTO.lab}" class="error"></span>
+                    </label>
                 </div>
 
-                <div>
-                    <label>Desired Username:</label>
-                    <input th:field="${registerFormDTO.username}"/>
-                    <span th:errors="${registerFormDTO.username}" class="error"></span>
+                <div class="form-group">
+                    <label>Desired Username:
+                        <input class="form-control" th:field="${registerFormDTO.username}"/>
+                        <span th:errors="${registerFormDTO.username}" class="error"></span>
+                    </label>
                 </div>
 
-                <div>
-                    <label>Password:</label>
-                    <input th:field="${registerFormDTO.password}" type="password"/>
-                    <span th:errors="${registerFormDTO.password}" class="error"></span>
+                <div class="form-group">
+                    <label>Password:
+                        <input class="form-control" th:field="${registerFormDTO.password}" type="password"/>
+                        <span th:errors="${registerFormDTO.password}" class="error"></span>
+                    </label>
                 </div>
 
-                <div>
-                    <label>Verify Password:</label>
-                    <input th:field="${registerFormDTO.verifyPassword}" type="password"/>
-                    <span th:errors="${registerFormDTO.verifyPassword}" class="error"></span>
+                <div class="form-group">
+                    <label>Verify Password:
+                        <input class="form-control" th:field="${registerFormDTO.verifyPassword}" type="password"/>
+                        <span th:errors="${registerFormDTO.verifyPassword}" class="error"></span>
+                    </label>
                 </div>
 
-                <input type="submit" value="Register"/>
+                <div class="form-group">
+                    <button class="btn btn-success" type="submit" aria-pressed="true">Register</button>
+                </div>
             </form>
         </div>
 

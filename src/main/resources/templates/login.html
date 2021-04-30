@@ -19,19 +19,22 @@
             </div>
 
             <form method="post">
-                <div>
-                    <label>Username:</label>
-                    <input th:field="${loginFormDTO.username}"/>
-                    <span th:errors="${loginFormDTO.username}" class="error"></span>
+                <div class="form-group">
+                    <label>Username:
+                        <input class="form-control" th:field="${loginFormDTO.username}"/>
+                        <span th:errors="${loginFormDTO.username}" class="error"></span>
+                    </label>
                 </div>
 
-                <div>
-                    <label>Password:</label>
-                    <input th:field="${loginFormDTO.password}" type="password"/>
-                    <span th:errors="${loginFormDTO.password}" class="error"></span>
+                <div class="form-group">
+                    <label>Password:
+                        <input class="form-control" th:field="${loginFormDTO.password}" type="password"/>
+                        <span th:errors="${loginFormDTO.password}" class="error"></span>
+                    </label>
                 </div>
-
-                <input type="submit" value="Login"/>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit" aria-pressed="true">Login</button>
+                </div>
             </form>
         </div>
 
