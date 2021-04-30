@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/">
-
-    <head th:fragment="head">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+    <head th:replace="fragmentsHome :: head">
+        <meta charset="UTF-8"/>
+        <title th:text="${user.username}">User</title>
 
         <!-- Bootstrap stylesheets and script -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -10,22 +11,19 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-        <title th:text="'LABrador' + ${title == null ? '' : ' :: ' + title}">LABrador</title>
     </head>
-
     <body>
-        <div th:fragment="page-header">
-            <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
-                <div class="container">
-                    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                            <li class="nav-item">
-                                <a class="navbar-brand" th:href="@{/}">LABrador</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+        <div th:replace="fragmentsHome :: page-header"></div>
+
+        <div class="container body-content">
+            <h2>Your Account Info</h2>
+            <p th:text="'Username: '+ ${user.username}"></p>
+            <p th:text="'Name: '+ ${user.firstName} + ' ' + ${user.lastName}"></p>
+            <p th:text="'Email: '+ ${user.email}"></p>
+            <p th:text="'Affiliated Laboratory: '+ ${user.lab}"></p>
+            <div class="form-group">
+                <a th:href="@{/user/edit}" class="btn btn-primary" role="button" aria-pressed="true">Edit User</a>
+            </div>
         </div>
     </body>
 </html>
