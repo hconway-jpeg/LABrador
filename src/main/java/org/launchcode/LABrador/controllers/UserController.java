@@ -54,24 +54,27 @@ public class UserController {
             return "user/edit";
         }
 
-        User userFind = userRepository.findByUsername(registerFormDTO.getUsername());
         String password = registerFormDTO.getPassword();
-        if(!userFind.isMatchingPassword(password)){
+
+        if(!userFromSession.isMatchingPassword(password)){
             errors.rejectValue("password","password.invalid", "Incorrect password.");
             model.addAttribute("title", "Edit User");
             model.addAttribute("user", userFromSession);
             return "user/edit";
         }
 
-        model.addAttribute("user", userFromSession);
+        User userTmp = userRepository.findByUsername(userFromSession.getUsername());
 
-        userRepository.findByUsername(userFromSession.getUsername()).setUsername(registerFormDTO.getUsername());
-        userRepository.findByUsername(userFromSession.getUsername()).setFirstName(registerFormDTO.getFirstName());
-        userRepository.findByUsername(userFromSession.getUsername()).setLastName(registerFormDTO.getLastName());
-        userRepository.findByUsername(userFromSession.getUsername()).setEmail(registerFormDTO.getEmail());
-        userRepository.findByUsername(userFromSession.getUsername()).setLab(registerFormDTO.getLab());
+        userTmp.setUsername(registerFormDTO.getUsername());
+        userTmp.setFirstName(registerFormDTO.getFirstName());
+        userTmp.setLastName(registerFormDTO.getLastName());
+        userTmp.setEmail(registerFormDTO.getEmail());
+        userTmp.setLab(registerFormDTO.getLab());
 
-        userRepository.save(userRepository.findByUsername(userFromSession.getUsername()));
+        userRepository.save(userTmp);
+
+        model.addAttribute("user", userTmp);
+
         return "redirect:";
     }
 }
