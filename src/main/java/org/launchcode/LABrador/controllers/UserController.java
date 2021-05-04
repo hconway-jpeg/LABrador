@@ -2,8 +2,9 @@ package org.launchcode.LABrador.controllers;
 
 import org.launchcode.LABrador.data.UserRepository;
 import org.launchcode.LABrador.models.User;
-import org.launchcode.LABrador.models.dto.RegisterFormDTO;
+import org.launchcode.LABrador.models.dto.EditFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -21,6 +22,7 @@ public class UserController {
     private AuthenticationController authenticationController;
     @Autowired
     private UserRepository userRepository;
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @GetMapping
     public String displayUserInfo(Model model, HttpServletRequest request) {
@@ -37,14 +39,14 @@ public class UserController {
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
-        model.addAttribute(new RegisterFormDTO());
+        model.addAttribute(new EditFormDTO());
         model.addAttribute("title", "Edit User");
         model.addAttribute(userRepository.findByUsername(userFromSession.getUsername()));
         return "user/edit";
     }
 
     @PostMapping("edit")
-    public String processEditUserForm(@ModelAttribute @Valid RegisterFormDTO registerFormDTO, Errors errors, HttpServletRequest request, Model model) {
+    public String processEditUserForm(@ModelAttribute @Valid EditFormDTO editFormDTO, Errors errors, HttpServletRequest request, Model model) {
 
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
@@ -54,7 +56,7 @@ public class UserController {
             return "user/edit";
         }
 
-        String password = registerFormDTO.getPassword();
+        String password = editFormDTO.getPassword();
 
         if(!userFromSession.isMatchingPassword(password)){
             errors.rejectValue("password","password.invalid", "Incorrect password.");
@@ -65,12 +67,62 @@ public class UserController {
 
         User userTmp = userRepository.findByUsername(userFromSession.getUsername());
 
-        userTmp.setUsername(registerFormDTO.getUsername());
-        userTmp.setFirstName(registerFormDTO.getFirstName());
-        userTmp.setLastName(registerFormDTO.getLastName());
-        userTmp.setEmail(registerFormDTO.getEmail());
-        userTmp.setLab(registerFormDTO.getLab());
+        userTmp.setUsername(editFormDTO.getUsername());
+        userTmp.setFirstName(editFormDTO.getFirstName());
+        userTmp.setLastName(editFormDTO.getLastName());
+        userTmp.setEmail(editFormDTO.getEmail());
+        userTmp.setLab(editFormDTO.getLab());
 
+        userRepository.save(userTmp);
+
+        model.addAttribute("user", userTmp);
+
+        return "redirect:";
+    }
+
+    @GetMapping("password")
+    public String displayNewPasswordForm(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
+        model.addAttribute(new EditFormDTO());
+        model.addAttribute("title", "Edit Password");
+        model.addAttribute(userRepository.findByUsername(userFromSession.getUsername()));
+        return "user/password";
+    }
+
+    @PostMapping("password")
+    public String processNewPasswordForm(@ModelAttribute @Valid EditFormDTO editFormDTO, Errors errors, HttpServletRequest request, Model model) {
+
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+
+        if (errors.hasErrors()) {
+            model.addAttribute("user", userFromSession);
+            return "user/password";
+        }
+
+        String password = editFormDTO.getPassword();
+
+        if(!userFromSession.isMatchingPassword(password)){
+            errors.rejectValue("password","password.invalid", "Incorrect password.");
+            model.addAttribute("title", "Edit Password");
+            model.addAttribute("user", userFromSession);
+            return "user/password";
+        }
+
+        String newPassword = editFormDTO.getNewPassword();
+        String verifyNewPassword = editFormDTO.getVerifyNewPassword();
+        if(!newPassword.equals(verifyNewPassword)){
+            errors.rejectValue("newPassword", "passwords.mismatch", "Passwords do not match.");
+            model.addAttribute("title", "Edit Password");
+            return "user/password";
+        }
+
+        User userTmp = userRepository.findByUsername(userFromSession.getUsername());
+
+        userTmp.setPwHash(encoder.encode(editFormDTO.getNewPassword()));
         userRepository.save(userTmp);
 
         model.addAttribute("user", userTmp);
