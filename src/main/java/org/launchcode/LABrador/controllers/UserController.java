@@ -2,7 +2,9 @@ package org.launchcode.LABrador.controllers;
 
 import org.launchcode.LABrador.data.UserRepository;
 import org.launchcode.LABrador.models.User;
-import org.launchcode.LABrador.models.dto.EditFormDTO;
+import org.launchcode.LABrador.models.dto.DeleteFormDTO;
+import org.launchcode.LABrador.models.dto.PwFormDTO;
+import org.launchcode.LABrador.models.dto.RegisterFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -29,7 +31,6 @@ public class UserController {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
-
         return "user/index";
     }
 
@@ -38,15 +39,14 @@ public class UserController {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
-
-        model.addAttribute(new EditFormDTO());
+        model.addAttribute(new RegisterFormDTO());
         model.addAttribute("title", "Edit User");
         model.addAttribute(userRepository.findByUsername(userFromSession.getUsername()));
         return "user/edit";
     }
 
     @PostMapping("edit")
-    public String processEditUserForm(@ModelAttribute @Valid EditFormDTO editFormDTO, Errors errors, HttpServletRequest request, Model model) {
+    public String processEditUserForm(@ModelAttribute @Valid RegisterFormDTO registerFormDTO, Errors errors, HttpServletRequest request, Model model) {
 
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
@@ -56,8 +56,7 @@ public class UserController {
             return "user/edit";
         }
 
-        String password = editFormDTO.getPassword();
-
+        String password = registerFormDTO.getPassword();
         if(!userFromSession.isMatchingPassword(password)){
             errors.rejectValue("password","password.invalid", "Incorrect password.");
             model.addAttribute("title", "Edit User");
@@ -66,17 +65,14 @@ public class UserController {
         }
 
         User userTmp = userRepository.findByUsername(userFromSession.getUsername());
-
-        userTmp.setUsername(editFormDTO.getUsername());
-        userTmp.setFirstName(editFormDTO.getFirstName());
-        userTmp.setLastName(editFormDTO.getLastName());
-        userTmp.setEmail(editFormDTO.getEmail());
-        userTmp.setLab(editFormDTO.getLab());
-
+        userTmp.setUsername(registerFormDTO.getUsername());
+        userTmp.setFirstName(registerFormDTO.getFirstName());
+        userTmp.setLastName(registerFormDTO.getLastName());
+        userTmp.setEmail(registerFormDTO.getEmail());
+        userTmp.setLab(registerFormDTO.getLab());
         userRepository.save(userTmp);
 
         model.addAttribute("user", userTmp);
-
         return "redirect:";
     }
 
@@ -85,15 +81,14 @@ public class UserController {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
-
-        model.addAttribute(new EditFormDTO());
+        model.addAttribute(new PwFormDTO());
         model.addAttribute("title", "Edit Password");
         model.addAttribute(userRepository.findByUsername(userFromSession.getUsername()));
         return "user/password";
     }
 
     @PostMapping("password")
-    public String processNewPasswordForm(@ModelAttribute @Valid EditFormDTO editFormDTO, Errors errors, HttpServletRequest request, Model model) {
+    public String processNewPasswordForm(@ModelAttribute @Valid PwFormDTO pwFormDTO, Errors errors, HttpServletRequest request, Model model) {
 
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
@@ -103,8 +98,7 @@ public class UserController {
             return "user/password";
         }
 
-        String password = editFormDTO.getPassword();
-
+        String password = pwFormDTO.getPassword();
         if(!userFromSession.isMatchingPassword(password)){
             errors.rejectValue("password","password.invalid", "Incorrect password.");
             model.addAttribute("title", "Edit Password");
@@ -112,21 +106,55 @@ public class UserController {
             return "user/password";
         }
 
-        String newPassword = editFormDTO.getNewPassword();
-        String verifyNewPassword = editFormDTO.getVerifyNewPassword();
+        String newPassword = pwFormDTO.getNewPassword();
+        String verifyNewPassword = pwFormDTO.getVerifyNewPassword();
         if(!newPassword.equals(verifyNewPassword)){
             errors.rejectValue("newPassword", "passwords.mismatch", "Passwords do not match.");
             model.addAttribute("title", "Edit Password");
+            model.addAttribute("user", userFromSession);
             return "user/password";
         }
 
         User userTmp = userRepository.findByUsername(userFromSession.getUsername());
-
-        userTmp.setPwHash(encoder.encode(editFormDTO.getNewPassword()));
+        userTmp.setPwHash(pwFormDTO.getNewPassword());
         userRepository.save(userTmp);
 
         model.addAttribute("user", userTmp);
+        return "redirect:";
+    }
 
+    @GetMapping("delete")
+    public String displayDeleteUserForm(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+        model.addAttribute(new DeleteFormDTO());
+        model.addAttribute("title", "Delete User");
+        model.addAttribute(userRepository.findByUsername(userFromSession.getUsername()));
+        return "user/delete";
+    }
+
+    @PostMapping("delete")
+    public String processDeleteUserForm(@ModelAttribute @Valid DeleteFormDTO deleteFormDTO, Errors errors, HttpServletRequest request, Model model) {
+
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+
+        if (errors.hasErrors()) {
+            model.addAttribute("user", userFromSession);
+            return "user/delete";
+        }
+
+        String password = deleteFormDTO.getPassword();
+        if(!userFromSession.isMatchingPassword(password)){
+            errors.rejectValue("password","password.invalid", "Incorrect password.");
+            model.addAttribute("title", "Delete User");
+            model.addAttribute("user", userFromSession);
+            return "user/delete";
+        }
+
+        User userDel = userRepository.findByUsername(userFromSession.getUsername());
+        userRepository.deleteById(userDel.getId());
         return "redirect:";
     }
 }
