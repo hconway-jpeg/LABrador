@@ -47,7 +47,12 @@
         <div class="form-group">
             <label>
                 Genotype
-                <input class="form-control" th:field="${animal.genotype}">
+                <select th:field="${animal.genotype}">
+                    <option th:each="genotype : ${genotype}"
+                            th:value="${genotype.id}"
+                            th:text="${genotype.name}">
+                    </option>
+                </select>
             </label>
         </div>
         <div class="form-group">

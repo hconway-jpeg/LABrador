@@ -1,6 +1,7 @@
 package org.launchcode.LABrador.controllers;
 
 import org.launchcode.LABrador.data.AnimalRepository;
+import org.launchcode.LABrador.data.GenotypeRepository;
 import org.launchcode.LABrador.models.Animal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,9 @@ public class AnimalController {
     @Autowired
     private AnimalRepository animalRepository;
 
+    @Autowired
+    private GenotypeRepository genotypeRepository;
+
     @GetMapping
     public String displayAllAnimals(Model model) {
         model.addAttribute("title", "LAB_NAME Animal Colony");
@@ -29,6 +33,7 @@ public class AnimalController {
     @GetMapping("add")
     public String displayAddAnimalForm(Model model) {
         model.addAttribute("title", "Add Entry");
+        model.addAttribute("genotype", genotypeRepository.findAll());
         model.addAttribute(new Animal());
         return "colony/add";
     }
@@ -43,6 +48,7 @@ public class AnimalController {
     public String displayEditAnimalForm(Model model, @PathVariable  int animalId) {
         model.addAttribute("title", "Edit Entry");
         model.addAttribute(animalRepository.findById(animalId).get());
+        model.addAttribute("genotype", genotypeRepository.findAll());
         return "colony/edit";
     }
 
@@ -59,7 +65,6 @@ public class AnimalController {
         animalRepository.findById(animalId).get().setCageType(animal.getCageType());
         animalRepository.findById(animalId).get().setSex(animal.getSex());
         animalRepository.findById(animalId).get().setDateOfBirth(animal.getDateOfBirth());
-        animalRepository.findById(animalId).get().setDateOpened(animal.getDateOpened());
         animalRepository.findById(animalId).get().setGenotype(animal.getGenotype());
         animalRepository.findById(animalId).get().setLitter(animal.getLitter());
         animalRepository.findById(animalId).get().setNotes(animal.getNotes());

@@ -22,7 +22,6 @@
                 <th>Type</th>
                 <th>Sex</th>
                 <th>Date of Birth</th>
-                <th>Date Opened</th>
                 <th>Genotype</th>
                 <th>Litter</th>
                 <th>Notes</th>
@@ -37,7 +36,7 @@
                 <td th:text="${animal.cageType}">Tag</td>
                 <td th:text="${animal.sex}">Tag</td>
                 <td th:text="${animal.dateOfBirth}">Tag</td>
-                <td th:text="${animal.genotype}">Tag</td>
+                <td th:text="${animal.genotype.name}">Tag</td>
                 <td th:text="${animal.litter}">Tag</td>
                 <td th:text="${animal.notes}">Tag</td>
                 <td>

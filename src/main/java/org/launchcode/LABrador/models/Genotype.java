@@ -10,26 +10,26 @@ import java.util.List;
 public class Genotype extends AbstractEntity {
 
     @NotBlank
-    private String genotype;
+    private String name;
 
     @OneToMany(mappedBy = "genotype")
-    private final List<Animal> animalsOne = new ArrayList<>();
+    private final List<Animal> animals = new ArrayList<>();
 
     public Genotype() {}
 
-    public Genotype(@NotBlank String genotype) {
-        this.genotype = genotype;
+    public Genotype(@NotBlank String name) {
+        this.name = name;
     }
 
-    public String getGenotype() {
-        return genotype;
+    public String getName() {
+        return name;
     }
-    public void setGenotype(String genotype) {
-        this.genotype = genotype;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public List<Animal> getAnimalsOne() {
-        return animalsOne;
+    public List<Animal> getAnimals() {
+        return animals;
     }
 
 }

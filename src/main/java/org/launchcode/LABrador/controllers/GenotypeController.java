@@ -37,5 +37,11 @@ public class GenotypeController {
         return "redirect:";
     }
 
+//    @GetMapping("edit")
+//    @PostMapping("edit")
+
+//    @GetMapping("delete")
+//    @PostMapping("delete")
+
 
 }
