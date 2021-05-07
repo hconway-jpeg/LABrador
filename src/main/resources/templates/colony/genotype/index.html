@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragmentsColony :: head">
+    <meta charset="UTF-8"/>
+    <title>Lab Genotypes</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div th:replace="fragmentsColony :: page-header"></div>
+
+<div class="container body-content">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Genotypes</th>
+        </tr>
+        </thead>
+
+        <tr th:each="genotype : ${genotype}">
+            <td th:text="${genotype.genotype}"></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

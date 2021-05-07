@@ -1,8 +1,7 @@
 package org.launchcode.LABrador.models;
 
 import javax.persistence.Entity;
-import java.util.Date;
-import java.util.Objects;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Animal extends AbstractEntity {
@@ -12,24 +11,23 @@ public class Animal extends AbstractEntity {
     private String cageType;
     private String sex;
     private String dateOfBirth;
-    private String dateOpened;
-    private String genotypeOne;
-    private String genotypeTwo;
+
+    @ManyToOne
+    private Genotype genotype;
+
     private String litter;
     private String notes;
 
     public Animal() { }
 
-    public Animal(String tag, String cageNumber, String cageType, String sex, String dateOpened, String dateOfBirth, String genotypeOne, String genotypeTwo, String litter, String notes) {
+    public Animal(String tag, String cageNumber, String cageType, String sex, String dateOfBirth, Genotype genotype, String litter, String notes) {
         super();
         this.tag = tag;
         this.cageNumber = cageNumber;
         this.cageType = cageType;
         this.sex = sex;
-        this.dateOpened = dateOpened;
         this.dateOfBirth = dateOfBirth;
-        this.genotypeOne = genotypeOne;
-        this.genotypeTwo = genotypeTwo;
+        this.genotype = genotype;
         this.litter = litter;
         this.notes = notes;
     }
@@ -62,13 +60,6 @@ public class Animal extends AbstractEntity {
         this.sex = sex;
     }
 
-    public String getDateOpened() {
-        return dateOpened;
-    }
-    public void setDateOpened(String dateOpened) {
-        this.dateOpened = dateOpened;
-    }
-
     public String getDateOfBirth() {
         return dateOfBirth;
     }
@@ -76,18 +67,11 @@ public class Animal extends AbstractEntity {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getGenotypeOne() {
-        return genotypeOne;
+    public Genotype getGenotype() {
+        return genotype;
     }
-    public void setGenotypeOne(String genotypeOne) {
-        this.genotypeOne = genotypeOne;
-    }
-
-    public String getGenotypeTwo() {
-        return genotypeTwo;
-    }
-    public void setGenotypeTwo(String genotypeTwo) {
-        this.genotypeTwo = genotypeTwo;
+    public void setGenotype(Genotype genotype) {
+        this.genotype = genotype;
     }
 
     public String getLitter() {

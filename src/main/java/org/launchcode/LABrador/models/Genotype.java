@@ -13,9 +13,9 @@ public class Genotype extends AbstractEntity {
     private String genotype;
 
     @OneToMany(mappedBy = "genotype")
-    private final List<Animal> animals = new ArrayList<>();
+    private final List<Animal> animalsOne = new ArrayList<>();
 
-    public Genotype () {}
+    public Genotype() {}
 
     public Genotype(@NotBlank String genotype) {
         this.genotype = genotype;
@@ -28,7 +28,8 @@ public class Genotype extends AbstractEntity {
         this.genotype = genotype;
     }
 
-    public List<Animal> getAnimals() {
-        return animals;
+    public List<Animal> getAnimalsOne() {
+        return animalsOne;
     }
+
 }

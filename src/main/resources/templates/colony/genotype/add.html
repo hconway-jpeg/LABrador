@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragmentsColony :: head">
+    <meta charset="UTF-8"/>
+    <title>Add Genotype</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body class="container  body-content">
+<nav th:replace="fragmentsColony :: page-header"></nav>
+
+<h1>Add Animal</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label>
+            Genotype
+            <input class="form-control" th:field="${genotype.genotype}">
+        </label>
+    </div>
+    <div class="form-group">
+        <input class="btn btn-success" type="submit" value="Add Entry">
+    </div>
+</form>
+
+</body>
+</html>

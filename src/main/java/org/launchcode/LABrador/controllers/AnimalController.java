@@ -60,8 +60,7 @@ public class AnimalController {
         animalRepository.findById(animalId).get().setSex(animal.getSex());
         animalRepository.findById(animalId).get().setDateOfBirth(animal.getDateOfBirth());
         animalRepository.findById(animalId).get().setDateOpened(animal.getDateOpened());
-        animalRepository.findById(animalId).get().setGenotypeOne(animal.getGenotypeOne());
-        animalRepository.findById(animalId).get().setGenotypeTwo(animal.getGenotypeTwo());
+        animalRepository.findById(animalId).get().setGenotype(animal.getGenotype());
         animalRepository.findById(animalId).get().setLitter(animal.getLitter());
         animalRepository.findById(animalId).get().setNotes(animal.getNotes());
 
