@@ -3,6 +3,7 @@ package org.launchcode.LABrador.controllers;
 import org.launchcode.LABrador.data.AnimalRepository;
 import org.launchcode.LABrador.models.Animal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -40,7 +41,7 @@ public class AnimalController {
     }
 
     @GetMapping("edit/{animalId}")
-    public String displayEditAnimalForm(Model model, @PathVariable  int animalId) {
+    public String displayEditAnimalForm(Model model, @PathVariable int animalId) {
         model.addAttribute("title", "Edit Entry");
         model.addAttribute(animalRepository.findById(animalId).get());
         return "colony/edit";
@@ -86,4 +87,66 @@ public class AnimalController {
         }
         return "redirect:";
     }
+
+    @GetMapping("tag")
+    public String sortByTag(Model model) {
+        model.addAttribute("title", "tag sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by("tag")));
+        return "colony/index";
+    }
+
+    @GetMapping("cagenumber")
+    public String sortByCageNumber(Model model) {
+        model.addAttribute("title", "cage number sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by("cageNumber")));
+        return "colony/index";
+    }
+
+    @GetMapping("cagetype")
+    public String sortByCageType(Model model) {
+        model.addAttribute("title", "cage type sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by("cageType")));
+        return "colony/index";
+    }
+
+    @GetMapping("sex")
+    public String sortBySex(Model model) {
+        model.addAttribute("title", "sex sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by("sex")));
+        return "colony/index";
+    }
+
+    @GetMapping("dateofbirth")
+    public String sortByDateOfBirth(Model model) {
+        model.addAttribute("title", "date of birth sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by("dateOfBirth")));
+        return "colony/index";
+    }
+
+    @GetMapping("dateopened")
+    public String sortByDateOpened(Model model) {
+        model.addAttribute("title", "date opened sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by("dateOpened")));
+        return "colony/index";
+    }
+
+    @GetMapping("genotype1")
+    public String sortBygenotype1(Model model) {
+        model.addAttribute("title", "genotype one sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by("genotypeOne")));
+        return "colony/index";
+    }
+
+    @GetMapping("genotype2")
+    public String sortBygenotype2(Model model) {
+        model.addAttribute("title", "genotype two sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by("genotypeTwo")));
+        return "colony/index";
+    }
+    @GetMapping("litter")
+    public String sortBLitter(Model model) {
+        model.addAttribute("title", "litter sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by("litter")));
+        return "colony/index";
+}
 }
