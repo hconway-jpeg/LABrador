@@ -56,6 +56,14 @@ public class UserController {
             return "user/edit";
         }
 
+        User userExists = userRepository.findByUsername(registerFormDTO.getUsername());
+        if(userExists != null){
+            errors.rejectValue("username", "username.alreadyexists", "A user with that username already exists.");
+            model.addAttribute("title", "Edit User");
+            model.addAttribute("user", userFromSession);
+            return "user/edit";
+        }
+
         String password = registerFormDTO.getPassword();
         if(!userFromSession.isMatchingPassword(password)){
             errors.rejectValue("password","password.invalid", "Incorrect password.");
