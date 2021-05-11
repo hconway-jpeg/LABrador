@@ -102,7 +102,7 @@ public class AnimalController {
         return "colony/index";
     }
 
-    @GetMapping("cagetype")
+    @GetMapping("type")
     public String sortByCageType(Model model) {
         model.addAttribute("title", "cage type sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by("cageType")));
