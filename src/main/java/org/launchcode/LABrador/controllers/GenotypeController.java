@@ -1,14 +1,15 @@
 package org.launchcode.LABrador.controllers;
 
+import org.launchcode.LABrador.data.AnimalRepository;
 import org.launchcode.LABrador.data.GenotypeRepository;
+import org.launchcode.LABrador.models.Animal;
 import org.launchcode.LABrador.models.Genotype;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("colony/genotype")
@@ -17,10 +18,14 @@ public class GenotypeController {
     @Autowired
     private GenotypeRepository genotypeRepository;
 
+    @Autowired
+    private AnimalRepository animalRepository;
+
     @GetMapping
-    public String displayAllGenotypes(Model model) {
+    public String displayAllGenotypes(Model model, @RequestParam(required = false) int[] genotypeIds) {
         model.addAttribute("title", "Lab Genotypes");
         model.addAttribute("genotype", genotypeRepository.findAll());
+
         return "colony/genotype/index";
     }
 
@@ -41,7 +46,17 @@ public class GenotypeController {
 //    @PostMapping("edit")
 
 //    @GetMapping("delete")
-//    @PostMapping("delete")
+    @PostMapping
+    public String processDeleteGenotypeForm(@RequestParam(required = false) int[] genotypeIds) {
+        if (genotypeIds != null) {
+            for (int id : genotypeIds) {
+                //need to delete from animal first! will keep throwing error until then.
+                genotypeRepository.deleteById(id);
+            }
+        }
+        return "redirect:";
+    }
+
 
 
 }

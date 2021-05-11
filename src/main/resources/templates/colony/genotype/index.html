@@ -18,17 +18,26 @@
 </div>
 
 <div class="container body-content">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Genotypes</th>
-        </tr>
-        </thead>
+    <form method="post">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Genotypes</th>
+                <th>Delete?</th>
+            </tr>
+            </thead>
 
-        <tr th:each="genotype : ${genotype}">
-            <td th:text="${genotype.name}"></td>
-        </tr>
-    </table>
+            <tr th:each="genotype : ${genotype}">
+                <td th:text="${genotype.name}"></td>
+                <td>
+                    <input type="checkbox" th:value="${genotype.id}" name="genotypeIds">
+                </td>
+            </tr>
+        </table>
+
+        <input class="btn btn-danger" type="submit" value="Confirm Delete">
+
+    </form>
 </div>
 
 </body>
