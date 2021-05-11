@@ -11,6 +11,11 @@
 <body>
 
 <div th:replace="fragmentsColony :: page-header"></div>
+<div class="navbar-header">
+    <ul class="nav navbar-nav">
+        <li><a th:href="@{/colony/genotype/add}">Add Genotype</a></li>
+    </ul>
+</div>
 
 <div class="container body-content">
     <table class="table table-striped">
