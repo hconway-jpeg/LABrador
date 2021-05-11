@@ -25,7 +25,6 @@ public class GenotypeController {
     public String displayAllGenotypes(Model model, @RequestParam(required = false) int[] genotypeIds) {
         model.addAttribute("title", "Lab Genotypes");
         model.addAttribute("genotype", genotypeRepository.findAll());
-
         return "colony/genotype/index";
     }
 
@@ -45,16 +44,18 @@ public class GenotypeController {
 //    @GetMapping("edit")
 //    @PostMapping("edit")
 
-//    @GetMapping("delete")
     @PostMapping
-    public String processDeleteGenotypeForm(@RequestParam(required = false) int[] genotypeIds) {
+    public String processDeleteGenotypeForm(Model model, @RequestParam(required = false) int[] genotypeIds) {
         if (genotypeIds != null) {
             for (int id : genotypeIds) {
                 //need to delete from animal first! will keep throwing error until then.
+
                 genotypeRepository.deleteById(id);
             }
         }
-        return "redirect:";
+        model.addAttribute("title", "Lab Genotypes");
+        model.addAttribute("genotype", genotypeRepository.findAll());
+        return "colony/genotype/index";
     }
 
 
