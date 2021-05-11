@@ -12,7 +12,6 @@ public class Animal extends AbstractEntity {
     private String cageType;
     private String sex;
     private String dateOfBirth;
-    private String dateOpened;
     private String genotypeOne;
     private String genotypeTwo;
     private String litter;
@@ -20,13 +19,12 @@ public class Animal extends AbstractEntity {
 
     public Animal() { }
 
-    public Animal(String tag, String cageNumber, String cageType, String sex, String dateOpened, String dateOfBirth, String genotypeOne, String genotypeTwo, String litter, String notes) {
+    public Animal(String tag, String cageNumber, String cageType, String sex, String dateOfBirth, String genotypeOne, String genotypeTwo, String litter, String notes) {
         super();
         this.tag = tag;
         this.cageNumber = cageNumber;
         this.cageType = cageType;
         this.sex = sex;
-        this.dateOpened = dateOpened;
         this.dateOfBirth = dateOfBirth;
         this.genotypeOne = genotypeOne;
         this.genotypeTwo = genotypeTwo;
@@ -60,13 +58,6 @@ public class Animal extends AbstractEntity {
     }
     public void setSex(String sex) {
         this.sex = sex;
-    }
-
-    public String getDateOpened() {
-        return dateOpened;
-    }
-    public void setDateOpened(String dateOpened) {
-        this.dateOpened = dateOpened;
     }
 
     public String getDateOfBirth() {

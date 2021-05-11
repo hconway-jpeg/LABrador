@@ -79,7 +79,6 @@ public class AnimalController {
         animalTmp.setCageType(animal.getCageType());
         animalTmp.setSex(animal.getSex());
         animalTmp.setDateOfBirth(animal.getDateOfBirth());
-        animalTmp.setDateOpened(animal.getDateOpened());
         animalTmp.setGenotypeOne(animal.getGenotypeOne());
         animalTmp.setGenotypeTwo(animal.getGenotypeTwo());
         animalTmp.setLitter(animal.getLitter());
