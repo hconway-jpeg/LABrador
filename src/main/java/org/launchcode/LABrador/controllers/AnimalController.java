@@ -89,24 +89,19 @@ public class AnimalController {
         return "redirect:../";
     }
 
-    @GetMapping("delete")
-    public String displayDeleteAnimalForm(Model model, HttpServletRequest request) {
+    @PostMapping
+    public String processDeleteAnimalForm(Model model, HttpServletRequest request, @RequestParam(required = false) int[] animalIds) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
-        model.addAttribute("title", "Delete Entry");
-        model.addAttribute("animals", animalRepository.findAll());
-        return "colony/delete";
-    }
-
-    @PostMapping("delete")
-    public String processDeleteAnimalForm(@RequestParam(required = false) int[] animalIds) {
         if (animalIds != null) {
             for (int id : animalIds) {
                 animalRepository.deleteById(id);
             }
         }
-        return "redirect:";
+        model.addAttribute("title", "LAB_NAME Animal Colony");
+        model.addAttribute("animals", animalRepository.findAll());
+        return "colony/index";
     }
 }
