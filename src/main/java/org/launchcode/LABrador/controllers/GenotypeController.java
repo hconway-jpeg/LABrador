@@ -41,9 +41,6 @@ public class GenotypeController {
         return "redirect:";
     }
 
-//    @GetMapping("edit")
-//    @PostMapping("edit")
-
     @PostMapping
     public String processDeleteGenotypeForm(Model model, @RequestParam(required = false) int[] genotypeIds) {
         if (genotypeIds != null) {
