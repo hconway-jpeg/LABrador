@@ -11,8 +11,6 @@
 <body class="container  body-content">
 <nav th:replace="fragmentsColony :: page-header"></nav>
 
-<h1>Add Animal</h1>
-
 <form method="post">
     <div class="form-group">
         <label>
@@ -24,6 +22,18 @@
         <input class="btn btn-success" type="submit" value="Add Entry">
     </div>
 </form>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Genotypes</th>
+    </tr>
+    </thead>
+
+    <tr th:each="genotype : ${genotypes}">
+        <td th:text="${genotype.name}"></td>
+    </tr>
+</table>
 
 </body>
 </html>

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Id;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Optional;
 
 @Controller
@@ -31,6 +33,7 @@ public class GenotypeController {
     @GetMapping("add")
     public String displayAddGenotypeForm(Model model) {
         model.addAttribute("title", "Lab Genotypes");
+        model.addAttribute("genotypes", genotypeRepository.findAll());
         model.addAttribute(new Genotype());
         return "colony/genotype/add";
     }
@@ -43,11 +46,18 @@ public class GenotypeController {
 
     @PostMapping
     public String processDeleteGenotypeForm(Model model, @RequestParam(required = false) int[] genotypeIds) {
+        //IF genotype is NOT IN USE by an animal, then delete
+        //ELSE display "cannot delete genotype that's in use" etc.
+        Iterable<Animal> animals = animalRepository.findAll();
         if (genotypeIds != null) {
-            for (int id : genotypeIds) {
-                //need to delete from animal first! will keep throwing error until then.
-
-                genotypeRepository.deleteById(id);
+            for (Animal animal : animals) {
+                for (int id : genotypeIds) {
+                    if (animal.genotype.getId().compareTo(id) == 0) {
+                        animal.setGenotype(null);
+                        animalRepository.save(animal);
+                    }
+                    genotypeRepository.deleteById(id);
+                }
             }
         }
         model.addAttribute("title", "Lab Genotypes");

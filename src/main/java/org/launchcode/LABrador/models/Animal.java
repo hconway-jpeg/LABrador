@@ -13,7 +13,7 @@ public class Animal extends AbstractEntity {
     private String dateOfBirth;
 
     @ManyToOne
-    private Genotype genotype;
+    public Genotype genotype;
 
     private String litter;
     private String notes;
