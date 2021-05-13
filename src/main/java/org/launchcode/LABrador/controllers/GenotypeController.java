@@ -46,18 +46,16 @@ public class GenotypeController {
 
     @PostMapping
     public String processDeleteGenotypeForm(Model model, @RequestParam(required = false) int[] genotypeIds) {
-        //IF genotype is NOT IN USE by an animal, then delete
-        //ELSE display "cannot delete genotype that's in use" etc.
         Iterable<Animal> animals = animalRepository.findAll();
         if (genotypeIds != null) {
-            for (Animal animal : animals) {
-                for (int id : genotypeIds) {
+            for (int id : genotypeIds) {
+                for (Animal animal : animals) {
                     if (animal.genotype.getId().compareTo(id) == 0) {
                         animal.setGenotype(null);
                         animalRepository.save(animal);
                     }
-                    genotypeRepository.deleteById(id);
                 }
+                genotypeRepository.deleteById(id);
             }
         }
         model.addAttribute("title", "Lab Genotypes");
