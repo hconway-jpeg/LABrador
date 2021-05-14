@@ -123,12 +123,6 @@ public class AnimalController {
         return "colony/index";
     }
 
-    @GetMapping("dateopened")
-    public String sortByDateOpened(Model model) {
-        model.addAttribute("title", "date opened sort");
-        model.addAttribute("animals", animalRepository.findAll(Sort.by("dateOpened")));
-        return "colony/index";
-    }
 
     @GetMapping("genotype1")
     public String sortBygenotype1(Model model) {
