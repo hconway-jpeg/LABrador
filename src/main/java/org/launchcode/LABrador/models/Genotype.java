@@ -9,7 +9,6 @@ import java.util.List;
 @Entity
 public class Genotype extends AbstractEntity {
 
-    @NotBlank
     private String name;
 
     @OneToMany(mappedBy = "genotype")
@@ -17,7 +16,7 @@ public class Genotype extends AbstractEntity {
 
     public Genotype() {}
 
-    public Genotype(@NotBlank String name) {
+    public Genotype(String name) {
         this.name = name;
     }
 

@@ -47,7 +47,10 @@ public class GenotypeController {
     @PostMapping
     public String processDeleteGenotypeForm(Model model, @RequestParam(required = false) int[] genotypeIds) {
         Iterable<Animal> animals = animalRepository.findAll();
-        Genotype nullGenotype = new Genotype("");
+        Genotype nullGenotype = new Genotype(null);
+        //check if null exists, if so don't create more.
+        //don't allow to repeat genotypes?
+        genotypeRepository.save(nullGenotype);
         if (genotypeIds != null) {
             for (int id : genotypeIds) {
                 for (Animal animal : animals) {
