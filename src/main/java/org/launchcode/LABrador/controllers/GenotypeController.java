@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.Id;
 import javax.persistence.criteria.CriteriaBuilder;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -40,7 +41,14 @@ public class GenotypeController {
 
     @PostMapping("add")
     public String processAddGenotypeForm(@ModelAttribute Genotype newGenotype, Model model) {
-        genotypeRepository.save(newGenotype);
+        //don't allow to repeat genotypes
+        Iterable<Genotype> genotypes = genotypeRepository.findAll();
+        for (Genotype genotype : genotypes) {
+            if (!newGenotype.equals(genotype)) {
+                genotypeRepository.save(newGenotype);
+            }
+        }
+        //this doesn't work yet**
         return "redirect:";
     }
 
@@ -48,9 +56,9 @@ public class GenotypeController {
     public String processDeleteGenotypeForm(Model model, @RequestParam(required = false) int[] genotypeIds) {
         Iterable<Animal> animals = animalRepository.findAll();
         Genotype nullGenotype = new Genotype(null);
-        //check if null exists, if so don't create more.
-        //don't allow to repeat genotypes?
         genotypeRepository.save(nullGenotype);
+
+        //check if null exists, if so don't create more.
         if (genotypeIds != null) {
             for (int id : genotypeIds) {
                 for (Animal animal : animals) {
