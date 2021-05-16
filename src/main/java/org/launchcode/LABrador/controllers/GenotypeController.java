@@ -53,9 +53,11 @@ public class GenotypeController {
     public String processDeleteGenotypeForm(Model model, @RequestParam(required = false) int[] genotypeIds) {
         Iterable<Animal> animals = animalRepository.findAll();
 
-        //check if null exists, if so don't create more.
         Genotype nullGenotype = new Genotype(null);
-        genotypeRepository.save(nullGenotype);
+        Genotype existingGenotype = genotypeRepository.findByName(null);
+            if (existingGenotype == null) {
+                genotypeRepository.save(nullGenotype);
+            }
 
         if (genotypeIds != null) {
             for (int id : genotypeIds) {
