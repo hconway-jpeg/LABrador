@@ -16,6 +16,7 @@
         <label>
             Genotype
             <input class="form-control" th:field="${genotype.name}">
+            <span th:errors="${genotype.name}" class="error"></span>
         </label>
     </div>
     <div class="form-group">
@@ -30,7 +31,7 @@
     </tr>
     </thead>
 
-    <tr th:each="genotype : ${genotypes}">
+    <tr th:each="genotype : ${genotypes}" th:if="${genotype.name != null}">
         <td th:text="${genotype.name}"></td>
     </tr>
 </table>
