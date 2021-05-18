@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.text.html.Option;
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("colony")
@@ -82,7 +80,8 @@ public class AnimalController {
         animalTmp.setGenotypeOne(animal.getGenotypeOne());
         animalTmp.setGenotypeTwo(animal.getGenotypeTwo());
         animalTmp.setLitter(animal.getLitter());
-        animalTmp.setNotes(animal.getNotes());
+        animalTmp.setNotesTitle(animal.getNotesTitle());
+        animalTmp.setNotesDescription(animal.getNotesDescription());
 
         animalRepository.save(animalTmp);
 

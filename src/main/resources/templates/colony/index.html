@@ -38,7 +38,9 @@
                     <td th:text="${animal.genotypeOne}">Tag</td>
                     <td th:text="${animal.genotypeTwo}">Tag</td>
                     <td th:text="${animal.litter}">Tag</td>
-                    <td th:text="${animal.notes}">Tag</td>
+                    <td>
+                        <a href="#" class="text-dark" data-toggle="popover" data-placement="bottom" data-trigger="focus" th:data-content="${animal.notesDescription}" th:text="${animal.notesTitle}"></a>
+                    </td>
                     <td>
                         <input type="checkbox" name="animalIds" th:value="${animal.id}">
                     </td>
@@ -53,6 +55,10 @@
 
         </form>
     </div>
-
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
 </body>
 </html>
