@@ -1,6 +1,7 @@
 package org.launchcode.LABrador.models;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Animal extends AbstractEntity {
@@ -13,12 +14,15 @@ public class Animal extends AbstractEntity {
     private String genotypeOne;
     private String genotypeTwo;
     private String litter;
-    private String notesTitle;
+
+    @Size(max = 30, message = "Keyword is too long.")
+    private String notesKeyword;
+    @Size(max = 250, message = "Description is too long.")
     private String notesDescription;
 
     public Animal() { }
 
-    public Animal(String tag, String cageNumber, String cageType, String sex, String dateOfBirth, String genotypeOne, String genotypeTwo, String litter, String notesTitle, String notesDescription) {
+    public Animal(String tag, String cageNumber, String cageType, String sex, String dateOfBirth, String genotypeOne, String genotypeTwo, String litter, String notesKeyword, String notesDescription) {
         super();
         this.tag = tag;
         this.cageNumber = cageNumber;
@@ -28,7 +32,7 @@ public class Animal extends AbstractEntity {
         this.genotypeOne = genotypeOne;
         this.genotypeTwo = genotypeTwo;
         this.litter = litter;
-        this.notesTitle = notesTitle;
+        this.notesKeyword = notesKeyword;
         this.notesDescription = notesDescription;
     }
 
@@ -88,11 +92,11 @@ public class Animal extends AbstractEntity {
         this.litter = litter;
     }
 
-    public String getNotesTitle() {return notesTitle;}
-    public void setNotesTitle(String notesTitle) {this.notesTitle = notesTitle;}
+    public String getNotesKeyword() {return notesKeyword;}
+    public void setNotesKeyword(String notesKeyword) {this.notesKeyword = notesKeyword;}
 
     public String getNotesDescription() {return notesDescription;}
-    public void setNotesDescription(String notesBody) {this.notesDescription = notesBody;}
+    public void setNotesDescription(String notesDescription) {this.notesDescription = notesDescription;}
 
     @Override
     public String toString() {

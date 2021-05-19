@@ -69,14 +69,16 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>
-                                    Title
-                                    <input class="form-control" th:field="${animal.notesTitle}">
+                                    Keyword
+                                    <input class="form-control" th:field="${animal.notesKeyword}">
+                                    <span th:errors="${animal.notesKeyword}" class="error"></span>
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label>
                                     Description
                                     <textarea class="form-control col-xs-12" rows="5" cols="40" style="min-width: 100%" th:field="${animal.notesDescription}"></textarea>
+                                    <span th:errors="${animal.notesDescription}" class="error"></span>
                                 </label>
                             </div>
                         </div>

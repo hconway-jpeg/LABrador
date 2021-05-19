@@ -46,7 +46,23 @@ public class AnimalController {
     }
 
     @PostMapping("add")
-    public String processAddAnimalForm(@ModelAttribute Animal newAnimal, Model model) {
+    public String processAddAnimalForm(@ModelAttribute @Valid Animal newAnimal, Errors errors, HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+
+        if (errors.hasErrors()) {
+            model.addAttribute("user", userFromSession);
+            model.addAttribute("title", "Add Entry");
+            return "colony/add";
+        }
+
+        if (!newAnimal.getNotesDescription().isEmpty() && newAnimal.getNotesKeyword().isEmpty() ) {
+            errors.rejectValue("notesKeyword", "notesKeyword.isblank", "Must enter a keyword.");
+            model.addAttribute("user", userFromSession);
+            model.addAttribute("title", "Add Entry");
+            return "colony/add";
+        }
+
         animalRepository.save(newAnimal);
         return "redirect:";
     }
@@ -63,9 +79,19 @@ public class AnimalController {
     }
 
     @PostMapping("edit/{animalId}")
-    public String processEditAnimalForm(@ModelAttribute @Valid Animal animal, Model model, Errors errors, @PathVariable int animalId) {
+    public String processEditAnimalForm(@ModelAttribute @Valid Animal animal, Errors errors, HttpServletRequest request, Model model, @PathVariable int animalId) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
 
         if (errors.hasErrors()) {
+            model.addAttribute("user", userFromSession);
+            model.addAttribute("title", "Edit Entry");
+            return "colony/edit";
+        }
+
+        if (!animal.getNotesDescription().isEmpty() && animal.getNotesKeyword().isEmpty() ) {
+            errors.rejectValue("notesKeyword", "notesKeyword.isblank", "Must enter a keyword.");
+            model.addAttribute("user", userFromSession);
             model.addAttribute("title", "Edit Entry");
             return "colony/edit";
         }
@@ -80,7 +106,7 @@ public class AnimalController {
         animalTmp.setGenotypeOne(animal.getGenotypeOne());
         animalTmp.setGenotypeTwo(animal.getGenotypeTwo());
         animalTmp.setLitter(animal.getLitter());
-        animalTmp.setNotesTitle(animal.getNotesTitle());
+        animalTmp.setNotesKeyword(animal.getNotesKeyword());
         animalTmp.setNotesDescription(animal.getNotesDescription());
 
         animalRepository.save(animalTmp);

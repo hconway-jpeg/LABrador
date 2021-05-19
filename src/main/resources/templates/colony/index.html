@@ -39,7 +39,7 @@
                     <td th:text="${animal.genotypeTwo}">Tag</td>
                     <td th:text="${animal.litter}">Tag</td>
                     <td>
-                        <a href="#" class="text-dark" data-toggle="popover" data-placement="bottom" data-trigger="focus" th:data-content="${animal.notesDescription}" th:text="${animal.notesTitle}"></a>
+                        <a href="#" class="text-dark" data-toggle="popover" data-placement="bottom" data-trigger="focus" th:data-content="${animal.notesDescription}" th:text="${animal.notesKeyword}"></a>
                     </td>
                     <td>
                         <input type="checkbox" name="animalIds" th:value="${animal.id}">
