@@ -52,13 +52,13 @@ public class GenotypeController {
     @PostMapping
     public String processDeleteGenotypeForm(Model model, @RequestParam(required = false) int[] genotypeIds) {
         Iterable<Animal> animals = animalRepository.findAll();
-        String blankGenotype = genotypeRepository.findByName("").getName();
+        Genotype blankGenotype = genotypeRepository.findByName("");
 
         if (genotypeIds != null) {
             for (int id : genotypeIds) {
                 for (Animal animal : animals) {
                     if (animal.genotype.getId().compareTo(id) == 0) {
-                        animal.genotype.setName(blankGenotype);
+                        animal.setGenotype(blankGenotype);
                         animalRepository.save(animal);
                     }
                 }
