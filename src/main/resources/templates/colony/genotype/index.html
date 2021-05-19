@@ -29,7 +29,7 @@
             </tr>
             </thead>
 
-            <tr th:each="genotype : ${genotype}" th:if="${genotype.name != null}">
+            <tr th:each="genotype : ${genotype}" th:if="${genotype.name != ''}">
                 <td th:text="${genotype.name}"></td>
                 <td>
                     <input type="checkbox" th:value="${genotype.id}" name="genotypeIds">

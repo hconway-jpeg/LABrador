@@ -28,6 +28,12 @@ public class AnimalController {
     public String displayAllAnimals(Model model) {
         model.addAttribute("title", "LAB_NAME Animal Colony");
         model.addAttribute("animals", animalRepository.findAll());
+
+        if (genotypeRepository.findByName("") == null) {
+            Genotype blankGenotype = new Genotype("");
+            genotypeRepository.save(blankGenotype);
+        }
+
         return "colony/index";
     }
 

@@ -37,8 +37,8 @@ public class GenotypeController {
 
     @PostMapping("add")
     public String processAddGenotypeForm(@ModelAttribute Genotype newGenotype, Model model, Errors errors) {
-
         Genotype existingGenotype = genotypeRepository.findByName(newGenotype.getName());
+
         if (existingGenotype != null) {
             errors.rejectValue("name", "name.alreadyexists", "Already exists!");
             model.addAttribute("title", "Lab Genotypes");
@@ -53,17 +53,11 @@ public class GenotypeController {
     public String processDeleteGenotypeForm(Model model, @RequestParam(required = false) int[] genotypeIds) {
         Iterable<Animal> animals = animalRepository.findAll();
 
-        Genotype nullGenotype = new Genotype(null);
-        Genotype existingGenotype = genotypeRepository.findByName(null);
-            if (existingGenotype == null) {
-                genotypeRepository.save(nullGenotype);
-            }
-
         if (genotypeIds != null) {
             for (int id : genotypeIds) {
                 for (Animal animal : animals) {
                     if (animal.genotype.getId().compareTo(id) == 0) {
-                        animal.setGenotype(nullGenotype);
+                        animal.genotype.setName(genotypeRepository.findByName("").getName());
                         animalRepository.save(animal);
                     }
                 }
