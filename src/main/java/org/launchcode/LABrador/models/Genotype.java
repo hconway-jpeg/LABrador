@@ -10,7 +10,7 @@ import java.util.Objects;
 @Entity
 public class Genotype extends AbstractEntity {
 
-    private String name;
+    private String name = null;
 
     @OneToMany(mappedBy = "genotype")
     private final List<Animal> animals = new ArrayList<>();
