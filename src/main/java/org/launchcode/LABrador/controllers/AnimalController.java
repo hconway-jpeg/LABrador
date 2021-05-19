@@ -29,16 +29,16 @@ public class AnimalController {
         model.addAttribute("title", "LAB_NAME Animal Colony");
         model.addAttribute("animals", animalRepository.findAll());
 
-        if (genotypeRepository.findByName("") == null) {
-            Genotype blankGenotype = new Genotype("");
-            genotypeRepository.save(blankGenotype);
-        }
-
         return "colony/index";
     }
 
     @GetMapping("add")
     public String displayAddAnimalForm(Model model) {
+        if (genotypeRepository.findByName("") == null) {
+            Genotype blankGenotype = new Genotype("");
+            genotypeRepository.save(blankGenotype);
+        }
+
         model.addAttribute("title", "Add Entry");
         model.addAttribute("genotype", genotypeRepository.findAll());
         model.addAttribute(new Animal());
