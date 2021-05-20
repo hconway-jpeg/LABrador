@@ -25,22 +25,7 @@
                     <th>Delete?</th>
                     <th></th>
                 </tr>
-    <div class="container body-content">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tag</th>
-                <th>Cage Number</th>
-                <th>Type</th>
-                <th>Sex</th>
-                <th>Date of Birth</th>
-                <th>Genotype</th>
-                <th>Litter</th>
-                <th>Notes</th>
-                <th></th>
-            </tr>
-            </thead>
+
             <tbody>
                 <tr th:each="animal : ${animals}">
                     <td th:text="${animal.id}"></td>

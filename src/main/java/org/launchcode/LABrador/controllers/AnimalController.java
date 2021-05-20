@@ -42,7 +42,7 @@ public class AnimalController {
     }
 
     @GetMapping("add")
-    public String displayAddAnimalForm(Model model) {
+    public String displayAddAnimalForm(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
@@ -71,7 +71,7 @@ public class AnimalController {
         model.addAttribute("user", userFromSession);
 
         model.addAttribute("title", "Edit Entry");
-        model.addAttribute(animalRepository.findById(animalId).get());
+        model.addAttribute(animalRepository.findById(animalId));
         model.addAttribute("genotype", genotypeRepository.findAll());
         return "colony/edit";
     }
@@ -91,8 +91,7 @@ public class AnimalController {
         animalTmp.setCageType(animal.getCageType());
         animalTmp.setSex(animal.getSex());
         animalTmp.setDateOfBirth(animal.getDateOfBirth());
-        animalTmp.setGenotypeOne(animal.getGenotypeOne());
-        animalTmp.setGenotypeTwo(animal.getGenotypeTwo());
+        animalTmp.setGenotype(animal.getGenotype());
         animalTmp.setLitter(animal.getLitter());
         animalTmp.setNotes(animal.getNotes());
 
