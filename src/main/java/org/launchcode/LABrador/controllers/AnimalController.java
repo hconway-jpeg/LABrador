@@ -6,6 +6,7 @@ import org.launchcode.LABrador.models.Animal;
 import org.launchcode.LABrador.models.User;
 import org.launchcode.LABrador.models.Genotype;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -38,6 +39,55 @@ public class AnimalController {
 
         model.addAttribute("title", "LAB_NAME Animal Colony");
         model.addAttribute("animals", animalRepository.findAll());
+        return "colony/index";
+    }
+    @GetMapping("tag")
+    public String sortByTag(Model model) {
+        model.addAttribute("title", "tag sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by("tag")));
+        return "colony/index";
+    }
+
+    @GetMapping("cagenumber")
+    public String sortByCageNumber(Model model) {
+        model.addAttribute("title", "cage number sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by("cageNumber")));
+        return "colony/index";
+    }
+
+    @GetMapping("type")
+    public String sortByCageType(Model model) {
+        model.addAttribute("title", "cage type sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by("cageType")));
+        return "colony/index";
+    }
+
+    @GetMapping("sex")
+    public String sortBySex(Model model) {
+        model.addAttribute("title", "sex sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by("sex")));
+        return "colony/index";
+    }
+
+    @GetMapping("dateofbirth")
+    public String sortByDateOfBirth(Model model) {
+        model.addAttribute("title", "date of birth sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by("dateOfBirth")));
+        return "colony/index";
+    }
+
+
+    @GetMapping("genotypesort")
+    public String sortBygenotype1(Model model) {
+        model.addAttribute("title", "genotype one sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by("genotype")));
+        return "colony/index";
+    }
+
+    @GetMapping("litter")
+    public String sortBLitter(Model model) {
+        model.addAttribute("title", "litter sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by("litter")));
         return "colony/index";
     }
 
