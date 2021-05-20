@@ -1,8 +1,10 @@
 package org.launchcode.LABrador.controllers;
 
 import org.launchcode.LABrador.data.AnimalRepository;
+import org.launchcode.LABrador.data.GenotypeRepository;
 import org.launchcode.LABrador.models.Animal;
 import org.launchcode.LABrador.models.User;
+import org.launchcode.LABrador.models.Genotype;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,9 @@ public class AnimalController {
     @Autowired
     private AnimalRepository animalRepository;
 
+    @Autowired
+    private GenotypeRepository genotypeRepository;
+
     @GetMapping
     public String displayAllAnimals(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -37,12 +42,18 @@ public class AnimalController {
     }
 
     @GetMapping("add")
-    public String displayAddAnimalForm(Model model, HttpServletRequest request) {
+    public String displayAddAnimalForm(Model model) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
+        if (genotypeRepository.findByName("") == null) {
+            Genotype blankGenotype = new Genotype("");
+            genotypeRepository.save(blankGenotype);
+        }
+
         model.addAttribute("title", "Add Entry");
+        model.addAttribute("genotype", genotypeRepository.findAll());
         model.addAttribute(new Animal());
         return "colony/add";
     }
@@ -60,7 +71,8 @@ public class AnimalController {
         model.addAttribute("user", userFromSession);
 
         model.addAttribute("title", "Edit Entry");
-        model.addAttribute(animalRepository.findById(animalId));
+        model.addAttribute(animalRepository.findById(animalId).get());
+        model.addAttribute("genotype", genotypeRepository.findAll());
         return "colony/edit";
     }
 

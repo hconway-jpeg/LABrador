@@ -19,26 +19,39 @@
                     <th>Type</th>
                     <th>Sex</th>
                     <th>Date of Birth</th>
-                    <th>Genotype One</th>
-                    <th>Genotype Two</th>
+                    <th>Genotype</th>
                     <th>Litter</th>
                     <th>Notes</th>
                     <th>Delete?</th>
                     <th></th>
                 </tr>
+    <div class="container body-content">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tag</th>
+                <th>Cage Number</th>
+                <th>Type</th>
+                <th>Sex</th>
+                <th>Date of Birth</th>
+                <th>Genotype</th>
+                <th>Litter</th>
+                <th>Notes</th>
+                <th></th>
+            </tr>
             </thead>
             <tbody>
                 <tr th:each="animal : ${animals}">
                     <td th:text="${animal.id}"></td>
                     <td th:text="${animal.tag}">Tag</td>
-                    <td th:text="${animal.cageNumber}">Tag</td>
-                    <td th:text="${animal.cageType}">Tag</td>
-                    <td th:text="${animal.sex}">Tag</td>
-                    <td th:text="${animal.dateOfBirth}">Tag</td>
-                    <td th:text="${animal.genotypeOne}">Tag</td>
-                    <td th:text="${animal.genotypeTwo}">Tag</td>
-                    <td th:text="${animal.litter}">Tag</td>
-                    <td th:text="${animal.notes}">Tag</td>
+                    <td th:text="${animal.cageNumber}">Cage Number</td>
+                    <td th:text="${animal.cageType}">Cage Type</td>
+                    <td th:text="${animal.sex}">Sex</td>
+                    <td th:text="${animal.dateOfBirth}">Date of Birth</td>
+                    <td th:text="${animal.genotype.name}">Genotype</td>
+                    <td th:text="${animal.litter}">Litte</td>
+                    <td th:text="${animal.notes}">Notes</td>
                     <td>
                         <input type="checkbox" name="animalIds" th:value="${animal.id}">
                     </td>

@@ -10,66 +10,65 @@
 
         <h2 th:text="'Edit ' + ${animal.tag}"></h2>
 
-        <form method="post">
-            <input type="hidden" th:field="*{animalId}" />
-            <div class="form-group">
-                <label>
-                    Tag
-                    <input class="form-control" th:field="${animal.tag}">
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    Cage Number
-                    <input class="form-control" th:field="${animal.cageNumber}">
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    Type
-                    <input class="form-control" th:field="${animal.cageType}">
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    Sex
-                    <input class="form-control" th:field="${animal.sex}">
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    Date of Birth
-                    <input type="date" class="form-control" th:field="${animal.dateOfBirth}">
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    Genotype
-                    <input class="form-control" th:field="${animal.genotypeOne}">
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    Genotype
-                    <input class="form-control" th:field="${animal.genotypeTwo}">
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    Litter
-                    <input class="form-control" th:field="${animal.litter}">
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    Notes
-                    <input class="form-control" th:field="${animal.notes}">
-                </label>
-            </div>
-            <div class="form-group">
-                <input class="btn btn-success" type="submit" value="Edit Entry">
-            </div>
-        </form>
-    </div>
+    <form method="post">
+        <input type="hidden" th:field="*{animalId}" />
+        <div class="form-group">
+            <label>
+                Tag
+                <input class="form-control" th:field="${animal.tag}">
+            </label>
+        </div>
+        <div class="form-group">
+            <label>
+                Cage Number
+                <input class="form-control" th:field="${animal.cageNumber}">
+            </label>
+        </div>
+        <div class="form-group">
+            <label>
+                Type
+                <input class="form-control" th:field="${animal.cageType}">
+            </label>
+        </div>
+        <div class="form-group">
+            <label>
+                Sex
+                <input class="form-control" th:field="${animal.sex}">
+            </label>
+        </div>
+        <div class="form-group">
+            <label>
+                Date of Birth
+                <input type="date" class="form-control" th:field="${animal.dateOfBirth}">
+            </label>
+        </div>
+        <div class="form-group">
+            <label>
+                Genotype
+                <select th:field="${animal.genotype}">
+                    <option th:each="genotype : ${genotype}"
+                            th:value="${genotype.id}"
+                            th:text="${genotype.name}">
+                    </option>
+                </select>
+            </label>
+        </div>
+        <div class="form-group">
+            <label>
+                Litter
+                <input class="form-control" th:field="${animal.litter}">
+            </label>
+        </div>
+        <div class="form-group">
+            <label>
+                Notes
+                <input class="form-control" th:field="${animal.notes}">
+            </label>
+        </div>
+        <div class="form-group">
+            <input class="btn btn-success" type="submit" value="Edit Entry">
+        </div>
+    </form>
+
 </body>
 </html>
