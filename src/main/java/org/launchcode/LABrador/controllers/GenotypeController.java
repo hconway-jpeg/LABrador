@@ -51,10 +51,14 @@ public class GenotypeController {
     }
 
     @PostMapping("add")
-    public String processAddGenotypeForm(@ModelAttribute Genotype newGenotype, Model model, Errors errors) {
+    public String processAddGenotypeForm(HttpServletRequest request, @ModelAttribute Genotype newGenotype, Model model, Errors errors) {
         Genotype existingGenotype = genotypeRepository.findByName(newGenotype.getName());
 
         if (existingGenotype != null) {
+            HttpSession session = request.getSession();
+            User userFromSession = authenticationController.getUserFromSession(session);
+            model.addAttribute("user", userFromSession);
+
             errors.rejectValue("name", "name.alreadyexists", "Already exists!");
             model.addAttribute("title", "Lab Genotypes");
             model.addAttribute("genotypes", genotypeRepository.findAll());
