@@ -2,9 +2,7 @@ package org.launchcode.LABrador.controllers;
 
 import org.launchcode.LABrador.data.UserRepository;
 import org.launchcode.LABrador.models.User;
-import org.launchcode.LABrador.models.dto.DeleteFormDTO;
-import org.launchcode.LABrador.models.dto.PwFormDTO;
-import org.launchcode.LABrador.models.dto.RegisterFormDTO;
+import org.launchcode.LABrador.models.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -39,14 +37,14 @@ public class UserController {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
-        model.addAttribute(new RegisterFormDTO());
+        model.addAttribute(new EditFormDTO());
         model.addAttribute("title", "Edit User");
         model.addAttribute(userRepository.findByUsername(userFromSession.getUsername()));
         return "user/edit";
     }
 
     @PostMapping("edit")
-    public String processEditUserForm(@ModelAttribute @Valid RegisterFormDTO registerFormDTO, Errors errors, HttpServletRequest request, Model model) {
+    public String processEditUserForm(@ModelAttribute @Valid EditFormDTO editFormDTO, Errors errors, HttpServletRequest request, Model model) {
 
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
@@ -56,15 +54,7 @@ public class UserController {
             return "user/edit";
         }
 
-        User userExists = userRepository.findByUsername(registerFormDTO.getUsername());
-        if(userExists != null){
-            errors.rejectValue("username", "username.alreadyexists", "A user with that username already exists.");
-            model.addAttribute("title", "Edit User");
-            model.addAttribute("user", userFromSession);
-            return "user/edit";
-        }
-
-        String password = registerFormDTO.getPassword();
+        String password = editFormDTO.getPassword();
         if(!userFromSession.isMatchingPassword(password)){
             errors.rejectValue("password","password.invalid", "Incorrect password.");
             model.addAttribute("title", "Edit User");
@@ -73,11 +63,55 @@ public class UserController {
         }
 
         User userTmp = userRepository.findByUsername(userFromSession.getUsername());
-        userTmp.setUsername(registerFormDTO.getUsername());
-        userTmp.setFirstName(registerFormDTO.getFirstName());
-        userTmp.setLastName(registerFormDTO.getLastName());
-        userTmp.setEmail(registerFormDTO.getEmail());
-        userTmp.setLab(registerFormDTO.getLab());
+        userTmp.setFirstName(editFormDTO.getFirstName());
+        userTmp.setLastName(editFormDTO.getLastName());
+        userTmp.setEmail(editFormDTO.getEmail());
+        userTmp.setLab(editFormDTO.getLab());
+        userRepository.save(userTmp);
+
+        model.addAttribute("user", userTmp);
+        return "redirect:";
+    }
+
+    @GetMapping("username")
+    public String displayEditUsernameForm(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+        model.addAttribute(new LoginFormDTO());
+        model.addAttribute("title", "Edit Username");
+        model.addAttribute(userRepository.findByUsername(userFromSession.getUsername()));
+        return "user/username";
+    }
+
+    @PostMapping("username")
+    public String processEditUsernameForm(@ModelAttribute @Valid LoginFormDTO loginFormDTO, Errors errors, HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+
+        if (errors.hasErrors()) {
+            model.addAttribute("user", userFromSession);
+            return "user/username";
+        }
+
+        User userExists = userRepository.findByUsername(loginFormDTO.getUsername());
+        if(userExists != null){
+            errors.rejectValue("username", "username.alreadyexists", "A user with that username already exists.");
+            model.addAttribute("title", "Edit Username");
+            model.addAttribute("user", userFromSession);
+            return "user/username";
+        }
+
+        String password = loginFormDTO.getPassword();
+        if(!userFromSession.isMatchingPassword(password)){
+            errors.rejectValue("password","password.invalid", "Incorrect password.");
+            model.addAttribute("title", "Edit Username");
+            model.addAttribute("user", userFromSession);
+            return "user/username";
+        }
+
+        User userTmp = userRepository.findByUsername(userFromSession.getUsername());
+        userTmp.setUsername(loginFormDTO.getUsername());
         userRepository.save(userTmp);
 
         model.addAttribute("user", userTmp);

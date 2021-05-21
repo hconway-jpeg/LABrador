@@ -14,44 +14,37 @@
                         <form action="/user/edit" method="post">
                             <div class="form-group">
                                 <label>
-                                    Username:
-                                    <input class="form-control" th:field="${user.username}"/>
-                                    <span th:errors="${registerFormDTO.username}" class="error"></span>
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>
                                     First Name:
                                     <input class="form-control" th:field="${user.firstName}"/>
-                                    <span th:errors="${registerFormDTO.firstName}" class="error"></span>
+                                    <span th:errors="${editFormDTO.firstName}" class="error"></span>
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label>
                                     Last Name:
                                     <input class="form-control" th:field="${user.lastName}"/>
-                                    <span th:errors="${registerFormDTO.lastName}" class="error"></span>
+                                    <span th:errors="${editFormDTO.lastName}" class="error"></span>
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label>
                                     Email:
                                     <input class="form-control" th:field="${user.email}"/>
-                                    <span th:errors="${registerFormDTO.email}" class="error"></span>
+                                    <span th:errors="${editFormDTO.email}" class="error"></span>
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label>
                                     Affiliated Laboratory:
                                     <input class="form-control" th:field="${user.lab}"/>
-                                    <span th:errors="${registerFormDTO.lab}" class="error"></span>
+                                    <span th:errors="${editFormDTO.lab}" class="error"></span>
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label>
                                     Please Confirm Your Password:
-                                    <input class="form-control" th:field="${registerFormDTO.password}" type="password"/>
-                                    <span th:errors="${registerFormDTO.password}" class="error"></span>
+                                    <input class="form-control" th:field="${editFormDTO.password}" type="password"/>
+                                    <span th:errors="${editFormDTO.password}" class="error"></span>
                                 </label>
                             </div>
                             <div class="form-group">
@@ -61,6 +54,12 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
+                    <div class="card mb-5">
+                        <div class="card-header"><h5>Change Username</h5></div>
+                        <div class="card-body">
+                            <a>Change your username <a th:href="@{/user/username}">here</a>.</a>
+                        </div>
+                    </div>
                     <div class="card mb-5">
                         <div class="card-header"><h5>Reset Password</h5></div>
                         <div class="card-body">
