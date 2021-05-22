@@ -22,7 +22,6 @@ public class UserController {
     private AuthenticationController authenticationController;
     @Autowired
     private UserRepository userRepository;
-    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @GetMapping
     public String displayUserInfo(Model model, HttpServletRequest request) {
