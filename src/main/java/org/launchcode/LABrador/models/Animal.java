@@ -2,6 +2,7 @@ package org.launchcode.LABrador.models;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Animal extends AbstractEntity {
@@ -16,11 +17,15 @@ public class Animal extends AbstractEntity {
     public Genotype genotype;
 
     private String litter;
-    private String notes;
+
+    @Size(max = 30, message = "Keyword is too long.")
+    private String notesKeyword;
+    @Size(max = 250, message = "Description is too long.")
+    private String notesDescription;
 
     public Animal() { }
 
-    public Animal(String tag, String cageNumber, String cageType, String sex, String dateOfBirth, Genotype genotype, String litter, String notes) {
+    public Animal(String tag, String cageNumber, String cageType, String sex, String dateOfBirth, Genotype genotype, String litter, String notesKeyword, String notesDescription) {
         super();
         this.tag = tag;
         this.cageNumber = cageNumber;
@@ -29,7 +34,8 @@ public class Animal extends AbstractEntity {
         this.dateOfBirth = dateOfBirth;
         this.genotype = genotype;
         this.litter = litter;
-        this.notes = notes;
+        this.notesKeyword = notesKeyword;
+        this.notesDescription = notesDescription;
     }
 
     public String getTag() {
@@ -81,12 +87,11 @@ public class Animal extends AbstractEntity {
         this.litter = litter;
     }
 
-    public String getNotes() {
-        return notes;
-    }
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
+    public String getNotesKeyword() {return notesKeyword;}
+    public void setNotesKeyword(String notesKeyword) {this.notesKeyword = notesKeyword;}
+
+    public String getNotesDescription() {return notesDescription;}
+    public void setNotesDescription(String notesDescription) {this.notesDescription = notesDescription;}
 
     @Override
     public String toString() {

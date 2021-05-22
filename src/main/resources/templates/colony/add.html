@@ -1,72 +1,90 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragmentsColony :: head">
+<head th:replace="fragments :: head">
     <meta charset="UTF-8"/>
     <title>Add Entry</title>
 </head>
 <body>
-    <div th:replace="fragmentsColony :: page-header"></div>
+    <div th:replace="fragments :: colony-header-fragment"></div>
     <div class="container  body-content">
         <h2>Add Animal</h2>
-
-    <form method="post">
-        <div class="form-group">
-            <label>
-                Tag
-                <input class="form-control" th:field="${animal.tag}">
-            </label>
-        </div>
-        <div class="form-group">
-            <label>
-                Cage Number
-                <input class="form-control" th:field="${animal.cageNumber}">
-            </label>
-        </div>
-        <div class="form-group">
-            <label>
-                Type
-                <input class="form-control" th:field="${animal.cageType}">
-            </label>
-        </div>
-        <div class="form-group">
-            <label>
-                Sex
-                <input class="form-control" th:field="${animal.sex}">
-            </label>
-        </div>
-        <div class="form-group">
-            <label>
-                Date of Birth
-                <input type="date" class="form-control" th:field="${animal.dateOfBirth}">
-            </label>
-        </div>
-        <div class="form-group">
-            <label>
-                Genotype
-                <select th:field="${animal.genotype}">
-                    <option th:each="genotype : ${genotype}"
-                            th:value="${genotype.id}"
-                            th:text="${genotype.name}">
-                    </option>
-                </select>
-            </label>
-        </div>
-        <div class="form-group">
-            <label>
-                Litter
-                <input class="form-control" th:field="${animal.litter}">
-            </label>
-        </div>
-        <div class="form-group">
-            <label>
-                Notes
-                <input class="form-control" th:field="${animal.notes}">
-            </label>
-        </div>
-        <div class="form-group">
-            <input class="btn btn-success" type="submit" value="Add Entry">
-        </div>
-    </form>
-
+        <form method="post" >
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>
+                            Tag
+                            <input class="form-control" th:field="${animal.tag}">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Cage Number
+                            <input class="form-control" th:field="${animal.cageNumber}">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Type
+                            <input class="form-control" th:field="${animal.cageType}">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Sex
+                            <input class="form-control" th:field="${animal.sex}">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Date of Birth
+                            <input type="date" class="form-control" th:field="${animal.dateOfBirth}">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Genotype
+                            <select th:field="${animal.genotype}">
+                                <option th:each="genotype : ${genotype}"
+                                        th:value="${genotype.id}"
+                                        th:text="${genotype.name}">
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            Litter
+                            <input class="form-control" th:field="${animal.litter}">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-success" type="submit" value="Add Entry">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card mb-5">
+                        <div class="card-header">Notes</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>
+                                    Keyword
+                                    <input class="form-control" th:field="${animal.notesKeyword}">
+                                    <span th:errors="${animal.notesKeyword}" class="error"></span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    Description
+                                    <textarea class="form-control col-xs-12" rows="5" cols="40" style="min-width: 100%" th:field="${animal.notesDescription}"></textarea>
+                                    <span th:errors="${animal.notesDescription}" class="error"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

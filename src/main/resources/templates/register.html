@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-    <head th:replace="fragmentsHome :: head">
+    <head th:replace="fragments :: head">
     </head>
     <body>
 
-        <div th:replace="fragmentsLogin :: page-header"></div>
+        <div th:replace="fragments :: login-header-fragment"></div>
 
         <div class="container body-content">
             <form action="/register" method="post">

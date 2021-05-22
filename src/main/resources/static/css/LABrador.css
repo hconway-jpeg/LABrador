@@ -1,0 +1,11 @@
+th {
+    white-space: nowrap;
+}
+
+.container {
+    max-width: 85%;
+}
+
+#table {
+    max-width: 90%;
+}
