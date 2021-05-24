@@ -3,6 +3,8 @@ package org.launchcode.LABrador.models;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
@@ -20,7 +22,8 @@ public class User extends AbstractEntity {
     @NotNull
     private  String pwHash;
 
-    private String lab;
+    @ManyToOne
+    private Lab lab;
 
     @NotNull
     private String email;
@@ -31,13 +34,11 @@ public class User extends AbstractEntity {
     @NotNull
     private String lastName;
 
-    public User() {
-    }
+    public User() { }
 
-    public User(@NotNull String username, @NotNull String password, @NotNull String email, @NotNull String firstName, @NotNull String lastName, String lab) {
+    public User(@NotNull String username, @NotNull String password, @NotNull String email, @NotNull String firstName, @NotNull String lastName) {
         this.username = username;
         this.pwHash = encoder.encode(password);
-        this.lab = lab;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -46,7 +47,6 @@ public class User extends AbstractEntity {
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -54,23 +54,18 @@ public class User extends AbstractEntity {
     public String getPwHash() {
         return pwHash;
     }
-
     public void setPwHash(String password) {
         this.pwHash = encoder.encode(password);
     }
 
-    public String getLab() {
-        return lab;
-    }
-
-    public void setLab(String lab) {
+    public Lab getLab() { return lab; }
+    public void setLab(Lab lab) {
         this.lab = lab;
     }
 
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -78,7 +73,6 @@ public class User extends AbstractEntity {
     public String getFirstName() {
         return firstName;
     }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -86,7 +80,6 @@ public class User extends AbstractEntity {
     public String getLastName() {
         return lastName;
     }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }

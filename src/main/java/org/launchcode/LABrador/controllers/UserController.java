@@ -1,5 +1,6 @@
 package org.launchcode.LABrador.controllers;
 
+import org.launchcode.LABrador.data.LabRepository;
 import org.launchcode.LABrador.data.UserRepository;
 import org.launchcode.LABrador.models.User;
 import org.launchcode.LABrador.models.dto.*;
@@ -20,8 +21,12 @@ public class UserController {
 
     @Autowired
     private AuthenticationController authenticationController;
+
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private LabRepository labRepository;
 
     @GetMapping
     public String displayUserInfo(Model model, HttpServletRequest request) {
@@ -44,7 +49,6 @@ public class UserController {
 
     @PostMapping("edit")
     public String processEditUserForm(@ModelAttribute @Valid EditFormDTO editFormDTO, Errors errors, HttpServletRequest request, Model model) {
-
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
 
@@ -65,7 +69,6 @@ public class UserController {
         userTmp.setFirstName(editFormDTO.getFirstName());
         userTmp.setLastName(editFormDTO.getLastName());
         userTmp.setEmail(editFormDTO.getEmail());
-        userTmp.setLab(editFormDTO.getLab());
         userRepository.save(userTmp);
 
         model.addAttribute("user", userTmp);
