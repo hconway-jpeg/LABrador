@@ -7,9 +7,11 @@
         <div th:replace="fragments :: login-header-fragment"></div>
         <div class="container body-content">
             <div>
-                <p>Need an account? <a href="/register">Register here.</a></p>
+                <ul>New to LABrador?
+                    <li><a href="/register">Create an Account!</a></li>
+                    <li><a href="/lab">Add Your Lab!</a></li>
+                </ul>
             </div>
-
             <form method="post">
                 <div class="form-group">
                     <label>Username:
