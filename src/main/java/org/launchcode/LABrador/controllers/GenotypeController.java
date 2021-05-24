@@ -80,7 +80,7 @@ public class GenotypeController {
         if (genotypeIds != null) {
             for (int id : genotypeIds) {
                 for (Animal animal : animals) {
-                    if (animal.genotype.getId().compareTo(id) == 0) {
+                    if (animal.getGenotype().getId().compareTo(id) == 0) {
                         animal.setGenotype(blankGenotype);
                         animalRepository.save(animal);
                     }

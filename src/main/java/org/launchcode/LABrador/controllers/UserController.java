@@ -69,6 +69,7 @@ public class UserController {
         userTmp.setFirstName(editFormDTO.getFirstName());
         userTmp.setLastName(editFormDTO.getLastName());
         userTmp.setEmail(editFormDTO.getEmail());
+        userTmp.setLab(editFormDTO.getLab());
         userRepository.save(userTmp);
 
         model.addAttribute("user", userTmp);

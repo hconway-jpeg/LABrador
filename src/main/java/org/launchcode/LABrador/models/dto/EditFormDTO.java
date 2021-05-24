@@ -1,5 +1,7 @@
 package org.launchcode.LABrador.models.dto;
 
+import org.launchcode.LABrador.models.Lab;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,7 +14,7 @@ public class EditFormDTO{
 
     private String lastName;
 
-    private String lab;
+    private Lab lab;
 
     @NotNull
     @NotBlank
@@ -47,11 +49,11 @@ public class EditFormDTO{
         this.lastName = lastName;
     }
 
-    public String getLab() {
+    public Lab getLab() {
         return lab;
     }
 
-    public void setLab(String lab) {
+    public void setLab(Lab lab) {
         this.lab = lab;
     }
 }

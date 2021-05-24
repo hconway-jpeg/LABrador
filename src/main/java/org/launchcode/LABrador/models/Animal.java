@@ -14,7 +14,10 @@ public class Animal extends AbstractEntity {
     private String dateOfBirth;
 
     @ManyToOne
-    public Genotype genotype;
+    private Genotype genotype;
+
+    @ManyToOne
+    private Lab lab;
 
     private String litter;
 
@@ -25,7 +28,7 @@ public class Animal extends AbstractEntity {
 
     public Animal() { }
 
-    public Animal(String tag, String cageNumber, String cageType, String sex, String dateOfBirth, Genotype genotype, String litter, String notesKeyword, String notesDescription) {
+    public Animal(String tag, String cageNumber, String cageType, String sex, String dateOfBirth, Genotype genotype, String litter, String notesKeyword, String notesDescription, Lab lab) {
         super();
         this.tag = tag;
         this.cageNumber = cageNumber;
@@ -36,6 +39,7 @@ public class Animal extends AbstractEntity {
         this.litter = litter;
         this.notesKeyword = notesKeyword;
         this.notesDescription = notesDescription;
+        this.lab = lab;
     }
 
     public String getTag() {
@@ -92,6 +96,9 @@ public class Animal extends AbstractEntity {
 
     public String getNotesDescription() {return notesDescription;}
     public void setNotesDescription(String notesDescription) {this.notesDescription = notesDescription;}
+
+    public Lab getLab() { return lab; }
+    public void setLab(Lab lab) { this.lab = lab; }
 
     @Override
     public String toString() {

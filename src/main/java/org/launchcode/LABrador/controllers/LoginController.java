@@ -94,7 +94,7 @@ public class LoginController {
         }
 
         User newUser = new User(registerFormDTO.getUsername(), registerFormDTO.getPassword(),
-                registerFormDTO.getEmail(), registerFormDTO.getFirstName(), registerFormDTO.getLastName());
+                registerFormDTO.getEmail(), registerFormDTO.getFirstName(), registerFormDTO.getLastName(), registerFormDTO.getLab());
         userRepository.save(newUser);
         setUserInSession(request.getSession(), newUser);
 

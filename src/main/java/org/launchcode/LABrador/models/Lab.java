@@ -18,6 +18,9 @@ public class Lab extends AbstractEntity {
     @OneToMany(mappedBy = "lab")
     private final List<User> labMembers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "lab")
+    private final List<Animal> colony = new ArrayList<>();
+
     private String organization;
 
     private String department;
