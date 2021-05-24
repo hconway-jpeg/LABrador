@@ -2,16 +2,22 @@ package org.launchcode.LABrador.models;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
 public class Lab extends AbstractEntity {
 
     //PI
+    @NotBlank
+    @Size(min = 3)
     private String principalInvestigator;
 
+    @NotBlank(message = "Please Enter a Valid Email Address")
     private String contactEmail;
 
+    @NotBlank(message = "Please Enter a Lab Name")
     private String labName;
 
     @OneToMany(mappedBy = "lab")
