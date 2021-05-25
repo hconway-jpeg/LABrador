@@ -1,5 +1,7 @@
 package org.launchcode.LABrador.models.dto;
 
+import org.launchcode.LABrador.models.Lab;
+
 public class RegisterFormDTO extends LoginFormDTO {
 
     private String email;
@@ -8,7 +10,7 @@ public class RegisterFormDTO extends LoginFormDTO {
 
     private String lastName;
 
-    private String lab;
+    private Lab lab;
 
     private String verifyPassword;
 
@@ -44,11 +46,11 @@ public class RegisterFormDTO extends LoginFormDTO {
         this.lastName = lastName;
     }
 
-    public String getLab() {
+    public Lab getLab() {
         return lab;
     }
 
-    public void setLab(String lab) {
+    public void setLab(Lab lab) {
         this.lab = lab;
     }
 }
