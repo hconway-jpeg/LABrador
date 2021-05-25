@@ -55,6 +55,14 @@
         </div>
 
         <div class="form-group">
+            <label>
+                Passcode
+                <input class="form-control" th:field="${lab.passcode}">
+                <span th:errors="${lab.passcode}" class="error"></span>
+            </label>
+        </div>
+
+        <div class="form-group">
             <input class="btn btn-success" type="submit" value="Add Lab">
         </div>
 

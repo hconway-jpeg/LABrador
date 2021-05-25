@@ -30,14 +30,19 @@ public class Lab extends AbstractEntity {
 
     private String department;
 
+    @NotBlank
+    @Size(min = 10, message = "Please Enter a 10-digit Passcode")
+    private String passcode;
+
     public Lab() { }
 
-    public Lab(String principalInvestigator, String labName, String organization, String department, String contactEmail) {
+    public Lab(String principalInvestigator, String labName, String organization, String department, String contactEmail, String passcode) {
         this.principalInvestigator = principalInvestigator;
         this.labName = labName;
         this.organization = organization;
         this.department = department;
         this.contactEmail = contactEmail;
+        this.passcode = passcode;
     }
 
     @Override
@@ -80,8 +85,11 @@ public class Lab extends AbstractEntity {
     public String getContactEmail() {
         return contactEmail;
     }
-
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
     }
+
+    public String getPasscode() { return passcode; }
+    public void setPasscode(String passcode) { this.passcode = passcode; }
+
 }
