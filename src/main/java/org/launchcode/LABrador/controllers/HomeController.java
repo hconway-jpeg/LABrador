@@ -25,7 +25,7 @@ public class HomeController {
     @Autowired
     private LabRepository labRepository;
 
-    @GetMapping("")
+    @GetMapping
     public String index(Model model, HttpServletRequest request) {
 
         //grabs the session from the browser and uses that to find which user's information to display.

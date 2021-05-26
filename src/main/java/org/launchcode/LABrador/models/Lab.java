@@ -1,6 +1,7 @@
 package org.launchcode.LABrador.models;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -20,8 +21,8 @@ public class Lab extends AbstractEntity {
     @NotBlank(message = "Please Enter a Lab Name")
     private String labName;
 
-    @OneToMany(mappedBy = "lab")
-    private final List<User> labMembers = new ArrayList<>();
+    @ManyToMany(mappedBy = "labs")
+    private final List<User> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "lab")
     private final List<Animal> colony = new ArrayList<>();
@@ -48,10 +49,6 @@ public class Lab extends AbstractEntity {
     @Override
     public String toString() {
         return labName;
-    }
-
-    public List<User> getLabMembers() {
-        return labMembers;
     }
 
     public String getPrincipalInvestigator() {
@@ -91,5 +88,10 @@ public class Lab extends AbstractEntity {
 
     public String getPasscode() { return passcode; }
     public void setPasscode(String passcode) { this.passcode = passcode; }
+
+    public List<User> getUsers() {
+        return users;
+    }
+    public void addUser(User user) { this.users.add(user); }
 
 }

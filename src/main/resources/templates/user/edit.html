@@ -12,6 +12,7 @@
                 <div class="col-sm-4">
                     <div>
                         <form action="/user/edit" method="post">
+
                             <div class="form-group">
                                 <label>
                                     First Name:
@@ -19,6 +20,7 @@
                                     <span th:errors="${editFormDTO.firstName}" class="error"></span>
                                 </label>
                             </div>
+
                             <div class="form-group">
                                 <label>
                                     Last Name:
@@ -26,6 +28,7 @@
                                     <span th:errors="${editFormDTO.lastName}" class="error"></span>
                                 </label>
                             </div>
+
                             <div class="form-group">
                                 <label>
                                     Email:
@@ -33,13 +36,7 @@
                                     <span th:errors="${editFormDTO.email}" class="error"></span>
                                 </label>
                             </div>
-                            <div class="form-group">
-                                <label>
-                                    Affiliated Laboratory:
-                                    <input class="form-control" th:field="${user.lab}"/>
-                                    <span th:errors="${editFormDTO.lab}" class="error"></span>
-                                </label>
-                            </div>
+
                             <div class="form-group">
                                 <label>
                                     Please Confirm Your Password:
@@ -47,9 +44,11 @@
                                     <span th:errors="${editFormDTO.password}" class="error"></span>
                                 </label>
                             </div>
+
                             <div class="form-group">
                                 <button class="btn btn-success" type="submit" aria-pressed="true">Save Changes</button>
                             </div>
+
                         </form>
                     </div>
                 </div>

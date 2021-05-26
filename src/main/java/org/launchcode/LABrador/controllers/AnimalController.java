@@ -82,7 +82,7 @@ public class AnimalController {
     }
 
     @GetMapping("edit/{animalId}")
-    public String displayEditAnimalForm(Model model, @PathVariable  int animalId, HttpServletRequest request) {
+    public String displayEditAnimalForm(Model model, @PathVariable int animalId, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
