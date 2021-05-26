@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
 </head>
 <body>
 
+<div th:replace="fragments :: home-header-fragment"></div>
+
+<div class="container body-content">
+    <h2>LABrador Lab Management Solutions</h2>
+    <div>
+        <h5 th:text="'Welcome, '+ ${user.firstName} + ' ' + ${user.lastName} + '!'">Welcome!</h5>
+
+        <div>
+            Your labs:
+            <ul >
+                <li th:each="lab : ${lab}"><a href="/colony" th:text="${lab.labName}"></a></li>
+            </ul>
+        </div>
+        <div class="form-group">
+            <label>
+                Find a Lab
+                <select class="form-control" th:field="${lab}">
+                    <option th:each="lab : ${lab}"
+                            th:value="${lab.id}"
+                            th:text="${lab.labName}">
+                    </option>
+                </select>
+                <small><a th:href="@{/lab/add}">Create New Lab</a>.</small>
+            </label>
+        </div>
+    </div>
+
+</div>
 </body>
 </html>

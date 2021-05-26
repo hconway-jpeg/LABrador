@@ -30,6 +30,17 @@ public class LabController {
     @Autowired
     private LabRepository labRepository;
 
+    @GetMapping
+    public String displayLabs(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
+        model.addAttribute("title", "User's Labs");
+        model.addAttribute("lab", labRepository.findAll());
+        return "lab/index";
+    }
+
     @GetMapping("add")
     public String displayAddLabForm(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
@@ -51,8 +62,9 @@ public class LabController {
             model.addAttribute("title", "Add Lab");
             return "lab/add";
         }
+//        model.addAttribute("user", userFromSession);
         labRepository.save(newLab);
-        return "lab/index";
+        return "redirect:";
     }
 
 }
