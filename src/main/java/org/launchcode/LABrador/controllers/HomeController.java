@@ -1,6 +1,7 @@
 package org.launchcode.LABrador.controllers;
 
 import org.launchcode.LABrador.data.AnimalRepository;
+import org.launchcode.LABrador.data.LabRepository;
 import org.launchcode.LABrador.data.UserRepository;
 import org.launchcode.LABrador.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class HomeController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private LabRepository labRepository;
+
     @GetMapping("")
     public String index(Model model, HttpServletRequest request) {
 
@@ -28,6 +32,7 @@ public class HomeController {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
+        model.addAttribute("lab", labRepository.findAll());
 
         return "index";
     }
