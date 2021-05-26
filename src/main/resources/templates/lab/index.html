@@ -14,14 +14,14 @@
         <div>
             Your labs:
             <ul >
-                <li th:each="lab : ${lab}"><a href="/colony" th:text="${lab.labName}"></a></li>
+                <li th:each="lab : ${labs}"><a href="/colony" th:text="${lab.labName}"></a></li>
             </ul>
         </div>
         <div class="form-group">
             <label>
                 Find a Lab
-                <select class="form-control" th:field="${lab}">
-                    <option th:each="lab : ${lab}"
+                <select class="form-control" th:field="${user.lab}">
+                    <option th:each="lab : ${labs}"
                             th:value="${lab.id}"
                             th:text="${lab.labName}">
                     </option>

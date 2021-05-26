@@ -10,18 +10,20 @@
             <h2>LABrador Lab Management Solutions</h2>
             <div>
                 <h5 th:text="'Welcome, '+ ${user.firstName} + ' ' + ${user.lastName} + '!'">Welcome!</h5>
-                <div class="form-group">
-                    <label>
-                        New to LABrador? Find a Lab!
-                        <select class="form-control" th:field="${lab}">
-                            <option th:each="lab : ${lab}"
-                                    th:value="${lab.id}"
-                                    th:text="${lab.labName}">
-                            </option>
-                        </select>
-                        <small>Don't See your lab? Create it <a th:href="@{/lab/add}">here</a>.</small>
-                    </label>
-                </div>
+                <form method="post">
+                    <div class="form-group">
+                        <label>
+                            New to LABrador? Find a Lab!
+                            <select class="form-control" th:field="${user.lab}">
+                                <option th:each="lab : ${labs}" th:value="${lab.id}" th:text="${lab.labName}"></option>
+                            </select>
+                            <small>Don't See your lab? Create it <a th:href="@{/lab/add}">here</a>.</small>
+                        </label>
+                        <div>
+                            <a class="btn btn-success" th:href="@{/lab/passcode/{id}(id=${user.lab.id})}" role="button">Join Lab</a>
+                        </div>
+                    </div>
+                </form>
                 <div>
                     <p>Or get started without a lab!</p>
                     <a class="btn btn-primary" th:href="@{/colony/add}" role="button">Create New Colony</a>

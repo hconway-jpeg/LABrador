@@ -32,7 +32,7 @@ public class HomeController {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
-        model.addAttribute("lab", labRepository.findAll());
+        model.addAttribute("labs", labRepository.findAll());
 
         return "index";
     }
