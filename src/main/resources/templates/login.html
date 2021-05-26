@@ -3,34 +3,36 @@
     <head th:replace="fragments :: head">
     </head>
     <body>
+    <div class="container body-content">
+        <h1 class="text-center p-3">LABrador Lab Management Solutions</h1>
+        <div class="py-2">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col align-self-center shadow p-3 px-5 mb-5 bg-white rounded">
+                    <small th:errors="${loginFormDTO.username}" class="text-muted form-text"></small>
+                    <small th:errors="${loginFormDTO.password}" class="text-muted form-text"></small>
+                    <form method="post">
+                        <div class="form-group">
+                            <label for="loginUsername">Username</label>
+                            <input id="loginUsername" class="form-control" th:field="${loginFormDTO.username}"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input id="loginPassword" class="form-control" th:field="${loginFormDTO.password}" type="password"/>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block" type="submit" aria-pressed="true">Login</button>
+                        </div>
+                    </form>
 
-        <div th:replace="fragments :: login-header-fragment"></div>
-        <div class="container body-content">
-            <div>
-                <p>Need an account? <a href="/register">Register here.</a></p>
+                    <div>
+                        <p class="text-center">Need an account? <a href="/register">Register here.</a></p>
+                    </div>
+                </div>
+                <div class="col"></div>
             </div>
-
-            <form method="post">
-                <div class="form-group">
-                    <label>Username:
-                        <input class="form-control" th:field="${loginFormDTO.username}"/>
-                        <span th:errors="${loginFormDTO.username}" class="error"></span>
-                    </label>
-                </div>
-
-                <div class="form-group">
-                    <label>Password:
-                        <input class="form-control" th:field="${loginFormDTO.password}" type="password"/>
-                        <span th:errors="${loginFormDTO.password}" class="error"></span>
-                    </label>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary" type="submit" aria-pressed="true">Login</button>
-                </div>
-            </form>
         </div>
-
-
+    </div>
 
     </body>
 </html>
