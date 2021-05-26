@@ -26,8 +26,14 @@
                                     th:text="${lab.labName}">
                             </option>
                         </select>
+                        <small>Don't See your lab? Create it <a th:href="@{/lab/add}">here</a>.</small>
                     </label>
                 </div>
+                <div>
+                    <p>Or get started without a lab!</p>
+                    <a class="btn btn-primary" th:href="@{/colony/add}" role="button">Create New Colony</a>
+                </div>
+
             </div>
 
         </div>
