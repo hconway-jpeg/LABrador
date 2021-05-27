@@ -71,15 +71,15 @@ public class LabController {
         return "redirect:";
     }
 
-    @GetMapping("passcode/{labId}")
-    public String displayPasscodeForm(HttpServletRequest request, Model model, @PathVariable int labId) {
+    @GetMapping("passcode")
+    public String displayPasscodeForm(@ModelAttribute @Valid Lab lab, HttpServletRequest request,  Model model) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
         model.addAttribute("title", "Join Lab");
         model.addAttribute(new LabFormDTO());
-        model.addAttribute("lab", labRepository.findById(labId));
+        model.addAttribute("lab", labRepository.findLabByLabName(lab.getLabName()));
         return "lab/passcode";
     }
 

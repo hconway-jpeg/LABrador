@@ -11,9 +11,7 @@
             <div>
                 <h5 th:text="'Welcome, '+ ${user.firstName} + ' ' + ${user.lastName} + '!'">Welcome!</h5>
                 <form method="post">
-
                     <div class="form-group">
-
                         <label>
                             New to LABrador? Find a Lab!
                             <select class="form-control" th:field="${user.lab}">
@@ -24,21 +22,16 @@
                             </select>
                             <small>Don't See your lab? Add it <a th:href="@{/lab/add}">here</a>.</small>
                         </label>
-
-                        <div>
-                            <a class="btn btn-success" th:href="@{/lab/passcode/{id}(id=${labId})}" role="button">Join Lab</a>
+                        <div class="form-group">
+                            <input class="btn btn-success" type="submit" value="Join Lab">
                         </div>
-
                     </div>
                 </form>
-
                 <div>
                     <p>Or get started without a lab!</p>
                     <a class="btn btn-primary" th:href="@{/colony/add}" role="button">Create New Colony</a>
                 </div>
-
             </div>
-
         </div>
     </body>
 </html>

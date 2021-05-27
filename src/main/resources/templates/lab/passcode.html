@@ -8,18 +8,27 @@
 <div th:replace="fragments :: home-header-fragment"></div>
 <div class="container  body-content">
     <h2 th:text="'Join ' + ${lab.labName}">Join Lab</h2>
-    <form method="post">
-        <div class="form-group">
-            <label>
-                Please Enter the Passcode:
-                <input class="form-control" th:field="${labFormDTO.passcode}" type="password"/>
-                <span th:errors="${labFormDTO.passcode}" class="error"></span>
-            </label>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-success" type="submit" aria-pressed="true">Join Lab</button>
-        </div>
-    </form>
+
+
+        <p th:text="'Lab: '+ ${lab.labName}"></p>
+        <p th:text="'Principal Investigator: '+ ${lab.principalInvestigator}"></p>
+        <p th:text="'Contact Email: '+ ${lab.contactEmail}"></p>
+        <p th:text="'Organization: '+ ${lab.organization}"></p>
+        <p th:text="'Department: '+ ${lab.department}"></p>
+<!--        <a th:href="@{/user/edit}" class="btn btn-secondary" role="button" aria-pressed="true">Edit</a>-->
+
+<!--    <form method="post">-->
+<!--        <div class="form-group">-->
+<!--            <label>-->
+<!--                Please Enter the Passcode:-->
+<!--                <input class="form-control" th:field="${labFormDTO.passcode}" type="password"/>-->
+<!--                <span th:errors="${labFormDTO.passcode}" class="error"></span>-->
+<!--            </label>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <button class="btn btn-success" type="submit" aria-pressed="true">Join Lab</button>-->
+<!--        </div>-->
+<!--    </form>-->
 </div>
 </body>
 </html>
