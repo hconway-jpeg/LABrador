@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-    <head th:replace="fragments :: head">
+    <head th:replace="fragments :: head-login">
     </head>
     <body>
     <div class="container body-content">
@@ -27,6 +27,13 @@
 
                     <div>
                         <p class="text-center">Need an account? <a href="/register">Register here.</a></p>
+                        <div class="row">
+                            <div class="col"></div>
+                            <div class="col">
+                                <p class="text-center bold">Or,<div class="g-signin2" data-onsuccess="onSignIn"></div></p>
+                            </div>
+                            <div class="col"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="col"></div>
