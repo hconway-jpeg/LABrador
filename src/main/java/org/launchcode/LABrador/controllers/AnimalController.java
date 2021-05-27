@@ -145,7 +145,26 @@ public class AnimalController {
         model.addAttribute("animals", animalRepository.findAll());
         return "colony/index";
     }
+    @GetMapping("id")
+    public String sortById(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
 
+        model.addAttribute("title", "id sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by("id")));
+        return "colony/index";
+    }
+    @GetMapping("id2")
+    public String sortByIdD(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
+        model.addAttribute("title", "id sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"id")));
+        return "colony/index";
+    }
     @GetMapping("tag")
     public String sortByTag(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -154,6 +173,16 @@ public class AnimalController {
 
         model.addAttribute("title", "tag sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by("tag")));
+        return "colony/index";
+    }
+    @GetMapping("tag2")
+    public String sortByTagD(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
+        model.addAttribute("title", "tag sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"tag")));
         return "colony/index";
     }
 
@@ -167,7 +196,16 @@ public class AnimalController {
         model.addAttribute("animals", animalRepository.findAll(Sort.by("cageNumber")));
         return "colony/index";
     }
+    @GetMapping("cagenumber2")
+    public String sortByCageNumberD(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
 
+        model.addAttribute("title", "cage number sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"cageNumber")));
+        return "colony/index";
+    }
     @GetMapping("type")
     public String sortByCageType(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -176,6 +214,16 @@ public class AnimalController {
 
         model.addAttribute("title", "cage type sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by("cageType")));
+        return "colony/index";
+    }
+    @GetMapping("type2")
+    public String sortByCageTypeD(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
+        model.addAttribute("title", "cage type sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"cageType")));
         return "colony/index";
     }
 
@@ -189,6 +237,16 @@ public class AnimalController {
         model.addAttribute("animals", animalRepository.findAll(Sort.by("sex")));
         return "colony/index";
     }
+    @GetMapping("sex2")
+    public String sortBySexD(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
+        model.addAttribute("title", "sex sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"sex")));
+        return "colony/index";
+    }
 
     @GetMapping("dateofbirth")
     public String sortByDateOfBirth(Model model, HttpServletRequest request) {
@@ -198,6 +256,16 @@ public class AnimalController {
 
         model.addAttribute("title", "date of birth sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by("dateOfBirth")));
+        return "colony/index";
+    }
+    @GetMapping("dateofbirth2")
+    public String sortByDateOfBirthD(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
+        model.addAttribute("title", "date of birth sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"dateOfBirth")));
         return "colony/index";
     }
 
@@ -212,6 +280,16 @@ public class AnimalController {
         model.addAttribute("animals", animalRepository.findAll(Sort.by("genotype")));
         return "colony/index";
     }
+    @GetMapping("genotype2")
+    public String sortByGenotype2(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
+        model.addAttribute("title", "genotype sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"genotype")));
+        return "colony/index";
+    }
 
     @GetMapping("litter")
     public String sortByLitter(Model model, HttpServletRequest request) {
@@ -221,6 +299,16 @@ public class AnimalController {
 
         model.addAttribute("title", "litter sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by("litter")));
+        return "colony/index";
+    }
+    @GetMapping("litter2")
+    public String sortByLitterD(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
+        model.addAttribute("title", "litter sort");
+        model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"litter")));
         return "colony/index";
     }
 
