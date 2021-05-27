@@ -10,12 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.text.html.Option;
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("lab")
@@ -76,15 +73,14 @@ public class LabController {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
-
         model.addAttribute("title", "Join Lab");
-        model.addAttribute(new LabFormDTO());
         model.addAttribute("lab", labRepository.findLabByLabName(lab.getLabName()));
+        model.addAttribute("labFormDTO", new LabFormDTO());
         return "lab/passcode";
     }
 
-    @PostMapping("passcode/{labId}")
-    public String processPasscodeForm(@ModelAttribute @Valid LabFormDTO labFormDTO, Errors errors, HttpServletRequest request, Model model, @PathVariable int labId) {
+    @PostMapping("passcode")
+    public String processPasscodeForm(@ModelAttribute @Valid Lab lab, @ModelAttribute @Valid String passcode, Errors errors, HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
 
@@ -93,9 +89,8 @@ public class LabController {
             return "lab/passcode";
         }
 
-        Lab lab = labRepository.findById(labId).get();
-        String labPasscode = lab.getPasscode();
-        String passcode = labFormDTO.getPasscode();
+        Lab tmp = labRepository.findLabByLabName(lab.getLabName());
+        String labPasscode = tmp.getPasscode();
 
         if(!labPasscode.equals(passcode)){
             errors.rejectValue("passcode","passcode.mismatch", "Incorrect Passcode");
@@ -104,11 +99,16 @@ public class LabController {
             return "lab/passcode";
         }
 
-        lab.addUser(userFromSession);
-        labRepository.save(lab);
+        tmp.addUser(userFromSession);
+//        tmp.setLabName(lab.getLabName());
+//        tmp.setContactEmail(lab.getContactEmail());
+//        tmp.setDepartment(lab.getDepartment());
+//        tmp.setOrganization(lab.getOrganization());
+//        tmp.setPrincipalInvestigator(lab.getPrincipalInvestigator());
+        labRepository.save(tmp);
 
         User userTmp = userRepository.findByUsername(userFromSession.getUsername());
-        userTmp.addLab(lab);
+        userTmp.addLab(tmp);
         userRepository.save(userTmp);
         return "redirect:../";
     }
