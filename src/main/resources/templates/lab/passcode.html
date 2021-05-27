@@ -17,12 +17,12 @@
         <p th:text="'Department: '+ ${lab.department}"></p>
 <!--        <a th:href="@{/user/edit}" class="btn btn-secondary" role="button" aria-pressed="true">Edit</a>-->
 
-    <form method="post">
+    <form th:object="${labFormDTO}" method="post">
         <div class="form-group">
             <label>
                 Please Enter the Passcode:
-                <input class="form-control"/>
-<!--                <input class="form-control" th:field="${labFormDTO.pcCheck}"/>-->
+<!--                <input class="form-control"/>-->
+                <input class="form-control" th:field="*{pcCheck}" type="password" />
 <!--                <span th:errors="${labFormDTO.confirmPasscode}" class="error"></span>-->
             </label>
         </div>

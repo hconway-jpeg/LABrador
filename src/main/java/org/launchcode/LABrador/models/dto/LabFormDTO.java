@@ -5,7 +5,7 @@ import javax.validation.constraints.Size;
 
 public class LabFormDTO {
 
-    private String pcCheck = "";
+    private String pcCheck;
 
     public String getPcCheck() {
         return pcCheck;
