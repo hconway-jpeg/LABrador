@@ -71,6 +71,16 @@ public class LabController {
             return "lab/add";
         }
 
+        Lab labExists = labRepository.findLabByLabName(newLab.getLabName());
+        if (labExists != null) {
+            logger.info("A lab with this name already exists.");
+            errors.rejectValue("labName","labName.alreadyexists", "A lab with this name already exists.");
+
+            model.addAttribute("user", userFromSession);
+            model.addAttribute("title", "Add Lab");
+            return "lab/add";
+        }
+
         newLab.getUsers().add(userFromSession);
         labRepository.save(newLab);
         User userTmp = userRepository.findByUsername(userFromSession.getUsername());
