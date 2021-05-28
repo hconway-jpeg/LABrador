@@ -94,4 +94,13 @@ public class Lab extends AbstractEntity {
     }
     public void addUser(User user) { this.users.add(user); }
 
+//    public Animal findAnimalByID(int id) {
+//        Animal tmp = new Animal();
+//        for (Animal animal : colony){
+//            if (animal.getId() == id) {
+//                tmp = animal;
+//            }
+//        }
+//        return tmp;
+//    }
 }
