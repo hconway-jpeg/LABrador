@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Controller
@@ -42,7 +43,9 @@ public class LabController {
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
         model.addAttribute("title", "User's Labs");
-        model.addAttribute("labs", labRepository.findAll());
+
+        List<Lab> currentLabs = userFromSession.getLab();
+        model.addAttribute("labs", currentLabs);
         return "lab/index";
     }
 
@@ -91,7 +94,7 @@ public class LabController {
     }
 
     @GetMapping("passcode")
-    public String displayPasscodeForm(@ModelAttribute @Valid Lab lab, HttpServletRequest request,  Model model, RedirectAttributes redirectAttributes) {
+    public String displayPasscodeForm(@ModelAttribute @Valid Lab lab, HttpServletRequest request,  Model model) {
         logger.info("PasscodeForm display pending.");
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);

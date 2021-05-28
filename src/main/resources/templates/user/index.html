@@ -12,7 +12,10 @@
             <p th:text="'Username: '+ ${user.username}"></p>
             <p th:text="'Name: '+ ${user.firstName} + ' ' + ${user.lastName}"></p>
             <p th:text="'Email: '+ ${user.email}"></p>
-            <p th:text="'Affiliated Laboratory: '+ ${user.lab}"></p>
+            <p>Affiliated Laboratories:</p>
+                <ul th:each="lab : ${user.lab}">
+                    <li th:text="${lab.labName}"></li>
+                </ul>
             <a th:href="@{/user/edit}" class="btn btn-secondary" role="button" aria-pressed="true">Edit</a>
         </div>
     </body>
