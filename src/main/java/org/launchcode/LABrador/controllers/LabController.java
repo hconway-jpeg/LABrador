@@ -124,9 +124,26 @@ public class LabController {
             return "lab/passcode";
         }
 
+        User userTmp = userRepository.findByUsername(userFromSession.getUsername());
+        Lab labExists = null;
+        for (Lab lab : userTmp.getLab()) {
+            if (lab.getLabName().equals(labFormDTO.getLabName())){
+                labExists = lab;
+            }
+        }
+
+        if(labExists != null) {
+            logger.info("User is already a member of this lab.");
+            errors.rejectValue("pcCheck","pcCheck.alreadymember", "You are already a member of this lab.");
+            model.addAttribute("user", userFromSession);
+            model.addAttribute("title", "Join Lab");
+            model.addAttribute("lab", labRepository.findLabByLabName(labFormDTO.getLabName()));
+            model.addAttribute("labFormDTO", labFormDTO);
+            return "lab/passcode";
+        }
+
         tmp.addUser(userFromSession);
         labRepository.save(tmp);
-        User userTmp = userRepository.findByUsername(userFromSession.getUsername());
         userTmp.addLab(tmp);
         userRepository.save(userTmp);
         logger.info("PasscodeForm processing successful.");
