@@ -45,7 +45,7 @@ public class HomeController {
     }
 
     @PostMapping
-    public String processIndex(@ModelAttribute @Valid Lab newLab, Errors errors, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
+    public String processIndex(@ModelAttribute @Valid Lab lab, Errors errors, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
 
@@ -58,7 +58,7 @@ public class HomeController {
 //        model.addAttribute("user", userFromSession);
 //        model.addAttribute("user.lab", labRepository.findLabByLabName(newLab.getLabName()));
 //        model.addAttribute("labFormDTO", new LabFormDTO());
-        redirectAttributes.addFlashAttribute("lab", newLab);
+        redirectAttributes.addFlashAttribute("lab", lab);
         return "redirect:lab/passcode";
     }
 }
