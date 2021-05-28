@@ -20,8 +20,8 @@
         <div class="form-group">
             <label>
                 Find a Lab
-                <select class="form-control" th:field="${user.lab}">
-                    <option th:each="lab : ${labs}"
+                <select class="form-control" th:field="${allLabs}">
+                    <option th:each="lab : ${allLabs}"
                             th:value="${lab.id}"
                             th:text="${lab.labName}">
                     </option>

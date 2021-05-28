@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -46,6 +45,8 @@ public class LabController {
 
         List<Lab> currentLabs = userFromSession.getLab();
         model.addAttribute("labs", currentLabs);
+
+        model.addAttribute("allLabs", labRepository.findAll());
         return "lab/index";
     }
 

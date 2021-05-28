@@ -14,7 +14,7 @@
                     <div class="form-group">
                         <label>
                             New to LABrador? Find a Lab!
-                            <select class="form-control" th:field="${user.lab}">
+                            <select class="form-control" th:field="${labs}">
                                 <option th:each="lab : ${labs}"
                                         th:value="${lab.id}"
                                         th:text="${lab.labName}">
