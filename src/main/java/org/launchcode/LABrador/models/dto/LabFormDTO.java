@@ -1,8 +1,5 @@
 package org.launchcode.LABrador.models.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
 public class LabFormDTO {
 
     private String pcCheck;

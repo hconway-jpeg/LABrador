@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -42,7 +41,6 @@ public class LabController {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
-
         model.addAttribute("title", "User's Labs");
         model.addAttribute("labs", labRepository.findAll());
         return "lab/index";
@@ -50,59 +48,62 @@ public class LabController {
 
     @GetMapping("add")
     public String displayAddLabForm(HttpServletRequest request, Model model) {
-        logger.info("Display addLabForm pending.");
+        logger.info("AddLabForm display pending.");
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
-
         model.addAttribute("title", "Add Lab");
         model.addAttribute(new Lab());
+        logger.info("AddLabForm display successful.");
         return "lab/add";
     }
 
     @PostMapping("add")
     public String processAddLabForm(@ModelAttribute @Valid Lab newLab, Errors errors, HttpServletRequest request, Model model) {
+        logger.info("AddLabForm processing in progress.");
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
 
         if (errors.hasErrors()) {
+            logger.info("processAddLabForm has errors.");
             model.addAttribute("user", userFromSession);
             model.addAttribute("title", "Add Lab");
             return "lab/add";
         }
+
         newLab.getUsers().add(userFromSession);
         labRepository.save(newLab);
-
         User userTmp = userRepository.findByUsername(userFromSession.getUsername());
         userTmp.addLab(newLab);
         userRepository.save(userTmp);
+        logger.info("AddLabForm processing successful.");
         return "redirect:";
     }
 
     @GetMapping("passcode")
     public String displayPasscodeForm(@ModelAttribute @Valid Lab lab, HttpServletRequest request,  Model model, RedirectAttributes redirectAttributes) {
+        logger.info("PasscodeForm display pending.");
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         LabFormDTO labFormDTO = new LabFormDTO();
         labFormDTO.setLabName(lab.getLabName());
+
         model.addAttribute("user", userFromSession);
         model.addAttribute("title", "Join Lab");
         model.addAttribute("lab", labRepository.findLabByLabName(lab.getLabName()));
         model.addAttribute("labFormDTO", labFormDTO);
-
-
-//        redirectAttributes.addFlashAttribute("lab", lab);
+        logger.info("PasscodeForm display successful.");
         return "lab/passcode";
     }
 
     @PostMapping("passcode")
     public String processPasscodeForm(@ModelAttribute @Valid LabFormDTO labFormDTO, Errors errors, HttpServletRequest request, Model model) {
-        logger.info("Processing passcode.");
-
+        logger.info("PasscodeForm processing in progress.");
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
 
         if (errors.hasErrors()) {
+            logger.info("PasscodeForm has errors.");
             model.addAttribute("user", userFromSession);
             model.addAttribute("title", "Join Lab");
             model.addAttribute("lab", labRepository.findLabByLabName(labFormDTO.getLabName()));
@@ -114,6 +115,7 @@ public class LabController {
         String passcode = tmp.getPasscode();
         String pcCheck = labFormDTO.getPcCheck();
         if(!passcode.equals(pcCheck)){
+            logger.info("PasscodeForm passcode does not match.");
             errors.rejectValue("pcCheck","pcCheck.mismatch", "Incorrect Passcode");
             model.addAttribute("user", userFromSession);
             model.addAttribute("title", "Join Lab");
@@ -127,7 +129,7 @@ public class LabController {
         User userTmp = userRepository.findByUsername(userFromSession.getUsername());
         userTmp.addLab(tmp);
         userRepository.save(userTmp);
-
+        logger.info("PasscodeForm processing successful.");
         return "redirect:";
     }
 }
