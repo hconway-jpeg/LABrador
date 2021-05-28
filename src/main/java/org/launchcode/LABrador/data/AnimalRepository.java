@@ -9,5 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface AnimalRepository extends CrudRepository<Animal, Integer> {
     Animal findById(int Id);
 
+    Animal findAllByLabId(int Id);
+
     Object findAll(Sort genotypeTwo);
 }

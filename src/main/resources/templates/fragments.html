@@ -80,7 +80,7 @@
                         <a class="nav-link" th:href="@{/colony/search}">Search</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/colony/add}">Add Animal</a>
+                        <a class="nav-link" th:href="@{/colony/add/{id}(id=${lab.id})}">Add Animal</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/colony/genotype}">Genotype Database</a>

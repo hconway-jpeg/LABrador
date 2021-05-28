@@ -8,7 +8,7 @@
     <div th:replace="fragments :: colony-header-fragment"></div>
     <div class="container  body-content">
         <h2>Add Animal</h2>
-        <form method="post" >
+        <form th:object="${labFormDTO}" method="post" >
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
@@ -61,6 +61,16 @@
                     <div class="form-group">
                         <input class="btn btn-success" type="submit" value="Add Entry">
                     </div>
+<!--                    <div class="form-group">-->
+<!--                        <label>-->
+<!--                            <input class="form-control" th:field="*{pcCheck}" type="hidden" />-->
+<!--&lt;!&ndash;                            <span th:errors="*{pcCheck}" class="error"></span>&ndash;&gt;-->
+<!--                        </label>-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <input class="form-control" th:field="*{labName}" type="hidden" />-->
+<!--                    </div>-->
+
                 </div>
                 <div class="col-sm-4">
                     <div class="card mb-5">

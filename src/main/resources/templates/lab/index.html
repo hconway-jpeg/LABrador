@@ -14,7 +14,7 @@
         <div>
             Your labs:
             <ul >
-                <li th:each="lab : ${labs}"><a href="/colony" th:text="${lab.labName}"></a></li>
+                <li th:each="lab : ${labs}"><a th:href="@{/colony/{id}(id=${lab.id})}" th:text="${lab.labName}"></a></li>
             </ul>
         </div>
         <div class="form-group">
