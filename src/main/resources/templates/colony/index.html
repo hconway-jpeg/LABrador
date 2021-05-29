@@ -56,7 +56,13 @@
                     <td>
                         <input type="checkbox" name="animalIds" th:value="${animal.id}">
                     </td>
-                    <td>
+<!--                    <td>-->
+<!--                        <a th:href="@{/colony/edit/{id}(id=${animal.id})}">Edit</a>-->
+<!--                    </td>-->
+                    <td th:if="${lab}">
+                        <a th:href="@{/colony/edit/{id}/{id2}(id=${animal.id}, id2=${lab.id})}">Edit</a>
+                    </td>
+                    <td th:unless="${lab}">
                         <a th:href="@{/colony/edit/{id}(id=${animal.id})}">Edit</a>
                     </td>
                 </tr>
