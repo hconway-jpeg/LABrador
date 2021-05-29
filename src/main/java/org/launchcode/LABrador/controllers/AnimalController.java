@@ -47,7 +47,6 @@ public class AnimalController {
 
         int userId = userFromSession.getId();
         List<Animal> colony = new ArrayList<>();
-
         for (Animal animal : animalRepository.findAll()) {
             if (animal.getUser() != null && animal.getUser().getId() == userId){
                 colony.add(animal);
@@ -67,9 +66,8 @@ public class AnimalController {
 
         List<Animal> colony = new ArrayList<>();
         for (Animal animal : animalRepository.findAll()) {
-            if (animal.getLab().getId() == labId){
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
                 colony.add(animal);
-//                animal.setLab(labRepository.findLabById(labId));
             }
         }
         labRepository.findLabById(labId).setColony(colony);
@@ -78,7 +76,7 @@ public class AnimalController {
     }
 
     @GetMapping("add/{labId}")
-    public String displayAddAnimalForm(Model model, @PathVariable int labId, HttpServletRequest request) {
+    public String displayAddLabAnimalForm(Model model, @PathVariable int labId, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
@@ -95,8 +93,25 @@ public class AnimalController {
         return "colony/add";
     }
 
+    @GetMapping("add")
+    public String displayAddUserAnimalForm(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
+        if (genotypeRepository.findByName("") == null) {
+            Genotype blankGenotype = new Genotype("");
+            genotypeRepository.save(blankGenotype);
+        }
+
+        model.addAttribute("title", "Add Entry");
+        model.addAttribute("genotype", genotypeRepository.findAll());
+        model.addAttribute(new Animal());
+        return "colony/add";
+    }
+
     @PostMapping("add/{labId}")
-    public String processAddAnimalForm(@PathVariable int labId, @ModelAttribute @Valid Animal newAnimal, Errors errors, HttpServletRequest request, Model model) {
+    public String processAddLabAnimalForm(@PathVariable int labId, @ModelAttribute @Valid Animal newAnimal, Errors errors, HttpServletRequest request, Model model) {
         logger.info("AddAnimalForm process pending.");
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
@@ -118,29 +133,59 @@ public class AnimalController {
 
         List<Animal> colony = new ArrayList<>();
         for (Animal animal : animalRepository.findAll()) {
-            if (animal.getLab().getId() == labId){
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
                 colony.add(animal);
-                animal.setLab(labRepository.findLabById(labId));
             }
         }
-        colony.add(newAnimal);
         newAnimal.setLab(labRepository.findLabById(labId));
+        colony.add(newAnimal);
         labRepository.findLabById(labId).setColony(colony);
         animalRepository.save(newAnimal);
         model.addAttribute("lab", labRepository.findLabById(labId));
         model.addAttribute("user", userFromSession);
-
         model.addAttribute("title", "LAB_NAME Animal Colony");
-        List<Animal> animals = new ArrayList<>();
-        labRepository.findLabById(labId).setColony(colony);
+        model.addAttribute("animals", colony);
+        logger.info("AddAnimalForm process successful");
+        return "colony/index";
+    }
+
+    @PostMapping("add")
+    public String processAddUserAnimalForm(@ModelAttribute @Valid Animal newAnimal, Errors errors, HttpServletRequest request, Model model) {
+        logger.info("AddAnimalForm process pending.");
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+
+        if (errors.hasErrors()) {
+            model.addAttribute("user", userFromSession);
+            model.addAttribute("title", "Add Entry");
+            model.addAttribute("genotype", genotypeRepository.findAll());
+            return "colony/add";
+        }
+
+        if (!newAnimal.getNotesDescription().isEmpty() && newAnimal.getNotesKeyword().isEmpty() ) {
+            errors.rejectValue("notesKeyword", "notesKeyword.isblank", "Must enter a keyword.");
+            model.addAttribute("user", userFromSession);
+            model.addAttribute("title", "Add Entry");
+            model.addAttribute("genotype", genotypeRepository.findAll());
+            return "colony/add";
+        }
+
+        int userId = userFromSession.getId();
+        List<Animal> colony = new ArrayList<>();
         for (Animal animal : animalRepository.findAll()) {
-            if (animal.getLab().getId() == labId){
-                animals.add(animal);
+            if (animal.getUser() != null && animal.getUser().getId() == userId){
+                colony.add(animal);
             }
         }
-        model.addAttribute("animals", animals);
+
+        colony.add(newAnimal);
+        newAnimal.setUser(userFromSession);
+        userFromSession.setColony(colony);
+        animalRepository.save(newAnimal);
+        model.addAttribute("user", userFromSession);
+        model.addAttribute("title", "USERNAME Animal Colony");
+        model.addAttribute("animals", colony);
         logger.info("AddAnimalForm process successful");
-//        return "redirect:";
         return "colony/index";
     }
 
