@@ -38,20 +38,38 @@ public class AnimalController {
 
     Logger logger = LoggerFactory.getLogger(AnimalController.class);
 
+    @GetMapping
+    public String displayUserAnimal(Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+        model.addAttribute("title", "LAB_NAME Animal Colony");
+
+        int userId = userFromSession.getId();
+        List<Animal> colony = new ArrayList<>();
+
+        for (Animal animal : animalRepository.findAll()) {
+            if (animal.getUser() != null && animal.getUser().getId() == userId){
+                colony.add(animal);
+            }
+        }
+        model.addAttribute("animals", colony);
+        return "colony/index";
+    }
+
     @GetMapping("{labId}")
-    public String displayAllAnimals(Model model, @PathVariable int labId, HttpServletRequest request) {
+    public String displayLabAnimals(Model model, @PathVariable int labId, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
         model.addAttribute("title", "LAB_NAME Animal Colony");
         model.addAttribute("lab", labRepository.findLabById(labId));
-//        model.addAttribute("animals", animalRepository.findAll());
 
         List<Animal> colony = new ArrayList<>();
         for (Animal animal : animalRepository.findAll()) {
             if (animal.getLab().getId() == labId){
                 colony.add(animal);
-                animal.setLab(labRepository.findLabById(labId));
+//                animal.setLab(labRepository.findLabById(labId));
             }
         }
         labRepository.findLabById(labId).setColony(colony);

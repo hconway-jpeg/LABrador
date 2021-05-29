@@ -6,7 +6,9 @@
 </head>
 <body>
 
-    <div th:replace="fragments :: colony-header-fragment"></div>
+<!--    <div th:replace="fragments :: colony-header-fragment"></div>-->
+<th:block th:if="${lab}"><div th:replace="fragments :: lab-colony-header-fragment"></div></th:block>
+<th:block th:unless="${lab}"><div th:replace="fragments :: user-colony-header-fragment"></div></th:block>
 
     <div class="container" id="table">
         <form method="post">
