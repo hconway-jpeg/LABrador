@@ -35,8 +35,11 @@
         <div class="container">
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
+                    <li th:if="${user.lab.size == 0}" class="nav-item">
                         <a class="navbar-brand" th:href="@{/}">LABrador</a>
+                    </li>
+                    <li th:unless="${user.lab.size == 0}" class="nav-item">
+                        <a class="navbar-brand" th:href="@{/lab}">LABrador</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/lab}">My Labs</a>
@@ -70,8 +73,11 @@
         <div class="container">
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
+                    <li th:if="${user.lab.size == 0}" class="nav-item">
                         <a class="navbar-brand" th:href="@{/}">LABrador</a>
+                    </li>
+                    <li th:unless="${user.lab.size == 0}" class="nav-item">
+                        <a class="navbar-brand" th:href="@{/lab}">LABrador</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/colony}">Animal Database</a>
@@ -108,8 +114,11 @@
         <div class="container">
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
+                    <li th:if="${user.lab.size == 0}" class="nav-item">
                         <a class="navbar-brand" th:href="@{/}">LABrador</a>
+                    </li>
+                    <li th:unless="${user.lab.size == 0}" class="nav-item">
+                        <a class="navbar-brand" th:href="@{/lab}">LABrador</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/colony}">Animal Database</a>
@@ -146,8 +155,11 @@
         <div class="container">
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
+                    <li th:if="${user.lab.size == 0}" class="nav-item">
                         <a class="navbar-brand" th:href="@{/}">LABrador</a>
+                    </li>
+                    <li th:unless="${user.lab.size == 0}" class="nav-item">
+                        <a class="navbar-brand" th:href="@{/lab}">LABrador</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/colony}">Animal Database</a>

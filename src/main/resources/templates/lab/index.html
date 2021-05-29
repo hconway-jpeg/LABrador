@@ -17,20 +17,23 @@
                 <li th:each="lab : ${labs}"><a th:href="@{/colony/{id}(id=${lab.id})}" th:text="${lab.labName}"></a></li>
             </ul>
         </div>
-        <div class="form-group">
-            <label>
-                Find a Lab
-                <select class="form-control" th:field="${allLabs}">
-                    <option th:each="lab : ${allLabs}"
-                            th:value="${lab.id}"
-                            th:text="${lab.labName}">
-                    </option>
-                </select>
-                <small><a th:href="@{/lab/add}">Create New Lab</a>.</small>
-            </label>
-        </div>
+        <form method="post">
+            <div class="form-group">
+                <label>
+                    Find a Lab
+                    <select class="form-control" th:field="${user.lab}">
+                        <option th:each="lab : ${allLabs}"
+                                th:value="${lab.id}"
+                                th:text="${lab.labName}">
+                        </option>
+                    </select>
+                </label>
+                <div class="form-group">
+                    <input class="btn btn-success" type="submit" value="Join Lab">
+                </div>
+            </div>
+        </form>
     </div>
-
 </div>
 </body>
 </html>

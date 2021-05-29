@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -41,13 +42,18 @@ public class LabController {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
-        model.addAttribute("title", "User's Labs");
-
         List<Lab> currentLabs = userFromSession.getLab();
         model.addAttribute("labs", currentLabs);
-
         model.addAttribute("allLabs", labRepository.findAll());
         return "lab/index";
+    }
+
+    @PostMapping
+    public String processJoinLab(@ModelAttribute @Valid Lab lab, Errors errors, HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        redirectAttributes.addFlashAttribute("lab", lab);
+        return "redirect:lab/passcode";
     }
 
     @GetMapping("add")

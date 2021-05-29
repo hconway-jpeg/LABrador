@@ -1,6 +1,7 @@
 package org.launchcode.LABrador.controllers;
 
 import org.launchcode.LABrador.data.UserRepository;
+import org.launchcode.LABrador.models.Lab;
 import org.launchcode.LABrador.models.User;
 import org.launchcode.LABrador.models.dto.LoginFormDTO;
 import org.launchcode.LABrador.models.dto.RegisterFormDTO;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import java.util.List;
 
 import static org.launchcode.LABrador.controllers.AuthenticationController.setUserInSession;
 
@@ -66,6 +69,10 @@ public class LoginController {
 
         setUserInSession(request.getSession(), userFind);
 
+        List<Lab> lab = userFind.getLab();
+        if (lab.size() != 0){
+            return "redirect:lab/";
+        }
         return "redirect:";
     }
 
