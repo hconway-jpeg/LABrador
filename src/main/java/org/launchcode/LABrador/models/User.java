@@ -24,6 +24,9 @@ public class User extends AbstractEntity {
     @ManyToMany
     private final List<Lab> labs = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private  List<Animal> colony = new ArrayList<>();
+
     @NotNull
     private String email;
 
@@ -81,6 +84,9 @@ public class User extends AbstractEntity {
     public List<Lab> getLab() { return labs; }
     public void addLab(Lab lab) { this.labs.add(lab); }
 
+    public List<Animal> getColony() {return colony;}
+
+    public void setColony(List<Animal> colony) {this.colony = colony;}
 
     public boolean isMatchingPassword(String password) {
         return encoder.matches(password, pwHash);

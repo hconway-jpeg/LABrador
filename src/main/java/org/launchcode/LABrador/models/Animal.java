@@ -20,6 +20,9 @@ public class Animal extends AbstractEntity {
     @ManyToOne
     private Lab lab;
 
+    @ManyToOne
+    private User user;
+
     private String litter;
 
     @Size(max = 30, message = "Keyword is too long.")
@@ -100,6 +103,9 @@ public class Animal extends AbstractEntity {
 
     public Lab getLab() { return lab; }
     public void setLab(Lab lab) { this.lab = lab; }
+
+    public User getUser() {return user;}
+    public void setUser(User user) {this.user = user;}
 
     @Override
     public String toString() {
