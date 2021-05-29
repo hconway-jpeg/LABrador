@@ -2,7 +2,6 @@ package org.launchcode.LABrador.models;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.Size;
 
 @Entity

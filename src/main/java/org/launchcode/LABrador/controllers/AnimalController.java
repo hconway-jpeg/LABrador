@@ -209,6 +209,38 @@ public class AnimalController {
         return "colony/index";
     }
 
+//    @GetMapping("tag/{labId}")
+//    public String labSortByTag(Model model, HttpServletRequest request) {
+//        HttpSession session = request.getSession();
+//        User userFromSession = authenticationController.getUserFromSession(session);
+//        model.addAttribute("user", userFromSession);
+//
+//        model.addAttribute("title", "tag sort");
+//        model.addAttribute("animals", animalRepository.findAll(Sort.by("tag")));
+//        return "colony/index";
+//    }
+//
+//    @GetMapping("tag")
+//    public String userSortByTag(Model model, HttpServletRequest request) {
+//        HttpSession session = request.getSession();
+//        User userFromSession = authenticationController.getUserFromSession(session);
+//        model.addAttribute("user", userFromSession);
+//        model.addAttribute("title", "tag sort");
+//
+//        int userId = userFromSession.getId();
+//        List<Animal> colony = new ArrayList<>();
+//
+//        for (Animal animal : animalRepository.findAll()) {
+//            if (animal.getUser() != null && animal.getUser().getId() == userId){
+//                colony.add(animal);
+//            }
+//        }
+//        Iterable<Animal> animals = colony;
+//
+//        model.addAttribute("animals", colony.(Sort.by("tag", colony.));
+//        return "colony/index";
+//    }
+
     @GetMapping("tag")
     public String sortByTag(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();

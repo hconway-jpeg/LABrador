@@ -14,7 +14,20 @@
         <form method="post">
         <table class="table table-striped table-bordered mt-4">
             <thead class="thead-dark">
-                <tr>
+                <tr th:if="${lab}">
+                    <th><a>ID</a></th>
+                    <th><a class="text-light" th:href="@{/colony/tag/{id}(id=${lab.id})}">Tag</a></th>
+                    <th><a class="text-light" th:href="@{/colony/cagenumber/{id}(id=${lab.id})}">Cage Number</a></th>
+                    <th><a class="text-light" th:href="@{/colony/type/{id}(id=${lab.id})}">Type</a></th>
+                    <th><a class="text-light" th:href="@{/colony/sex/{id}(id=${lab.id})}">Sex</a></th>
+                    <th><a class="text-light" th:href="@{/colony/dateofbirth/{id}(id=${lab.id})}">Date of Birth</a></th>
+                    <th><a class="text-light" th:href="@{/colony/genotype1/{id}(id=${lab.id})}">Genotype</a></th>
+                    <th><a class="text-light" th:href="@{/colony/litter/{id}(id=${lab.id})}">Litter</a></th>
+                    <th>Notes</th>
+                    <th>Delete?</th>
+                    <th></th>
+                </tr>
+                <tr th:unless="${lab}">
                     <th><a>ID</a></th>
                     <th><a class="text-light" th:href="@{/colony/tag}">Tag</a></th>
                     <th><a class="text-light" th:href="@{/colony/cagenumber}">Cage Number</a></th>
@@ -27,7 +40,6 @@
                     <th>Delete?</th>
                     <th></th>
                 </tr>
-
             <tbody>
                 <tr th:each="animal : ${animals}">
                     <td th:text="${animal.id}"></td>

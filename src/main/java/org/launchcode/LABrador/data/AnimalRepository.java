@@ -11,5 +11,9 @@ public interface AnimalRepository extends CrudRepository<Animal, Integer> {
 
     Animal findAllByLabId(int Id);
 
+    Animal findAllByUserId(int Id);
+
+
+
     Object findAll(Sort genotypeTwo);
 }
