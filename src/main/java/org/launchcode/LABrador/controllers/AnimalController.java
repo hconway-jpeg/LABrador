@@ -285,8 +285,8 @@ public class AnimalController {
         return "redirect:../";
     }
 
-    @PostMapping
-    public String processDeleteAnimalForm(Model model, HttpServletRequest request, @RequestParam(required = false) int[] animalIds) {
+    @PostMapping("{labId}")
+    public String processDeleteLabAnimalForm(Model model, HttpServletRequest request, @RequestParam(required = false) int[] animalIds) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
@@ -297,7 +297,21 @@ public class AnimalController {
             }
         }
         model.addAttribute("title", "LAB_NAME Animal Colony");
-        model.addAttribute("animals", animalRepository.findAll());
+        return "redirect:/colony/{labId}";
+    }
+
+    @PostMapping
+    public String processDeleteUserAnimalForm(Model model, HttpServletRequest request, @RequestParam(required = false) int[] animalIds) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
+        if (animalIds != null) {
+            for (int id : animalIds) {
+                animalRepository.deleteById(id);
+            }
+        }
+        model.addAttribute("title", "LAB_NAME Animal Colony");
         return "colony/index";
     }
 
