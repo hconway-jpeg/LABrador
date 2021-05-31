@@ -209,11 +209,7 @@ public class UserController {
 
         User userDel = userRepository.findByUsername(userFromSession.getUsername());
         int userDelId = userDel.getId();
-        for (Animal animal : animalRepository.findAll()) {
-            if (animal.getUser() != null && animal.getUser().getId() == userDelId) {
-                animalRepository.delete(animal);
-            }
-        }
+
 
         userRepository.deleteById(userDel.getId());
         for (Lab lab : labRepository.findAll()) {

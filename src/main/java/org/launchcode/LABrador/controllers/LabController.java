@@ -5,8 +5,6 @@ import org.launchcode.LABrador.data.UserRepository;
 import org.launchcode.LABrador.models.Lab;
 import org.launchcode.LABrador.models.User;
 import org.launchcode.LABrador.models.dto.LabFormDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,8 +23,6 @@ import java.util.List;
 @Controller
 @RequestMapping("lab")
 public class LabController {
-
-    Logger logger = LoggerFactory.getLogger(LabController.class);
 
     @Autowired
     private AuthenticationController authenticationController;
@@ -58,24 +54,20 @@ public class LabController {
 
     @GetMapping("add")
     public String displayAddLabForm(HttpServletRequest request, Model model) {
-        logger.info("AddLabForm display pending.");
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
         model.addAttribute("title", "Add Lab");
         model.addAttribute(new Lab());
-        logger.info("AddLabForm display successful.");
         return "lab/add";
     }
 
     @PostMapping("add")
     public String processAddLabForm(@ModelAttribute @Valid Lab newLab, Errors errors, HttpServletRequest request, Model model) {
-        logger.info("AddLabForm processing in progress.");
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
 
         if (errors.hasErrors()) {
-            logger.info("processAddLabForm has errors.");
             model.addAttribute("user", userFromSession);
             model.addAttribute("title", "Add Lab");
             return "lab/add";
@@ -83,7 +75,6 @@ public class LabController {
 
         Lab labExists = labRepository.findLabByLabName(newLab.getLabName());
         if (labExists != null) {
-            logger.info("A lab with this name already exists.");
             errors.rejectValue("labName","labName.alreadyexists", "A lab with this name already exists.");
 
             model.addAttribute("user", userFromSession);
@@ -96,13 +87,11 @@ public class LabController {
         User userTmp = userRepository.findByUsername(userFromSession.getUsername());
         userTmp.addLab(newLab);
         userRepository.save(userTmp);
-        logger.info("AddLabForm processing successful.");
         return "redirect:";
     }
 
     @GetMapping("passcode")
     public String displayPasscodeForm(@ModelAttribute @Valid Lab lab, HttpServletRequest request,  Model model) {
-        logger.info("PasscodeForm display pending.");
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         LabFormDTO labFormDTO = new LabFormDTO();
@@ -112,18 +101,15 @@ public class LabController {
         model.addAttribute("title", "Join Lab");
         model.addAttribute("lab", labRepository.findLabByLabName(lab.getLabName()));
         model.addAttribute("labFormDTO", labFormDTO);
-        logger.info("PasscodeForm display successful.");
         return "lab/passcode";
     }
 
     @PostMapping("passcode")
     public String processPasscodeForm(@ModelAttribute @Valid LabFormDTO labFormDTO, Errors errors, HttpServletRequest request, Model model) {
-        logger.info("PasscodeForm processing in progress.");
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
 
         if (errors.hasErrors()) {
-            logger.info("PasscodeForm has errors.");
             model.addAttribute("user", userFromSession);
             model.addAttribute("title", "Join Lab");
             model.addAttribute("lab", labRepository.findLabByLabName(labFormDTO.getLabName()));
@@ -135,7 +121,6 @@ public class LabController {
         String passcode = tmp.getPasscode();
         String pcCheck = labFormDTO.getPcCheck();
         if(!passcode.equals(pcCheck)){
-            logger.info("PasscodeForm passcode does not match.");
             errors.rejectValue("pcCheck","pcCheck.mismatch", "Incorrect Passcode");
             model.addAttribute("user", userFromSession);
             model.addAttribute("title", "Join Lab");
@@ -153,7 +138,6 @@ public class LabController {
         }
 
         if(labExists != null) {
-            logger.info("User is already a member of this lab.");
             errors.rejectValue("pcCheck","pcCheck.alreadymember", "You are already a member of this lab.");
             model.addAttribute("user", userFromSession);
             model.addAttribute("title", "Join Lab");
@@ -166,7 +150,8 @@ public class LabController {
         labRepository.save(tmp);
         userTmp.addLab(tmp);
         userRepository.save(userTmp);
-        logger.info("PasscodeForm processing successful.");
         return "redirect:";
+
     }
+
 }

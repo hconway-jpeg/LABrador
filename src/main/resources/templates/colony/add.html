@@ -6,8 +6,7 @@
 </head>
 <body>
 
-<th:block th:if="${lab}"><div th:replace="fragments :: lab-colony-header-fragment"></div></th:block>
-<th:block th:unless="${lab}"><div th:replace="fragments :: user-colony-header-fragment"></div></th:block>
+<div th:replace="fragments :: lab-colony-header-fragment"></div>
     <div class="container  body-content">
         <h2>Add Animal</h2>
         <form th:object="${labFormDTO}" method="post" >
