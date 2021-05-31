@@ -48,7 +48,7 @@
                         <a class="nav-link" th:href="@{/lab/add}">Create Lab</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/colony}">Animal Database</a>
+                        <a class="nav-link" th:href="@{/colony/{username}(username=${user.username})/{labId}(labId=${user.lab.id})}">Animal Database</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
