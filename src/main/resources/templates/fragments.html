@@ -88,8 +88,8 @@
                     <li class="nav-item" th:each="lab : ${lab}">
                         <a class="nav-link" th:href="@{/colony/add/{labId}(labId=${lab.id})}">Add Animal</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/colony/genotype}">Genotype Database</a>
+                    <li class="nav-item" th:each="lab : ${lab}">
+                        <a class="nav-link" th:href="@{/colony/genotype/{labId}(labId=${lab.id})}">Genotype Database</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
@@ -126,8 +126,8 @@
                     <li class="nav-item" th:each="lab : ${lab}">
                         <a class="nav-link" th:href="@{/colony/add/{labId}(labId=${lab.id})}">Add Animal</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/colony/genotype}">Genotype Database</a>
+                    <li class="nav-item" th:each="lab : ${lab}">
+                        <a class="nav-link" th:href="@{/colony/genotype/{labId}(labId=${lab.id})}">Genotype Database</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">

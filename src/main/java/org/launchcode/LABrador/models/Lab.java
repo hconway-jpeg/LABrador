@@ -26,7 +26,10 @@ public class Lab extends AbstractEntity {
     private final List<User> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "lab")
-    private  List<Animal> colony = new ArrayList<>();
+    private List<Animal> colony = new ArrayList<>();
+
+    @OneToMany(mappedBy = "lab")
+    private List<Genotype> genotypes = new ArrayList<>();
 
     private String organization;
 
@@ -98,18 +101,12 @@ public class Lab extends AbstractEntity {
     public List<Animal> getColony() {
         return colony;
     }
-
     public void setColony(List<Animal> colony) {
         this.colony = colony;
     }
 
-    //    public Animal findAnimalByID(int id) {
-//        Animal tmp = new Animal();
-//        for (Animal animal : colony){
-//            if (animal.getId() == id) {
-//                tmp = animal;
-//            }
-//        }
-//        return tmp;
-//    }
+    public List<Genotype> getGenotypes() { return genotypes; }
+    public void setGenotype(List<Genotype> genotypes) { this.genotypes = genotypes; }
+
+
 }
