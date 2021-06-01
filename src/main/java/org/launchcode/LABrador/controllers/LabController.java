@@ -1,7 +1,9 @@
 package org.launchcode.LABrador.controllers;
 
+import org.launchcode.LABrador.data.GenotypeRepository;
 import org.launchcode.LABrador.data.LabRepository;
 import org.launchcode.LABrador.data.UserRepository;
+import org.launchcode.LABrador.models.Genotype;
 import org.launchcode.LABrador.models.Lab;
 import org.launchcode.LABrador.models.User;
 import org.launchcode.LABrador.models.dto.LabFormDTO;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,6 +35,9 @@ public class LabController {
 
     @Autowired
     private LabRepository labRepository;
+
+    @Autowired
+    private GenotypeRepository genotypeRepository;
 
     @GetMapping
     public String displayLabs(Model model, HttpServletRequest request) {
@@ -59,6 +65,7 @@ public class LabController {
         model.addAttribute("user", userFromSession);
         model.addAttribute("title", "Add Lab");
         model.addAttribute(new Lab());
+
         return "lab/add";
     }
 
@@ -87,6 +94,7 @@ public class LabController {
         User userTmp = userRepository.findByUsername(userFromSession.getUsername());
         userTmp.addLab(newLab);
         userRepository.save(userTmp);
+
         return "redirect:";
     }
 

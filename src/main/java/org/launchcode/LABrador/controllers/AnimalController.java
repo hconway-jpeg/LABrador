@@ -36,17 +36,25 @@ public class AnimalController {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
+
+        //prevent access to non-lab members
+        if (!userFromSession.getLab().contains(labRepository.findLabById(labId))) {
+            List<Lab> currentLabs = userFromSession.getLab();
+            model.addAttribute("labs", currentLabs);
+            model.addAttribute("allLabs", labRepository.findAll());
+            return "lab/index";
+        }
+
         String labName = labRepository.findLabById(labId).getLabName();
         model.addAttribute("title", labName + " Animal Colony");
-        model.addAttribute("lab", labRepository.findLabById(labId));
 
+        model.addAttribute("lab", labRepository.findLabById(labId));
         List<Animal> colony = new ArrayList<>();
         for (Animal animal : animalRepository.findAll()) {
             if (animal.getLab() != null && animal.getLab().getId() == labId){
                 colony.add(animal);
             }
         }
-
         labRepository.findLabById(labId).setColony(colony);
 
         model.addAttribute("animals", colony);
@@ -59,10 +67,26 @@ public class AnimalController {
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
-        if (genotypeRepository.findByName("") == null) {
-            Genotype blankGenotype = new Genotype("");
-            genotypeRepository.save(blankGenotype);
+        //prevent access to non-lab members
+        if (!userFromSession.getLab().contains(labRepository.findLabById(labId))) {
+            List<Lab> currentLabs = userFromSession.getLab();
+            model.addAttribute("labs", currentLabs);
+            model.addAttribute("allLabs", labRepository.findAll());
+            return "lab/index";
         }
+
+        Lab userLab = labRepository.findLabById(labId);
+
+        if (!userLab.getGenotypes().contains(genotypeRepository.findByName(""))) {
+            Genotype blankGenotype = new Genotype("");
+            userLab.addGenotype(blankGenotype);
+            genotypeRepository.save(blankGenotype);
+            labRepository.save(userLab);
+        }
+//        if (genotypeRepository.findByName("") == null) {
+//            Genotype blankGenotype = new Genotype("");
+//            genotypeRepository.save(blankGenotype);
+//        }
 
         List<Genotype> genotypes = new ArrayList<>();
         for (Genotype genotype : genotypeRepository.findAll()) {
@@ -75,6 +99,7 @@ public class AnimalController {
         model.addAttribute("genotype", genotypes);
         model.addAttribute("lab", labRepository.findLabById(labId));
         model.addAttribute(new Animal());
+
         return "colony/add";
     }
 
@@ -125,6 +150,14 @@ public class AnimalController {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
+
+        //prevent access to non-lab members
+        if (!userFromSession.getLab().contains(labRepository.findLabById(labId))) {
+            List<Lab> currentLabs = userFromSession.getLab();
+            model.addAttribute("labs", currentLabs);
+            model.addAttribute("allLabs", labRepository.findAll());
+            return "lab/index";
+        }
 
         model.addAttribute("title", "Edit Entry");
         model.addAttribute(animalRepository.findById(animalId));

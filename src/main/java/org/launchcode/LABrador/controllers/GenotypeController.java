@@ -40,6 +40,14 @@ public class GenotypeController {
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
+        //prevent access to non-lab members
+        if (!userFromSession.getLab().contains(labRepository.findLabById(labId))) {
+            List<Lab> currentLabs = userFromSession.getLab();
+            model.addAttribute("labs", currentLabs);
+            model.addAttribute("allLabs", labRepository.findAll());
+            return "lab/index";
+        }
+
         model.addAttribute("title", "Lab Genotypes");
         model.addAttribute("lab", labRepository.findLabById(labId));
 
@@ -60,6 +68,14 @@ public class GenotypeController {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
+
+        //prevent access to non-lab members
+        if (!userFromSession.getLab().contains(labRepository.findLabById(labId))) {
+            List<Lab> currentLabs = userFromSession.getLab();
+            model.addAttribute("labs", currentLabs);
+            model.addAttribute("allLabs", labRepository.findAll());
+            return "lab/index";
+        }
 
         model.addAttribute("title", "Lab Genotypes");
         model.addAttribute("lab", labRepository.findLabById(labId));
