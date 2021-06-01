@@ -63,8 +63,16 @@ public class AnimalController {
             Genotype blankGenotype = new Genotype("");
             genotypeRepository.save(blankGenotype);
         }
+
+        List<Genotype> genotypes = new ArrayList<>();
+        for (Genotype genotype : genotypeRepository.findAll()) {
+            if (genotype.getLab() != null && genotype.getLab().getId() == labId){
+                genotypes.add(genotype);
+            }
+        }
+
         model.addAttribute("title", "Add Entry");
-        model.addAttribute("genotype", genotypeRepository.findAll());
+        model.addAttribute("genotype", genotypes);
         model.addAttribute("lab", labRepository.findLabById(labId));
         model.addAttribute(new Animal());
         return "colony/add";

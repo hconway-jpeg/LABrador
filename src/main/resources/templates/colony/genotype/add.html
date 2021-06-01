@@ -12,7 +12,7 @@
     <nav th:replace="fragments :: genotype-header-fragment"></nav>
 
     <div class="container body-content">
-        <form method="post">
+        <form th:object="${labFormDTO}" method="post">
             <div class="form-group">
                 <label>
                     Genotype
