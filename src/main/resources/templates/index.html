@@ -13,24 +13,20 @@
                 <form method="post">
                     <div class="form-group">
                         <label>
-                            New to LABrador? Find a Lab!
+                            New to LABrador? Find Your Lab!
                             <select class="form-control" th:field="${user.lab}">
                                 <option th:each="lab : ${labs}"
                                         th:value="${lab.id}"
                                         th:text="${lab.labName}">
                                 </option>
                             </select>
-                            <small>Don't See your lab? Add it <a th:href="@{/lab/add}">here</a>.</small>
+                            <small>Don't See Your Lab? Add It <a th:href="@{/lab/add}">Here</a></small>
                         </label>
                         <div class="form-group">
                             <input class="btn btn-success" type="submit" value="Join Lab">
                         </div>
                     </div>
                 </form>
-                <div>
-                    <p>Or get started without a lab!</p>
-                    <a class="btn btn-primary" th:href="@{/colony/add}" role="button">Create New Colony</a>
-                </div>
             </div>
         </div>
     </body>

@@ -55,14 +55,14 @@ public class LoginController {
         User userFind = userRepository.findByUsername(loginFormDTO.getUsername());
 
         if(userFind == null){
-            errors.rejectValue("username", "user.invalid", "Invalid username.");
+            errors.rejectValue("username", "user.invalid", "User Not Found");
             model.addAttribute("title","LABrador - Log In");
             return "login";
         }
 
         String password = loginFormDTO.getPassword();
         if(!userFind.isMatchingPassword(password)){
-            errors.rejectValue("password","password.invalid", "Invalid password.");
+            errors.rejectValue("password","password.invalid", "Invalid password");
             model.addAttribute("title", "LABrador - Log In");
             return "login";
         }
@@ -87,7 +87,7 @@ public class LoginController {
         User userExists = userRepository.findByUsername(registerFormDTO.getUsername());
 
         if(userExists != null){
-            errors.rejectValue("username", "username.alreadyexists", "A user with that username already exists.");
+            errors.rejectValue("username", "username.alreadyexists", "Username already exists");
             model.addAttribute("title", "LABrador - Register");
             return "register";
         }
@@ -95,7 +95,7 @@ public class LoginController {
         String password = registerFormDTO.getPassword();
         String verifyPassword = registerFormDTO.getVerifyPassword();
         if(!password.equals(verifyPassword)){
-            errors.rejectValue("password", "passwords.mismatch", "Passwords do not match.");
+            errors.rejectValue("password", "passwords.mismatch", "Passwords do not match");
             model.addAttribute("title", "LABrador - Register");
             return "register";
         }

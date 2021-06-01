@@ -35,22 +35,17 @@
         <div class="container">
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li th:if="${user.lab.size == 0}" class="nav-item">
-                        <a class="navbar-brand" th:href="@{/}">LABrador</a>
-                    </li>
-                    <li th:unless="${user.lab.size == 0}" class="nav-item">
+
+                    <li class="nav-item">
                         <a class="navbar-brand" th:href="@{/lab}">LABrador</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/lab}">My Labs</a>
+                        <a class="nav-link" th:href="@{/lab/add}">Create a Lab</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/lab/add}">Create Lab</a>
-                    </li>
-                    <li class="nav-item" th:each="lab : ${lab}">
-                        <a class="nav-link" th:href="@{/colony/{labId}(labId=${lab.id})}">Animal Database</a>
-                    </li>
+
                 </ul>
+
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a th:text="${user.username}" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

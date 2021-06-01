@@ -75,18 +75,6 @@ public class AnimalController {
             return "lab/index";
         }
 
-        Lab userLab = labRepository.findLabById(labId);
-
-        if (!userLab.getGenotypes().contains(genotypeRepository.findByName(""))) {
-            Genotype blankGenotype = new Genotype("");
-            userLab.addGenotype(blankGenotype);
-            genotypeRepository.save(blankGenotype);
-            labRepository.save(userLab);
-        }
-//        if (genotypeRepository.findByName("") == null) {
-//            Genotype blankGenotype = new Genotype("");
-//            genotypeRepository.save(blankGenotype);
-//        }
 
         List<Genotype> genotypes = new ArrayList<>();
         for (Genotype genotype : genotypeRepository.findAll()) {
@@ -94,6 +82,8 @@ public class AnimalController {
                 genotypes.add(genotype);
             }
         }
+        labRepository.findLabById(labId).setGenotype(genotypes);
+
 
         model.addAttribute("title", "Add Entry");
         model.addAttribute("genotype", genotypes);
