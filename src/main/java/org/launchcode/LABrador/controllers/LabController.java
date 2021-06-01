@@ -92,8 +92,13 @@ public class LabController {
         //Create new blank genotype for each new lab
         Genotype blankGenotype = new Genotype("");
         List<Genotype> genotypes = new ArrayList<>();
-        //do it in this method?
+        genotypeRepository.save(blankGenotype);
 
+        if (!newLab.getGenotypes().contains(blankGenotype)) {
+            blankGenotype.setLab(newLab);
+            genotypes.add(blankGenotype);
+            newLab.setGenotype(genotypes);
+        }
 
         newLab.getUsers().add(userFromSession);
         labRepository.save(newLab);
