@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+</head>
+<body>
+
+
+<div class="container body-content py-5">
+    <div class="shadow p-3 mb-5 bg-white rounded">
+
+        <div class="text-center">
+            <h3>These aren't the droids you're looking for...</h3>
+            <h5><u onClick="history.back()">Click here to go back.</u></h5>
+        </div>
+
+        <table class="table">
+            <tr>
+                <td class="text-right">Current Date:</td>
+                <td th:text="${timestamp}"/>
+            </tr>
+
+            <tr>
+                <td class="text-right">Path:</td>
+                <td th:text="${path}"/>
+            </tr>
+
+            <tr>
+                <td class="text-right">Error:</td>
+                <td th:text="${error}"/>
+            </tr>
+
+            <tr>
+                <td class="text-right">Status:</td>
+                <td th:text="${status}"/>
+            </tr>
+
+            <tr>
+                <td class="text-right">Message:</td>
+                <td th:text="${message}"/>
+            </tr>
+
+            <tr th:if="${exception}">
+                <td class="text-right">Exception:</td>
+                <td th:text="${exception}"/>
+            </tr>
+
+            <tr th:if="${trace}">
+                <td class="text-right">Stack trace:</td>
+                <td th:text="${trace}"/>
+            </tr>
+        </table>
+
+    </div>
+
+  
+</div>
+</body>
+</html>
