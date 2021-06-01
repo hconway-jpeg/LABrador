@@ -14,7 +14,7 @@
 
 <div class="container body-content">
 
-    <form th:action="@{/colony/genotype/add}">
+    <form th:action="@{/colony/genotype/add/{labId}(labId=${lab.id})}">
         <input class="btn btn-info" type="submit" value="Add Genotype">
     </form>
 

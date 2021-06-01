@@ -5,6 +5,7 @@ import org.launchcode.LABrador.data.GenotypeRepository;
 import org.launchcode.LABrador.data.LabRepository;
 import org.launchcode.LABrador.models.Animal;
 import org.launchcode.LABrador.models.Genotype;
+import org.launchcode.LABrador.models.Lab;
 import org.launchcode.LABrador.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -63,26 +64,44 @@ public class GenotypeController {
 
         model.addAttribute("title", "Lab Genotypes");
         model.addAttribute("genotypes", genotypeRepository.findAll());
+        model.addAttribute("lab", labRepository.findLabById(labId));
         model.addAttribute(new Genotype());
         return "colony/genotype/add";
     }
 
     @PostMapping("add/{labId}")
     public String processAddGenotypeForm(HttpServletRequest request, @ModelAttribute Genotype newGenotype, Model model, @PathVariable int labId, Errors errors) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
         Genotype existingGenotype = genotypeRepository.findByName(newGenotype.getName());
 
         if (existingGenotype != null) {
-            HttpSession session = request.getSession();
-            User userFromSession = authenticationController.getUserFromSession(session);
             model.addAttribute("user", userFromSession);
-
             errors.rejectValue("name", "name.alreadyexists", "Already exists!");
             model.addAttribute("title", "Lab Genotypes");
             model.addAttribute("genotypes", genotypeRepository.findAll());
             return "colony/genotype/add";
         }
+
+        List<Genotype> genotypes = new ArrayList<>();
+        for (Genotype genotype : genotypeRepository.findAll()) {
+            if (genotype.getLab() != null && genotype.getLab().getId() == labId){
+                genotypes.add(genotype);
+            }
+        }
+
+        Lab userLab = labRepository.findLabById(labId);
+        newGenotype.setLab(userLab);
+        genotypes.add(newGenotype);
+        userLab.setGenotype(genotypes);
         genotypeRepository.save(newGenotype);
-        return "redirect:";
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("genotypes", genotypes);
+        return "redirect:/colony/genotype/{labId}";
     }
 
     @PostMapping("{labId}")
@@ -107,7 +126,7 @@ public class GenotypeController {
         }
         model.addAttribute("title", "Lab Genotypes");
         model.addAttribute("genotype", genotypeRepository.findAll());
-        return "colony/genotype/index";
+        return "redirect:/colony/genotype/{labId}";
     }
 
 
