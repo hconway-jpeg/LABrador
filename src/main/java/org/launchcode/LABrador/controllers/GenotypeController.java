@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("colony/genotype")
@@ -133,6 +135,73 @@ public class GenotypeController {
 
         model.addAttribute("lab", labRepository.findLabById(labId));
         String labName = labRepository.findLabById(labId).getLabName();
+        return "redirect:/colony/genotype/{labId}";
+    }
+
+    @GetMapping("edit/{genotypeId}/{labId}")
+    public String displayEditLabAnimalForm(Model model, @PathVariable int genotypeId, @PathVariable int labId, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
+        //prevent access to non-lab members
+        if (!userFromSession.getLab().contains(labRepository.findLabById(labId))) {
+            List<Lab> currentLabs = userFromSession.getLab();
+            model.addAttribute("labs", currentLabs);
+            model.addAttribute("allLabs", labRepository.findAll());
+            return "lab/index";
+        }
+
+        List<Genotype> genotypes = new ArrayList<>();
+        for (Genotype genotype : genotypeRepository.findAll()) {
+            if (genotype.getLab() != null && genotype.getLab().getId() == labId){
+                genotypes.add(genotype);
+            }
+        }
+        labRepository.findLabById(labId).setGenotypes(genotypes);
+
+        model.addAttribute("title", "Edit Entry");
+        model.addAttribute(genotypeRepository.findById(genotypeId));
+        model.addAttribute("genotypes", genotypes);
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        return "colony/genotype/edit";
+    }
+
+
+    @PostMapping("edit/{genotypeId}/{labId}")
+    public String processEditLabAnimalForm(@ModelAttribute @Valid Genotype genotype, Errors errors, HttpServletRequest request, Model model, @PathVariable int genotypeId, @PathVariable int labId) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+
+        Lab userLab = labRepository.findLabById(labId);
+
+        List<Genotype> genotypes = new ArrayList<>();
+        for (Genotype labGenotype : genotypeRepository.findAll()) {
+            if (labGenotype.getLab() != null && labGenotype.getLab().getId() == labId){
+                genotypes.add(labGenotype);
+            }
+        }
+        userLab.setGenotypes(genotypes);
+
+        if (errors.hasErrors()) {
+            model.addAttribute("user", userFromSession);
+            model.addAttribute("title", "Edit Entry");
+            model.addAttribute("genotype", genotypes);
+            return "colony/genotype/edit";
+        }
+
+        Genotype genotypeTmp = genotypeRepository.findById(genotypeId);
+        genotypeTmp.setName(genotype.getName());
+        genotypeRepository.save(genotypeTmp);
+
+        for (Animal animal : userLab.getColony()) {
+            if (animal.getGenotype().getId() == genotypeId) {
+                animal.setGenotype(genotype);
+            }
+        }
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
         return "redirect:/colony/genotype/{labId}";
     }
 

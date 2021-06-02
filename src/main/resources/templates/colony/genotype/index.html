@@ -34,6 +34,9 @@
                 <td>
                     <input type="checkbox" th:value="${genotype.id}" name="genotypeIds">
                 </td>
+                <td>
+                    <a th:href="@{/colony/genotype/edit/{id}/{id2}(id=${genotype.id}, id2=${lab.id})}">Edit</a>
+                </td>
             </tr>
 
         </table>

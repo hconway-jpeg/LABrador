@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface GenotypeRepository extends CrudRepository<Genotype, Integer> {
 
     Genotype findByName(String name);
+    Genotype findById(int Id);
 
 }
