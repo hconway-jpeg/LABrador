@@ -84,7 +84,7 @@ public class GenotypeController {
 
         List<Genotype> genotypes = new ArrayList<>();
         for (Genotype genotype : genotypeRepository.findAll()) {
-            if (genotype.getLab() != null && genotype.getLab().getId() == labId){
+            if (genotype.getLab() != null && genotype.getLab().getId() == labId && !genotype.getName().equals("")){
                 genotypes.add(genotype);
             }
         }
@@ -102,21 +102,22 @@ public class GenotypeController {
 
         List<Genotype> genotypes = new ArrayList<>();
         for (Genotype genotype : genotypeRepository.findAll()) {
-            if (genotype.getLab() != null && genotype.getLab().getId() == labId){
+            if (genotype.getLab() != null && genotype.getLab().getId() == labId && !genotype.getName().equals("")){
                 genotypes.add(genotype);
             }
         }
 
-//        if (genotypeRepository.findByName(newGenotype.getName()).getLab().getId() == labId) {
-//            model.addAttribute("user", userFromSession);
-//            errors.rejectValue("name", "name.alreadyexists", "Already exists!");
-//            model.addAttribute("title", "Lab Genotypes");
-//            model.addAttribute("genotypes", genotypes);
-//            model.addAttribute("lab", labRepository.findLabById(labId));
-//
-//            return "colony/genotype/add";
-//        }
+        for (Genotype genotype : genotypes) {
+            if (genotype.getName().equals(newGenotype.getName())) {
+                model.addAttribute("user", userFromSession);
+                errors.rejectValue("name", "name.alreadyexists", "Already exists!");
+                model.addAttribute("title", "Lab Genotypes");
+                model.addAttribute("genotypes", genotypes);
+                model.addAttribute("lab", labRepository.findLabById(labId));
 
+                return "colony/genotype/add";
+            }
+        }
 
         Lab userLab = labRepository.findLabById(labId);
         newGenotype.setLab(userLab);
@@ -168,10 +169,22 @@ public class GenotypeController {
 
         List<Genotype> genotypes = new ArrayList<>();
         for (Genotype labGenotype : genotypeRepository.findAll()) {
-            if (labGenotype.getLab() != null && labGenotype.getLab().getId() == labId){
+            if (labGenotype.getLab() != null && labGenotype.getLab().getId() == labId && !labGenotype.getName().equals("")){
                 genotypes.add(labGenotype);
             }
         }
+
+        for (Genotype labGenotype : genotypes) {
+            if (labGenotype.getName().equals(genotype.getName())) {
+                model.addAttribute("user", userFromSession);
+                errors.rejectValue("name", "name.alreadyexists", "Already exists!");
+                model.addAttribute("title", "Lab Genotypes");
+                model.addAttribute("lab", labRepository.findLabById(labId));
+
+                return "colony/genotype/edit";
+            }
+        }
+
         userLab.setGenotypes(genotypes);
 
         if (errors.hasErrors()) {

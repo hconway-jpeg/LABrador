@@ -16,6 +16,7 @@
                     <label>
                         Name
                         <input class="form-control" th:each="genotype : ${genotype}" th:field="${genotype.name}">
+                        <span th:errors="${genotype.name}" class="error"></span>
                     </label>
                 </div>
 
