@@ -97,7 +97,7 @@ public class LabController {
         if (!newLab.getGenotypes().contains(blankGenotype)) {
             blankGenotype.setLab(newLab);
             genotypes.add(blankGenotype);
-            newLab.setGenotype(genotypes);
+            newLab.setGenotypes(genotypes);
         }
 
         newLab.getUsers().add(userFromSession);

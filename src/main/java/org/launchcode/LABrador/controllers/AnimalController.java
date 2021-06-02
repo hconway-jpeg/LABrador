@@ -82,7 +82,7 @@ public class AnimalController {
                 genotypes.add(genotype);
             }
         }
-        labRepository.findLabById(labId).setGenotype(genotypes);
+        labRepository.findLabById(labId).setGenotypes(genotypes);
 
 
         model.addAttribute("title", "Add Entry");
@@ -149,9 +149,17 @@ public class AnimalController {
             return "lab/index";
         }
 
+        List<Genotype> genotypes = new ArrayList<>();
+        for (Genotype genotype : genotypeRepository.findAll()) {
+            if (genotype.getLab() != null && genotype.getLab().getId() == labId){
+                genotypes.add(genotype);
+            }
+        }
+        labRepository.findLabById(labId).setGenotypes(genotypes);
+
         model.addAttribute("title", "Edit Entry");
         model.addAttribute(animalRepository.findById(animalId));
-        model.addAttribute("genotype", genotypeRepository.findAll());
+        model.addAttribute("genotype", genotypes);
         model.addAttribute("lab", labRepository.findLabById(labId));
         return "colony/edit";
     }

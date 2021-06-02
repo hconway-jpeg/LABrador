@@ -103,8 +103,6 @@ public class Lab extends AbstractEntity {
     }
 
     public List<Genotype> getGenotypes() { return genotypes; }
-    public void setGenotype(List<Genotype> genotypes) { this.genotypes = genotypes; }
-    public void addGenotype(Genotype genotype) { this.genotypes.add(genotype); }
-
+    public void setGenotypes(List<Genotype> genotypes) { this.genotypes = genotypes; }
 
 }

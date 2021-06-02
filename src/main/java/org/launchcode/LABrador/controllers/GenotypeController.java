@@ -58,7 +58,7 @@ public class GenotypeController {
             }
         }
 
-        labRepository.findLabById(labId).setGenotype(genotypes);
+        labRepository.findLabById(labId).setGenotypes(genotypes);
         model.addAttribute("genotype", genotypes);
         return "colony/genotype/index";
     }
@@ -88,7 +88,7 @@ public class GenotypeController {
             }
         }
 
-        labRepository.findLabById(labId).setGenotype(genotypes);
+        labRepository.findLabById(labId).setGenotypes(genotypes);
         model.addAttribute("genotypes", genotypes);
         return "colony/genotype/add";
     }
@@ -106,20 +106,29 @@ public class GenotypeController {
             }
         }
 
-        Genotype existingGenotype = genotypeRepository.findByName(newGenotype.getName());
+//        List<Genotype> labGenos = labRepository.findLabById(labId).getGenotypes();
+//        if (labGenos.contains(newGenotype)) {
+//            model.addAttribute("user", userFromSession);
+//            errors.rejectValue("name", "name.alreadyexists", "Already exists!");
+//            model.addAttribute("title", "Lab Genotypes");
+//            model.addAttribute("genotypes", genotypes);
+//            return "colony/genotype/add";
+//        }
 
-        if (existingGenotype != null) {
-            model.addAttribute("user", userFromSession);
-            errors.rejectValue("name", "name.alreadyexists", "Already exists!");
-            model.addAttribute("title", "Lab Genotypes");
-            model.addAttribute("genotypes", genotypes);
-            return "colony/genotype/add";
-        }
+//        Genotype existingGenotype = genotypeRepository.findByName(newGenotype.getName());
+//
+//        if (existingGenotype != null) {
+//            model.addAttribute("user", userFromSession);
+//            errors.rejectValue("name", "name.alreadyexists", "Already exists!");
+//            model.addAttribute("title", "Lab Genotypes");
+//            model.addAttribute("genotypes", genotypes);
+//            return "colony/genotype/add";
+//        }
 
         Lab userLab = labRepository.findLabById(labId);
         newGenotype.setLab(userLab);
         genotypes.add(newGenotype);
-        userLab.setGenotype(genotypes);
+        userLab.setGenotypes(genotypes);
         genotypeRepository.save(newGenotype);
 
         model.addAttribute("lab", labRepository.findLabById(labId));
@@ -140,8 +149,10 @@ public class GenotypeController {
             for (int id : genotypeIds) {
                 for (Animal animal : animals) {
                     if (animal.getGenotype().getId().compareTo(id) == 0) {
-                        animal.setGenotype(blankGenotype);
-                        animalRepository.save(animal);
+                        if (blankGenotype.getLab().getId() == labId) {
+                            animal.setGenotype(blankGenotype);
+                            animalRepository.save(animal);
+                        }
                     }
                 }
                 genotypeRepository.deleteById(id);
@@ -155,7 +166,7 @@ public class GenotypeController {
             }
         }
 
-        labRepository.findLabById(labId).setGenotype(genotypes);
+        labRepository.findLabById(labId).setGenotypes(genotypes);
         model.addAttribute("genotype", genotypes);
 
         return "redirect:/colony/genotype/{labId}";
