@@ -287,7 +287,7 @@ public class AnimalController {
         model.addAttribute("user", userFromSession);
 
         model.addAttribute("title", "genotype sort");
-        model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"genotype")));
+        model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC, "genotype")));
         return "colony/index";
     }
 
@@ -311,5 +311,6 @@ public class AnimalController {
         model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"litter")));
         return "colony/index";
     }
+
 
 }

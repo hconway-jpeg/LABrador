@@ -81,12 +81,17 @@
                                 <a href="#" class="search-toggle" data-selector="#header-1"></a>
                             </div>
 
-                            <form action="" class="search-box">
-                                <input type="text" class="text search-input" placeholder="Type here to search..." required/>
+                            <form class="search-box">
+                                <li class="search">
+                                    <input th:name= "search" type="text" class="form-control" placeholder="type keyword" aria-label="Search">
+                                </li>
+                                <a class="search-button" type="submit" value="search" th:href="@{/colony/search?q={query}(query=${search})}">Search</a>
+
                             </form>
                         </nav>
                     </div>
-                    <input type="submit" value="search" />
+
+
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
