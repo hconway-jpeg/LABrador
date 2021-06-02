@@ -32,8 +32,8 @@
             </tr>
             </thead>
 
-            <tr th:each="genotype : ${genotypes}" th:if="${genotype.name != ''}">
-                <td th:text="${genotype.name}"></td>
+            <tr th:each="genotypes : ${genotypes}" th:if="${genotype.name != ''}">
+                <td th:text="${genotypes.name}"></td>
             </tr>
         </table>
     </div>
