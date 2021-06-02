@@ -213,10 +213,7 @@ public class UserController {
 
         userRepository.deleteById(userDel.getId());
         for (Lab lab : labRepository.findAll()) {
-            if (lab.getUsers() == null || lab.getUsers().size() == 0) {
-                for (Animal animal: lab.getColony()){
-                    animalRepository.delete(animal);
-                }
+            if (lab.getUsers() == null || lab.getUsers().size() == 0) {//
                 labRepository.delete(lab);
             }
         }

@@ -1,9 +1,6 @@
 package org.launchcode.LABrador.models;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.*;
@@ -25,10 +22,10 @@ public class Lab extends AbstractEntity {
     @ManyToMany(mappedBy = "labs")
     private final List<User> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "lab")
+    @OneToMany(mappedBy = "lab", cascade = CascadeType.ALL)
     private List<Animal> colony = new ArrayList<>();
 
-    @OneToMany(mappedBy = "lab")
+    @OneToMany(mappedBy = "lab", cascade = CascadeType.ALL)
     private List<Genotype> genotypes = new ArrayList<>();
 
     private String organization;
