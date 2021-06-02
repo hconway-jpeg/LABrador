@@ -71,7 +71,7 @@ public class LoginController {
 
         List<Lab> lab = userFind.getLab();
         if (lab.size() != 0){
-            return "redirect:lab/";
+            return "redirect:lab";
         }
         return "redirect:";
     }

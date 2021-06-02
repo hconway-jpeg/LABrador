@@ -106,7 +106,7 @@ public class LabController {
         userTmp.addLab(newLab);
         userRepository.save(userTmp);
 
-        return "redirect:";
+        return "redirect:../lab";
     }
 
     @GetMapping("passcode")
@@ -169,8 +169,7 @@ public class LabController {
         labRepository.save(tmp);
         userTmp.addLab(tmp);
         userRepository.save(userTmp);
-        return "redirect:";
+        return "redirect:../lab";
 
     }
-
 }
