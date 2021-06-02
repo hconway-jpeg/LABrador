@@ -22,10 +22,10 @@ public class Lab extends AbstractEntity {
     @ManyToMany(mappedBy = "labs")
     private final List<User> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "lab", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "lab", cascade = CascadeType.REMOVE)
     private List<Animal> colony = new ArrayList<>();
 
-    @OneToMany(mappedBy = "lab", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "lab", cascade = CascadeType.REMOVE)
     private List<Genotype> genotypes = new ArrayList<>();
 
     private String organization;

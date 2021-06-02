@@ -18,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("colony/genotype")
@@ -212,7 +211,13 @@ public class GenotypeController {
         model.addAttribute("user", userFromSession);
 
         Iterable<Animal> animals = animalRepository.findAll();
-        Genotype blankGenotype = genotypeRepository.findByName("");
+
+        Genotype blankGenotype = null;
+        for (Genotype genotype : labRepository.findLabById(labId).getGenotypes()) {
+            if (genotype.getName().equals("")) {
+                blankGenotype = genotype;
+            }
+        }
 
         if (genotypeIds != null) {
             for (int id : genotypeIds) {
@@ -227,6 +232,7 @@ public class GenotypeController {
                 genotypeRepository.deleteById(id);
             }
         }
+
         model.addAttribute("title", "Lab Genotypes");
         List<Genotype> genotypes = new ArrayList<>();
         for (Genotype genotype : genotypeRepository.findAll()) {
@@ -237,7 +243,6 @@ public class GenotypeController {
 
         labRepository.findLabById(labId).setGenotypes(genotypes);
         model.addAttribute("genotype", genotypes);
-
         return "redirect:/colony/genotype/{labId}";
     }
 }
