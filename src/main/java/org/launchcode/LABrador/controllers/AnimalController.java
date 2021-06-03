@@ -349,7 +349,6 @@ public class AnimalController {
 
         return "colony/index";
     }
-
     @GetMapping("sex2/{labId}")
     public String sortBySexD(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -377,7 +376,6 @@ public class AnimalController {
 
         return "colony/index";
     }
-
     @GetMapping("dateofbirth2/{labId}")
     public String sortByDateOfBirthD(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -405,7 +403,6 @@ public class AnimalController {
 
         return "colony/index";
     }
-
     @GetMapping("genotype2/{labId}")
     public String sortByGenotype2(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -433,7 +430,6 @@ public class AnimalController {
 
         return "colony/index";
     }
-
     @GetMapping("litter2/{labId}")
     public String sortByLitterD(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -444,6 +440,33 @@ public class AnimalController {
         model.addAttribute("lab", labRepository.findLabById(labId));
 //
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by(Sort.Direction.DESC,"litter")));
+
+        return "colony/index";
+    }
+
+    @GetMapping("notes/{labId}")
+    public String sortByNotes(@PathVariable int labId, Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+        model.addAttribute("lab", labRepository.findLabById(labId));
+
+        model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by("notesKeyword")));
+
+        return "colony/index";
+    }
+    @GetMapping("notes2/{labId}")
+    public String sortByNotes2(@PathVariable int labId, Model model, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+        model.addAttribute("lab", labRepository.findLabById(labId));
+//
+        model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by(Sort.Direction.DESC,"notesKeyword")));
 
         return "colony/index";
     }
