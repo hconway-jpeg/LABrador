@@ -5,10 +5,11 @@
     <title>Add Entry</title>
 </head>
 <body>
-    <div th:replace="fragments :: colony-header-fragment"></div>
+
+<div th:replace="fragments :: lab-colony-header-fragment"></div>
     <div class="container  body-content">
         <h2>Add Animal</h2>
-        <form method="post" >
+        <form th:object="${labFormDTO}" method="post" >
             <div class="row">
                 <div class="col-sm-4">
                     <div class="form-group">
@@ -86,5 +87,6 @@
             </div>
         </form>
     </div>
+
 </body>
 </html>

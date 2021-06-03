@@ -48,8 +48,56 @@
         <div class="container">
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
                     <li class="nav-item">
+                        <a class="navbar-brand" th:href="@{/lab}">LABrador</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/lab/add}">Create a Lab</a>
+                    </li>
+
+                </ul>
+
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a th:text="${user.username}" class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            User
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/user">Account Info</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/logout">Log Out</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div th:fragment="lab-colony-header-fragment">
+    <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li th:if="${user.lab.size == 0}" class="nav-item">
                         <a class="navbar-brand" th:href="@{/}">LABrador</a>
+                    </li>
+                    <li th:unless="${user.lab.size == 0}" class="nav-item">
+                        <a class="navbar-brand" th:href="@{/lab}">LABrador</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/colony/{id}(id=${lab.id})}">Animal Database</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/colony/search}">Search</a>
+                    </li>
+                    <li class="nav-item" th:each="lab : ${lab}">
+                        <a class="nav-link" th:href="@{/colony/add/{labId}(labId=${lab.id})}">Add Animal</a>
+                    </li>
+                    <li class="nav-item" th:each="lab : ${lab}">
+                        <a class="nav-link" th:href="@{/colony/genotype/{labId}(labId=${lab.id})}">Genotype Database</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
@@ -69,25 +117,25 @@
     </nav>
 </div>
 
-<div th:fragment="colony-header-fragment" class="shadow mb-5 bg-dark">
+<div th:fragment="genotype-header-fragment">
     <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
         <div class="container">
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                        <a class="navbar-brand" th:href="@{/}">LABrador</a>
+                        <a class="navbar-brand" th:href="@{/lab}">LABrador</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/colony}">Animal Database</a>
+                    <li class="nav-item" th:each="lab : ${lab}">
+                        <a class="nav-link" th:href="@{/colony/{labId}(labId=${lab.id})}">Animal Database</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/colony/search}">Search</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/colony/add}">Add Animal</a>
+                    <li class="nav-item" th:each="lab : ${lab}">
+                        <a class="nav-link" th:href="@{/colony/add/{labId}(labId=${lab.id})}">Add Animal</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/colony/genotype}">Genotype Database</a>
+                    <li class="nav-item" th:each="lab : ${lab}">
+                        <a class="nav-link" th:href="@{/colony/genotype/{labId}(labId=${lab.id})}">Genotype Database</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">

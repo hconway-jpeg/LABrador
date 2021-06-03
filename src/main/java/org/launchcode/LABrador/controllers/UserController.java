@@ -1,11 +1,15 @@
 package org.launchcode.LABrador.controllers;
 
+import org.launchcode.LABrador.data.AnimalRepository;
 import org.launchcode.LABrador.data.LabRepository;
 import org.launchcode.LABrador.data.UserRepository;
+import org.launchcode.LABrador.models.Animal;
+import org.launchcode.LABrador.models.Lab;
 import org.launchcode.LABrador.models.User;
 import org.launchcode.LABrador.models.dto.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -14,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("user")
@@ -27,6 +33,11 @@ public class UserController {
 
     @Autowired
     private LabRepository labRepository;
+
+    @Autowired
+    private AnimalRepository animalRepository;
+
+    Logger logger = LoggerFactory.getLogger(AnimalController.class);
 
     @GetMapping
     public String displayUserInfo(Model model, HttpServletRequest request) {
@@ -180,7 +191,6 @@ public class UserController {
 
     @PostMapping("delete")
     public String processDeleteUserForm(@ModelAttribute @Valid DeleteFormDTO deleteFormDTO, Errors errors, HttpServletRequest request, Model model) {
-
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
 
@@ -198,7 +208,15 @@ public class UserController {
         }
 
         User userDel = userRepository.findByUsername(userFromSession.getUsername());
+        int userDelId = userDel.getId();
+
+
         userRepository.deleteById(userDel.getId());
+        for (Lab lab : labRepository.findAll()) {
+            if (lab.getUsers() == null || lab.getUsers().size() == 0) {//
+                labRepository.delete(lab);
+            }
+        }
         return "redirect:";
     }
 }

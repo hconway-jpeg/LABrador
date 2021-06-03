@@ -38,6 +38,32 @@
                 </div>
                 <div class="col"></div>
             </div>
+
+        <div th:replace="fragments :: login-header-fragment"></div>
+        <div class="container body-content">
+            <div>
+                <ul>New to LABrador?
+                    <li><a href="/register">Create an Account!</a></li>
+                </ul>
+            </div>
+            <form method="post">
+                <div class="form-group">
+                    <label>Username:
+                        <input class="form-control" th:field="${loginFormDTO.username}"/>
+                        <span th:errors="${loginFormDTO.username}" class="error"></span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>Password:
+                        <input class="form-control" th:field="${loginFormDTO.password}" type="password"/>
+                        <span th:errors="${loginFormDTO.password}" class="error"></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit" aria-pressed="true">Login</button>
+                </div>
+            </form>
         </div>
     </div>
 

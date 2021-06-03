@@ -1,20 +1,18 @@
 package org.launchcode.LABrador.controllers;
 
-import org.launchcode.LABrador.data.AnimalRepository;
-import org.launchcode.LABrador.data.GenotypeRepository;
-import org.launchcode.LABrador.models.Animal;
-import org.launchcode.LABrador.models.User;
-import org.launchcode.LABrador.models.Genotype;
+import org.launchcode.LABrador.data.*;
+import org.launchcode.LABrador.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("colony")
@@ -29,36 +27,78 @@ public class AnimalController {
     @Autowired
     private GenotypeRepository genotypeRepository;
 
-    @GetMapping
-    public String displayAllAnimals(Model model, HttpServletRequest request) {
+    @Autowired
+    private LabRepository labRepository;
+
+
+    @GetMapping("{labId}")
+    public String displayLabAnimals(Model model, @PathVariable int labId, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
-        model.addAttribute("title", "LAB_NAME Animal Colony");
-        model.addAttribute("animals", animalRepository.findAll());
+        //prevent access to non-lab members and users not affiliated with a lab
+        if (!userFromSession.getLab().contains(labRepository.findLabById(labId)) || userFromSession.getLab() == null) {
+            List<Lab> currentLabs = userFromSession.getLab();
+            model.addAttribute("labs", currentLabs);
+            model.addAttribute("allLabs", labRepository.findAll());
+            model.addAttribute("user", userFromSession);
+
+            return "lab/index";
+        }
+
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        List<Animal> colony = new ArrayList<>();
+        for (Animal animal : animalRepository.findAll()) {
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
+                colony.add(animal);
+            }
+        }
+        labRepository.findLabById(labId).setColony(colony);
+
+        model.addAttribute("animals", colony);
         return "colony/index";
     }
 
-    @GetMapping("add")
-    public String displayAddAnimalForm(Model model, HttpServletRequest request) {
+    @GetMapping("add/{labId}")
+    public String displayAddLabAnimalForm(Model model, @PathVariable int labId, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
-        if (genotypeRepository.findByName("") == null) {
-            Genotype blankGenotype = new Genotype("");
-            genotypeRepository.save(blankGenotype);
+        //prevent access to non-lab members and users not affiliated with a lab
+        if (!userFromSession.getLab().contains(labRepository.findLabById(labId)) || userFromSession.getLab() == null) {
+            List<Lab> currentLabs = userFromSession.getLab();
+            model.addAttribute("labs", currentLabs);
+            model.addAttribute("allLabs", labRepository.findAll());
+            model.addAttribute("user", userFromSession);
+
+            return "lab/index";
         }
 
+
+        List<Genotype> genotypes = new ArrayList<>();
+        for (Genotype genotype : genotypeRepository.findAll()) {
+            if (genotype.getLab() != null && genotype.getLab().getId() == labId){
+                genotypes.add(genotype);
+            }
+        }
+        labRepository.findLabById(labId).setGenotypes(genotypes);
+
+
         model.addAttribute("title", "Add Entry");
-        model.addAttribute("genotype", genotypeRepository.findAll());
+        model.addAttribute("genotype", genotypes);
+        model.addAttribute("lab", labRepository.findLabById(labId));
         model.addAttribute(new Animal());
+
         return "colony/add";
     }
 
-    @PostMapping("add")
-    public String processAddAnimalForm(@ModelAttribute @Valid Animal newAnimal, Errors errors, HttpServletRequest request, Model model) {
+    @PostMapping("add/{labId}")
+    public String processAddLabAnimalForm(@PathVariable int labId, @ModelAttribute @Valid Animal newAnimal, Errors errors, HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
 
@@ -77,26 +117,65 @@ public class AnimalController {
             return "colony/add";
         }
 
+        List<Animal> colony = new ArrayList<>();
+        for (Animal animal : animalRepository.findAll()) {
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
+                colony.add(animal);
+            }
+        }
+
+        Lab userLab = labRepository.findLabById(labId);
+        newAnimal.setLab(userLab);
+        colony.add(newAnimal);
+        userLab.setColony(colony);
         animalRepository.save(newAnimal);
-        return "redirect:";
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        model.addAttribute("user", userFromSession);
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+        model.addAttribute("animals", colony);
+        return "colony/index";
     }
 
-    @GetMapping("edit/{animalId}")
-    public String displayEditAnimalForm(Model model, @PathVariable  int animalId, HttpServletRequest request) {
+
+    @GetMapping("edit/{animalId}/{labId}")
+    public String displayEditLabAnimalForm(Model model, @PathVariable int animalId, @PathVariable int labId, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
+        //prevent access to non-lab members and users not affiliated with a lab
+        if (!userFromSession.getLab().contains(labRepository.findLabById(labId)) || userFromSession.getLab() == null) {
+            List<Lab> currentLabs = userFromSession.getLab();
+            model.addAttribute("labs", currentLabs);
+            model.addAttribute("allLabs", labRepository.findAll());
+            model.addAttribute("user", userFromSession);
+
+            return "lab/index";
+        }
+
+        List<Genotype> genotypes = new ArrayList<>();
+        for (Genotype genotype : genotypeRepository.findAll()) {
+            if (genotype.getLab() != null && genotype.getLab().getId() == labId){
+                genotypes.add(genotype);
+            }
+        }
+        labRepository.findLabById(labId).setGenotypes(genotypes);
+
         model.addAttribute("title", "Edit Entry");
         model.addAttribute(animalRepository.findById(animalId));
-        model.addAttribute("genotype", genotypeRepository.findAll());
+        model.addAttribute("genotype", genotypes);
+        model.addAttribute("lab", labRepository.findLabById(labId));
         return "colony/edit";
     }
 
-    @PostMapping("edit/{animalId}")
-    public String processEditAnimalForm(@ModelAttribute @Valid Animal animal, Errors errors, HttpServletRequest request, Model model, @PathVariable int animalId) {
+
+    @PostMapping("edit/{animalId}/{labId}")
+    public String processEditLabAnimalForm(@ModelAttribute @Valid Animal animal, Errors errors, HttpServletRequest request, Model model, @PathVariable int animalId, @PathVariable int labId) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
+        model.addAttribute("user", userFromSession);
 
         if (errors.hasErrors()) {
             model.addAttribute("user", userFromSession);
@@ -114,7 +193,6 @@ public class AnimalController {
         }
 
         Animal animalTmp = animalRepository.findById(animalId);
-
         animalTmp.setTag(animal.getTag());
         animalTmp.setCageNumber(animal.getCageNumber());
         animalTmp.setCageType(animal.getCageType());
@@ -124,14 +202,14 @@ public class AnimalController {
         animalTmp.setLitter(animal.getLitter());
         animalTmp.setNotesKeyword(animal.getNotesKeyword());
         animalTmp.setNotesDescription(animal.getNotesDescription());
-
         animalRepository.save(animalTmp);
 
-        return "redirect:../";
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        return "redirect:/colony/{labId}";
     }
 
-    @PostMapping
-    public String processDeleteAnimalForm(Model model, HttpServletRequest request, @RequestParam(required = false) int[] animalIds) {
+    @PostMapping("{labId}")
+    public String processDeleteLabAnimalForm(@PathVariable int labId, Model model, HttpServletRequest request, @RequestParam(required = false) int[] animalIds) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
@@ -141,9 +219,9 @@ public class AnimalController {
                 animalRepository.deleteById(id);
             }
         }
-        model.addAttribute("title", "LAB_NAME Animal Colony");
-        model.addAttribute("animals", animalRepository.findAll());
-        return "colony/index";
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+        return "redirect:/colony/{labId}";
     }
     @GetMapping("id")
     public String sortById(Model model, HttpServletRequest request) {
@@ -155,6 +233,7 @@ public class AnimalController {
         model.addAttribute("animals", animalRepository.findAll(Sort.by("id")));
         return "colony/index";
     }
+
     @GetMapping("id2")
     public String sortByIdD(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -206,6 +285,7 @@ public class AnimalController {
         model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"cageNumber")));
         return "colony/index";
     }
+
     @GetMapping("type")
     public String sortByCageType(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -216,6 +296,7 @@ public class AnimalController {
         model.addAttribute("animals", animalRepository.findAll(Sort.by("cageType")));
         return "colony/index";
     }
+
     @GetMapping("type2")
     public String sortByCageTypeD(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -237,6 +318,7 @@ public class AnimalController {
         model.addAttribute("animals", animalRepository.findAll(Sort.by("sex")));
         return "colony/index";
     }
+
     @GetMapping("sex2")
     public String sortBySexD(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -258,6 +340,7 @@ public class AnimalController {
         model.addAttribute("animals", animalRepository.findAll(Sort.by("dateOfBirth")));
         return "colony/index";
     }
+
     @GetMapping("dateofbirth2")
     public String sortByDateOfBirthD(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -269,7 +352,6 @@ public class AnimalController {
         return "colony/index";
     }
 
-
     @GetMapping("genotype1")
     public String sortByGenotype(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -280,6 +362,7 @@ public class AnimalController {
         model.addAttribute("animals", animalRepository.findAll(Sort.by("genotype")));
         return "colony/index";
     }
+
     @GetMapping("genotype2")
     public String sortByGenotype2(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -301,6 +384,7 @@ public class AnimalController {
         model.addAttribute("animals", animalRepository.findAll(Sort.by("litter")));
         return "colony/index";
     }
+
     @GetMapping("litter2")
     public String sortByLitterD(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();

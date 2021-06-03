@@ -10,11 +10,11 @@
 </head>
 <body>
 
-<div th:replace="fragments :: colony-header-fragment"></div>
+<div th:replace="fragments :: genotype-header-fragment"></div>
 
 <div class="container body-content">
 
-    <form th:action="@{/colony/genotype/add}">
+    <form th:action="@{/colony/genotype/add/{labId}(labId=${lab.id})}">
         <input class="btn btn-info" type="submit" value="Add Genotype">
     </form>
 
@@ -26,6 +26,7 @@
             <tr>
                 <th>Genotypes</th>
                 <th>Delete?</th>
+                <th></th>
             </tr>
             </thead>
 
@@ -33,6 +34,9 @@
                 <td th:text="${genotype.name}"></td>
                 <td>
                     <input type="checkbox" th:value="${genotype.id}" name="genotypeIds">
+                </td>
+                <td>
+                    <a th:href="@{/colony/genotype/edit/{id}/{id2}(id=${genotype.id}, id2=${lab.id})}">Edit</a>
                 </td>
             </tr>
 

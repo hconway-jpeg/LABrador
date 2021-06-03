@@ -6,7 +6,7 @@
 </head>
 <body>
 
-    <div th:replace="fragments :: colony-header-fragment"></div>
+<div th:replace="fragments :: lab-colony-header-fragment"></div>
 
     <div class="container py-2" id="table">
         <form method="post">
@@ -53,11 +53,18 @@
                     </svg></a><a th:href="@{/colony/litter2}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
                     </svg></a></th>
+                    <th><a>ID</a></th>
+                    <th><a class="text-light" th:href="@{/colony/tag/{id}(id=${lab.id})}">Tag</a></th>
+                    <th><a class="text-light" th:href="@{/colony/cagenumber/{id}(id=${lab.id})}">Cage Number</a></th>
+                    <th><a class="text-light" th:href="@{/colony/type/{id}(id=${lab.id})}">Type</a></th>
+                    <th><a class="text-light" th:href="@{/colony/sex/{id}(id=${lab.id})}">Sex</a></th>
+                    <th><a class="text-light" th:href="@{/colony/dateofbirth/{id}(id=${lab.id})}">Date of Birth</a></th>
+                    <th><a class="text-light" th:href="@{/colony/genotype1/{id}(id=${lab.id})}">Genotype</a></th>
+                    <th><a class="text-light" th:href="@{/colony/litter/{id}(id=${lab.id})}">Litter</a></th>
                     <th>Notes</th>
                     <th>Delete?</th>
                     <th></th>
                 </tr>
-
             <tbody>
                 <tr th:each="animal : ${animals}">
                     <td th:text="${animal.id}"></td>
@@ -75,7 +82,7 @@
                         <input type="checkbox" name="animalIds" th:value="${animal.id}">
                     </td>
                     <td>
-                        <a th:href="@{/colony/edit/{id}(id=${animal.id})}">Edit</a>
+                        <a th:href="@{/colony/edit/{id}/{id2}(id=${animal.id}, id2=${lab.id})}">Edit</a>
                     </td>
                 </tr>
             </tbody>
