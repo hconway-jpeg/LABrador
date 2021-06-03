@@ -13,7 +13,7 @@ public interface AnimalRepository extends CrudRepository<Animal, Integer> {
 
     Object findAll(Sort genotypeTwo);
 
-    ArrayList<String> findByNotesKeyword(String searchTerm);
+    ArrayList<Animal> findByNotesKeyword(String searchTerm);
 
 
 
