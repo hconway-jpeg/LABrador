@@ -37,11 +37,13 @@ public class AnimalController {
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
-        //prevent access to non-lab members
-        if (!userFromSession.getLab().contains(labRepository.findLabById(labId))) {
+        //prevent access to non-lab members and users not affiliated with a lab
+        if (!userFromSession.getLab().contains(labRepository.findLabById(labId)) || userFromSession.getLab() == null) {
             List<Lab> currentLabs = userFromSession.getLab();
             model.addAttribute("labs", currentLabs);
             model.addAttribute("allLabs", labRepository.findAll());
+            model.addAttribute("user", userFromSession);
+
             return "lab/index";
         }
 
@@ -67,11 +69,13 @@ public class AnimalController {
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
-        //prevent access to non-lab members
-        if (!userFromSession.getLab().contains(labRepository.findLabById(labId))) {
+        //prevent access to non-lab members and users not affiliated with a lab
+        if (!userFromSession.getLab().contains(labRepository.findLabById(labId)) || userFromSession.getLab() == null) {
             List<Lab> currentLabs = userFromSession.getLab();
             model.addAttribute("labs", currentLabs);
             model.addAttribute("allLabs", labRepository.findAll());
+            model.addAttribute("user", userFromSession);
+
             return "lab/index";
         }
 
@@ -141,11 +145,13 @@ public class AnimalController {
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
-        //prevent access to non-lab members
-        if (!userFromSession.getLab().contains(labRepository.findLabById(labId))) {
+        //prevent access to non-lab members and users not affiliated with a lab
+        if (!userFromSession.getLab().contains(labRepository.findLabById(labId)) || userFromSession.getLab() == null) {
             List<Lab> currentLabs = userFromSession.getLab();
             model.addAttribute("labs", currentLabs);
             model.addAttribute("allLabs", labRepository.findAll());
+            model.addAttribute("user", userFromSession);
+
             return "lab/index";
         }
 
