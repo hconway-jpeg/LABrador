@@ -11,6 +11,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import static org.launchcode.LABrador.controllers.AuthenticationController.setUserInSession;
@@ -21,17 +22,39 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AuthenticationController authenticationController;
+
     @GetMapping("/login")
-    public String showLoginPage(Model model){
+    public String showLoginPage(Model model, HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+
+        if(userFromSession != null){
+            return "redirect:";
+        }
+
+
         model.addAttribute(new LoginFormDTO());
         model.addAttribute("title", "LABrador - Log In");
+
         return "login";
     }
 
     @GetMapping("/register")
-    public String showRegisterPage(Model model){
+    public String showRegisterPage(Model model, HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        User userFromSession = authenticationController.getUserFromSession(session);
+
+        if(userFromSession != null){
+            return "redirect:";
+        }
+
         model.addAttribute(new RegisterFormDTO());
         model.addAttribute("title", "LABrador - Register");
+
         return "register";
     }
 
