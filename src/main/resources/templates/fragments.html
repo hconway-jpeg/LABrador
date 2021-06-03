@@ -81,17 +81,14 @@
         <div class="container">
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li th:if="${user.lab.size == 0}" class="nav-item">
-                        <a class="navbar-brand" th:href="@{/}">LABrador</a>
-                    </li>
-                    <li th:unless="${user.lab.size == 0}" class="nav-item">
+                    <li class="nav-item">
                         <a class="navbar-brand" th:href="@{/lab}">LABrador</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" th:each="lab : ${lab}">
                         <a class="nav-link" th:href="@{/colony/{id}(id=${lab.id})}">Animal Database</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/colony/search}">Search</a>
+                    <li class="nav-item" th:each="lab : ${lab}">
+                        <a class="nav-link" th:href="@{/colony/search/{labId}(labId=${lab.id})}">Search</a>
                     </li>
                     <li class="nav-item" th:each="lab : ${lab}">
                         <a class="nav-link" th:href="@{/colony/add/{labId}(labId=${lab.id})}">Add Animal</a>
@@ -128,8 +125,8 @@
                     <li class="nav-item" th:each="lab : ${lab}">
                         <a class="nav-link" th:href="@{/colony/{labId}(labId=${lab.id})}">Animal Database</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/colony/search}">Search</a>
+                    <li class="nav-item" th:each="lab : ${lab}">
+                        <a class="nav-link" th:href="@{/colony/search/{labId}(labId=${lab.id})}">Search</a>
                     </li>
                     <li class="nav-item" th:each="lab : ${lab}">
                         <a class="nav-link" th:href="@{/colony/add/{labId}(labId=${lab.id})}">Add Animal</a>

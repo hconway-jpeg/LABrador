@@ -223,177 +223,382 @@ public class AnimalController {
         model.addAttribute("title", labName + " Animal Colony");
         return "redirect:/colony/{labId}";
     }
-    @GetMapping("id")
-    public String sortById(Model model, HttpServletRequest request) {
+
+    //sort methods
+
+    @GetMapping("id/{labId}")
+    public String sortById(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
+
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        List<Animal> colony = new ArrayList<>();
+        for (Animal animal : animalRepository.findAll()) {
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
+                colony.add(animal);
+            }
+        }
+        labRepository.findLabById(labId).setColony(colony);
 
         model.addAttribute("title", "id sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by("id")));
+
         return "colony/index";
+
     }
 
-    @GetMapping("id2")
-    public String sortByIdD(Model model, HttpServletRequest request) {
+    @GetMapping("id2/{labId}")
+    public String sortByIdD(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
+
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        List<Animal> colony = new ArrayList<>();
+        for (Animal animal : animalRepository.findAll()) {
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
+                colony.add(animal);
+            }
+        }
+        labRepository.findLabById(labId).setColony(colony);
 
         model.addAttribute("title", "id sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"id")));
+
         return "colony/index";
+
     }
-    @GetMapping("tag")
-    public String sortByTag(Model model, HttpServletRequest request) {
+
+    @GetMapping("tag/{labId}")
+    public String sortByTag(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        List<Animal> colony = new ArrayList<>();
+        for (Animal animal : animalRepository.findAll()) {
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
+                colony.add(animal);
+            }
+        }
+        labRepository.findLabById(labId).setColony(colony);
+
         model.addAttribute("title", "tag sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by("tag")));
+
         return "colony/index";
+
     }
-    @GetMapping("tag2")
-    public String sortByTagD(Model model, HttpServletRequest request) {
+
+    @GetMapping("tag2/{labId}")
+    public String sortByTagD(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
         model.addAttribute("title", "tag sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"tag")));
+
         return "colony/index";
+
     }
 
-    @GetMapping("cagenumber")
-    public String sortByCageNumber(Model model, HttpServletRequest request) {
+    @GetMapping("cagenumber/{labId}")
+    public String sortByCageNumber(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        List<Animal> colony = new ArrayList<>();
+        for (Animal animal : animalRepository.findAll()) {
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
+                colony.add(animal);
+            }
+        }
+        labRepository.findLabById(labId).setColony(colony);
+
         model.addAttribute("title", "cage number sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by("cageNumber")));
+
         return "colony/index";
+
     }
-    @GetMapping("cagenumber2")
-    public String sortByCageNumberD(Model model, HttpServletRequest request) {
+    @GetMapping("cagenumber2/{labId}")
+    public String sortByCageNumberD(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
         model.addAttribute("title", "cage number sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"cageNumber")));
+
         return "colony/index";
+
     }
 
-    @GetMapping("type")
-    public String sortByCageType(Model model, HttpServletRequest request) {
+    @GetMapping("type/{labId}")
+    public String sortByCageType(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
+
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        List<Animal> colony = new ArrayList<>();
+        for (Animal animal : animalRepository.findAll()) {
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
+                colony.add(animal);
+            }
+        }
+        labRepository.findLabById(labId).setColony(colony);
 
         model.addAttribute("title", "cage type sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by("cageType")));
+
         return "colony/index";
+
     }
 
-    @GetMapping("type2")
-    public String sortByCageTypeD(Model model, HttpServletRequest request) {
+    @GetMapping("type2/{labId}")
+    public String sortByCageTypeD(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
+
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        List<Animal> colony = new ArrayList<>();
+        for (Animal animal : animalRepository.findAll()) {
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
+                colony.add(animal);
+            }
+        }
+        labRepository.findLabById(labId).setColony(colony);
 
         model.addAttribute("title", "cage type sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"cageType")));
+
         return "colony/index";
+
     }
 
-    @GetMapping("sex")
-    public String sortBySex(Model model, HttpServletRequest request) {
+    @GetMapping("sex/{labId}")
+    public String sortBySex(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
+
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        List<Animal> colony = new ArrayList<>();
+        for (Animal animal : animalRepository.findAll()) {
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
+                colony.add(animal);
+            }
+        }
+        labRepository.findLabById(labId).setColony(colony);
 
         model.addAttribute("title", "sex sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by("sex")));
+
         return "colony/index";
+
     }
 
-    @GetMapping("sex2")
-    public String sortBySexD(Model model, HttpServletRequest request) {
+    @GetMapping("sex2/{labId}")
+    public String sortBySexD(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
+
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        List<Animal> colony = new ArrayList<>();
+        for (Animal animal : animalRepository.findAll()) {
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
+                colony.add(animal);
+            }
+        }
+        labRepository.findLabById(labId).setColony(colony);
 
         model.addAttribute("title", "sex sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"sex")));
+
         return "colony/index";
+
     }
 
-    @GetMapping("dateofbirth")
-    public String sortByDateOfBirth(Model model, HttpServletRequest request) {
+    @GetMapping("dateofbirth/{labId}")
+    public String sortByDateOfBirth(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
+
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        List<Animal> colony = new ArrayList<>();
+        for (Animal animal : animalRepository.findAll()) {
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
+                colony.add(animal);
+            }
+        }
+        labRepository.findLabById(labId).setColony(colony);
 
         model.addAttribute("title", "date of birth sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by("dateOfBirth")));
+
         return "colony/index";
+
     }
 
-    @GetMapping("dateofbirth2")
-    public String sortByDateOfBirthD(Model model, HttpServletRequest request) {
+    @GetMapping("dateofbirth2/{labId}")
+    public String sortByDateOfBirthD(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
+
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        List<Animal> colony = new ArrayList<>();
+        for (Animal animal : animalRepository.findAll()) {
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
+                colony.add(animal);
+            }
+        }
+        labRepository.findLabById(labId).setColony(colony);
 
         model.addAttribute("title", "date of birth sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"dateOfBirth")));
+
         return "colony/index";
+
     }
 
-    @GetMapping("genotype1")
-    public String sortByGenotype(Model model, HttpServletRequest request) {
+    @GetMapping("genotype1/{labId}")
+    public String sortByGenotype(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
+
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        List<Animal> colony = new ArrayList<>();
+        for (Animal animal : animalRepository.findAll()) {
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
+                colony.add(animal);
+            }
+        }
+        labRepository.findLabById(labId).setColony(colony);
 
         model.addAttribute("title", "genotype sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by("genotype")));
+
         return "colony/index";
+
     }
 
-    @GetMapping("genotype2")
-    public String sortByGenotype2(Model model, HttpServletRequest request) {
+    @GetMapping("genotype2/{labId}")
+    public String sortByGenotype2(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
+
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        List<Animal> colony = new ArrayList<>();
+        for (Animal animal : animalRepository.findAll()) {
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
+                colony.add(animal);
+            }
+        }
+        labRepository.findLabById(labId).setColony(colony);
 
         model.addAttribute("title", "genotype sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"genotype")));
+
         return "colony/index";
+
     }
 
-    @GetMapping("litter")
-    public String sortByLitter(Model model, HttpServletRequest request) {
+    @GetMapping("litter/{labId}")
+    public String sortByLitter(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
+
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        List<Animal> colony = new ArrayList<>();
+        for (Animal animal : animalRepository.findAll()) {
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
+                colony.add(animal);
+            }
+        }
+        labRepository.findLabById(labId).setColony(colony);
 
         model.addAttribute("title", "litter sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by("litter")));
+
         return "colony/index";
+
     }
 
-    @GetMapping("litter2")
-    public String sortByLitterD(Model model, HttpServletRequest request) {
+    @GetMapping("litter2/{labId}")
+    public String sortByLitterD(@PathVariable int labId, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
 
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+
+        model.addAttribute("lab", labRepository.findLabById(labId));
+        List<Animal> colony = new ArrayList<>();
+        for (Animal animal : animalRepository.findAll()) {
+            if (animal.getLab() != null && animal.getLab().getId() == labId){
+                colony.add(animal);
+            }
+        }
+        labRepository.findLabById(labId).setColony(colony);
+
         model.addAttribute("title", "litter sort");
         model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"litter")));
+
         return "colony/index";
+
     }
 
 }
