@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("colony")
@@ -231,24 +233,13 @@ public class AnimalController {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
-
         String labName = labRepository.findLabById(labId).getLabName();
         model.addAttribute("title", labName + " Animal Colony");
-
         model.addAttribute("lab", labRepository.findLabById(labId));
-        List<Animal> colony = new ArrayList<>();
-        for (Animal animal : animalRepository.findAll()) {
-            if (animal.getLab() != null && animal.getLab().getId() == labId){
-                colony.add(animal);
-            }
-        }
-        labRepository.findLabById(labId).setColony(colony);
 
-        model.addAttribute("title", "id sort");
-        model.addAttribute("animals", animalRepository.findAll(Sort.by("id")));
+        model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by("id")));
 
         return "colony/index";
-
     }
 
     @GetMapping("id2/{labId}")
@@ -256,24 +247,13 @@ public class AnimalController {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
-
         String labName = labRepository.findLabById(labId).getLabName();
         model.addAttribute("title", labName + " Animal Colony");
-
         model.addAttribute("lab", labRepository.findLabById(labId));
-        List<Animal> colony = new ArrayList<>();
-        for (Animal animal : animalRepository.findAll()) {
-            if (animal.getLab() != null && animal.getLab().getId() == labId){
-                colony.add(animal);
-            }
-        }
-        labRepository.findLabById(labId).setColony(colony);
-
-        model.addAttribute("title", "id sort");
-        model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"id")));
+//
+        model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by(Sort.Direction.DESC,"id")));
 
         return "colony/index";
-
     }
 
     @GetMapping("tag/{labId}")
@@ -281,24 +261,13 @@ public class AnimalController {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
-
         String labName = labRepository.findLabById(labId).getLabName();
         model.addAttribute("title", labName + " Animal Colony");
-
         model.addAttribute("lab", labRepository.findLabById(labId));
-        List<Animal> colony = new ArrayList<>();
-        for (Animal animal : animalRepository.findAll()) {
-            if (animal.getLab() != null && animal.getLab().getId() == labId){
-                colony.add(animal);
-            }
-        }
-        labRepository.findLabById(labId).setColony(colony);
 
-        model.addAttribute("title", "tag sort");
-        model.addAttribute("animals", animalRepository.findAll(Sort.by("tag")));
+        model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by("tag")));
 
         return "colony/index";
-
     }
 
     @GetMapping("tag2/{labId}")
@@ -306,12 +275,13 @@ public class AnimalController {
         HttpSession session = request.getSession();
         User userFromSession = authenticationController.getUserFromSession(session);
         model.addAttribute("user", userFromSession);
-
-        model.addAttribute("title", "tag sort");
-        model.addAttribute("animals", animalRepository.findAll(Sort.by(Sort.Direction.DESC,"tag")));
+        String labName = labRepository.findLabById(labId).getLabName();
+        model.addAttribute("title", labName + " Animal Colony");
+        model.addAttribute("lab", labRepository.findLabById(labId));
+//
+        model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by(Sort.Direction.DESC,"tag")));
 
         return "colony/index";
-
     }
 
     @GetMapping("cagenumber/{labId}")

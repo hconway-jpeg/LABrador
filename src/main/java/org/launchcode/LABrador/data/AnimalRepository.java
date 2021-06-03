@@ -12,6 +12,8 @@ import java.util.List;
 public interface AnimalRepository extends CrudRepository<Animal, Integer> {
 
     Animal findById(int Id);
+    List<Animal> findByLabId(int labId, Sort id);
     Object findAll(Sort genotypeTwo);
+
 
 }
