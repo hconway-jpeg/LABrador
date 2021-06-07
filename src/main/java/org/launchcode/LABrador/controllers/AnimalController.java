@@ -240,7 +240,7 @@ public class AnimalController {
 
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by("id")));
 
-        return "colony/index";
+        return "colony/sort";
     }
     @GetMapping("id2/{labId}")
     public String sortByIdD(@PathVariable int labId, Model model, HttpServletRequest request) {
@@ -253,7 +253,7 @@ public class AnimalController {
 //
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by(Sort.Direction.DESC,"id")));
 
-        return "colony/index";
+        return "colony/sort";
     }
 
     @GetMapping("tag/{labId}")
@@ -267,7 +267,7 @@ public class AnimalController {
 
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by("tag")));
 
-        return "colony/index";
+        return "colony/sort";
     }
     @GetMapping("tag2/{labId}")
     public String sortByTagD(@PathVariable int labId, Model model, HttpServletRequest request) {
@@ -280,7 +280,7 @@ public class AnimalController {
 //
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by(Sort.Direction.DESC,"tag")));
 
-        return "colony/index";
+        return "colony/sort";
     }
 
     @GetMapping("cagenumber/{labId}")
@@ -294,7 +294,7 @@ public class AnimalController {
 
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by("cageNumber")));
 
-        return "colony/index";
+        return "colony/sort";
     }
     @GetMapping("cagenumber2/{labId}")
     public String sortByCageNumberD(@PathVariable int labId, Model model, HttpServletRequest request) {
@@ -307,7 +307,7 @@ public class AnimalController {
 //
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by(Sort.Direction.DESC,"cageNumber")));
 
-        return "colony/index";
+        return "colony/sort";
     }
 
     @GetMapping("type/{labId}")
@@ -321,7 +321,7 @@ public class AnimalController {
 
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by("cageType")));
 
-        return "colony/index";
+        return "colony/sort";
     }
     @GetMapping("type2/{labId}")
     public String sortByCageTypeD(@PathVariable int labId, Model model, HttpServletRequest request) {
@@ -334,7 +334,7 @@ public class AnimalController {
 //
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by(Sort.Direction.DESC,"cageType")));
 
-        return "colony/index";
+        return "colony/sort";
     }
 
     @GetMapping("sex/{labId}")
@@ -348,7 +348,7 @@ public class AnimalController {
 
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by("sex")));
 
-        return "colony/index";
+        return "colony/sort";
     }
     @GetMapping("sex2/{labId}")
     public String sortBySexD(@PathVariable int labId, Model model, HttpServletRequest request) {
@@ -361,7 +361,7 @@ public class AnimalController {
 //
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by(Sort.Direction.DESC,"sex")));
 
-        return "colony/index";
+        return "colony/sort";
     }
 
     @GetMapping("dateofbirth/{labId}")
@@ -375,7 +375,7 @@ public class AnimalController {
 
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by("dateOfBirth")));
 
-        return "colony/index";
+        return "colony/sort";
     }
     @GetMapping("dateofbirth2/{labId}")
     public String sortByDateOfBirthD(@PathVariable int labId, Model model, HttpServletRequest request) {
@@ -388,7 +388,7 @@ public class AnimalController {
 //
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by(Sort.Direction.DESC,"dateOfBirth")));
 
-        return "colony/index";
+        return "colony/sort";
     }
 
     @GetMapping("genotype1/{labId}")
@@ -402,7 +402,7 @@ public class AnimalController {
 
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by("genotype.name")));
 
-        return "colony/index";
+        return "colony/sort";
     }
     @GetMapping("genotype2/{labId}")
     public String sortByGenotype2(@PathVariable int labId, Model model, HttpServletRequest request) {
@@ -415,7 +415,7 @@ public class AnimalController {
 //
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by(Sort.Direction.DESC,"genotype.name")));
 
-        return "colony/index";
+        return "colony/sort";
     }
 
     @GetMapping("litter/{labId}")
@@ -429,7 +429,7 @@ public class AnimalController {
 
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by("litter")));
 
-        return "colony/index";
+        return "colony/sort";
     }
     @GetMapping("litter2/{labId}")
     public String sortByLitterD(@PathVariable int labId, Model model, HttpServletRequest request) {
@@ -442,7 +442,7 @@ public class AnimalController {
 //
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by(Sort.Direction.DESC,"litter")));
 
-        return "colony/index";
+        return "colony/sort";
     }
 
     @GetMapping("notes/{labId}")
@@ -456,7 +456,7 @@ public class AnimalController {
 
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by("notesKeyword")));
 
-        return "colony/index";
+        return "colony/sort";
     }
     @GetMapping("notes2/{labId}")
     public String sortByNotes2(@PathVariable int labId, Model model, HttpServletRequest request) {
@@ -469,6 +469,6 @@ public class AnimalController {
 //
         model.addAttribute("animals", animalRepository.findByLabId(labId, Sort.by(Sort.Direction.DESC,"notesKeyword")));
 
-        return "colony/index";
+        return "colony/sort";
     }
 }
