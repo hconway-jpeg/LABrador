@@ -88,9 +88,6 @@
                         <a class="nav-link" th:href="@{/colony/{id}(id=${lab.id})}">Animal Database</a>
                     </li>
                     <li class="nav-item" th:each="lab : ${lab}">
-                        <a class="nav-link" th:href="@{/colony/search/{labId}(labId=${lab.id})}">Search</a>
-                    </li>
-                    <li class="nav-item" th:each="lab : ${lab}">
                         <a class="nav-link" th:href="@{/colony/add/{labId}(labId=${lab.id})}">Add Animal</a>
                     </li>
                     <li class="nav-item" th:each="lab : ${lab}">
@@ -139,27 +136,11 @@
                         <a class="nav-link" th:href="@{/colony/{labId}(labId=${lab.id})}">Animal Database</a>
                     </li>
                     <li class="nav-item" th:each="lab : ${lab}">
-                        <a class="nav-link" th:href="@{/colony/search/{labId}(labId=${lab.id})}">Search</a>
-                    </li>
-                    <li class="nav-item" th:each="lab : ${lab}">
                         <a class="nav-link" th:href="@{/colony/add/{labId}(labId=${lab.id})}">Add Animal</a>
                     </li>
                     <li class="nav-item" th:each="lab : ${lab}">
                         <a class="nav-link" th:href="@{/colony/genotype/{labId}(labId=${lab.id})}">Genotype Database</a>
                     </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <div id="header-1" class="header">
-                        <nav class="header-nav">
-                            <div class="search-button">
-                                <a href="#" class="search-toggle" data-selector="#header-1"></a>
-                            </div>
-
-                            <form class="search-box" action="/search" method="get">
-                                <input type="text" id="query" name="query" class="form-control" placeholder="type keyword" aria-label="Search" style="width: 300px; height: 25px;">
-                            </form>
-                        </nav>
-                    </div>
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
