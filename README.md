@@ -12,6 +12,7 @@
 * Deleting your account.
 * Creating/Deleting a Laboratory.
 * Searching for specific data in your Laboratory's animal database.
+* Sorting your Laboratory's data by each table header.
 * Adding/Updating/Deleting data in your Laboratory's animal database.
 * Adding/Updating/Deleting data in your Laboratory's genotype database.
 
