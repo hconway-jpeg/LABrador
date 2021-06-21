@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+    <head th:replace="fragments :: head">
+    </head>
+    <body>
+
+        <div th:replace="fragments :: home-header-fragment"></div>
+
+        <div class="container body-content py-2">
+            <h2>LABrador Lab Management Solutions</h2>
+            <div>
+                <h5 th:text="'Welcome, '+ ${user.firstName} + ' ' + ${user.lastName} + '!'">Welcome!</h5>
+                <form method="post">
+                    <div class="form-group">
+                        <label>
+                            New to LABrador? Find Your Lab!
+                            <select class="form-control" th:field="${user.lab}">
+                                <option th:each="lab : ${labs}"
+                                        th:value="${lab.id}"
+                                        th:text="${lab.labName}">
+                                </option>
+                            </select>
+                            <small>Don't See Your Lab? Add It <a th:href="@{/lab/add}">Here</a></small>
+                        </label>
+                        <div class="form-group">
+                            <input class="btn btn-success" type="submit" value="Join Lab">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

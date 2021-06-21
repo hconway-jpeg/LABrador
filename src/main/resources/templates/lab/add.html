@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+    <meta charset="UTF-8"/>
+    <title>Add Lab</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div th:replace="fragments :: home-header-fragment"></div>
+<div class="container body-content">
+    <h2>Create New Lab</h2>
+    <form method="post">
+        <div class="form-group">
+            <label>
+                Principal Investigator (PI)
+                <input class="form-control" th:field="${lab.principalInvestigator}">
+                <span th:errors="${lab.principalInvestigator}" class="error"></span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>
+                Lab Name
+                <input class="form-control" th:field="${lab.labName}">
+                <span th:errors="${lab.labName}" class="error"></span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>
+                Lab Contact Email
+                <input class="form-control" th:field="${lab.contactEmail}">
+                <span th:errors="${lab.contactEmail}" class="error"></span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>
+                Organization
+                <input class="form-control" th:field="${lab.organization}">
+                <span th:errors="${lab.organization}" class="error"></span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>
+                Department
+                <input class="form-control" th:field="${lab.department}">
+                <span th:errors="${lab.department}" class="error"></span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label>
+                Passcode
+                <input class="form-control" th:field="${lab.passcode}">
+                <span th:errors="${lab.passcode}" class="error"></span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <input class="btn btn-success" type="submit" value="Add Lab">
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

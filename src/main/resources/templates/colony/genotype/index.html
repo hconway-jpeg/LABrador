@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+    <meta charset="UTF-8"/>
+    <title>Lab Genotypes</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div th:replace="fragments :: genotype-header-fragment"></div>
+
+<div class="container body-content">
+
+    <form th:action="@{/colony/genotype/add/{labId}(labId=${lab.id})}">
+        <input class="btn btn-info" type="submit" value="Add Genotype">
+    </form>
+
+    <form method="post">
+        <input class="btn btn-danger" type="submit" value="Confirm Delete">
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Genotypes</th>
+                <th>Delete?</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tr th:each="genotype : ${genotype}" th:if="${genotype.name != ''}">
+                <td th:text="${genotype.name}"></td>
+                <td>
+                    <input type="checkbox" th:value="${genotype.id}" name="genotypeIds">
+                </td>
+                <td>
+                    <a th:href="@{/colony/genotype/edit/{id}/{id2}(id=${genotype.id}, id2=${lab.id})}">Edit</a>
+                </td>
+            </tr>
+
+        </table>
+    </form>
+
+</div>
+
+</body>
+</html>
